@@ -11,14 +11,14 @@ public class Queue<T> implements IQueue<T> {
 		/**
 		 * Capacidad maxima del arreglo
 		 */
-        private int cabeza;
+        private Node<T> cabeza;
 		/**
 		 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
 		 */
         private int tamanoAct;
         
         
-        private int cola;
+        private Node<T> cola;
         
 		public void enqueue( T dato )
         {
@@ -43,6 +43,11 @@ public class Queue<T> implements IQueue<T> {
 			// TODO implementar
 			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
 			return null;
+		}
+		
+		private class Node<T> {
+			T dato;
+			Node next;
 		}
 
 }
