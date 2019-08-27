@@ -1,7 +1,8 @@
 package controller;
 
-import java.util.Scanner;
+import java.util.*;
 
+import model.data_structures.Queue;
 import model.logic.MVCModelo;
 import view.MVCView;
 
@@ -12,6 +13,8 @@ public class Controller {
 
 	/* Instancia de la Vista */
 	private MVCView view;
+	
+	private Queue<String[]> clus = new Queue<>();
 
 	/**
 	 * Crear la vista y el modelo del proyecto
@@ -39,16 +42,15 @@ public class Controller {
 				System.out.println("--------- \nRealizar carga de datos");
 				num = modelo.totalViajesTrimestre();
 				System.out.println("Viajes totales: " + num + "\n---------");
-				System.out.println("Primer viaje del trimestre: " + modelo.darTamano() + "\n---------");
-				System.out.println("Último viaje del trimestre: " + modelo.darTamano() + "\n---------");
+				System.out.println("Primer viaje del trimestre: " + modelo.primerElemento() + "\n---------");
+				System.out.println("Último viaje del trimestre: " + modelo.ultimoElemento() + "\n---------");
 				break;
 
 			case 2:
-				System.out.println("--------- \nConsulta del cluster más grande");
+				System.out.println("--------- \nConsulta del cluster más grande en una hora dada");
 				dato = lector.next();
-				modelo.agregar(dato);
-				System.out.println("Dato agregado");
-				System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");
+				clus = modelo.cluster(Integer.parseInt(dato));
+				System.out.println("Clúster de elementos más grande:\n " + Arrays.toString(clus.dequeue()) + "\n---------");
 				break;
 
 			case 3:

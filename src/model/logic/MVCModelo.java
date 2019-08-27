@@ -6,8 +6,9 @@ import model.data_structures.Stack;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
- import com.opencsv.CSVReader;
+import com.opencsv.CSVReader;
 /**
  * Definicion del modelo del mundo
  *
@@ -51,5 +52,31 @@ public class MVCModelo {
 		int totalviajes = this.CVSLector();
 		return totalviajes;
 	}
-
+	
+	public String[] primerElemento() {
+		return datosQ.consultarPrimerElemento();
+	}
+	
+	public String[] ultimoElemento() {
+		return datosS.consultarElementoTope();
+	}
+	
+	public Queue<String[]> cluster(int hora){
+		Queue<String[]> clusterQ = new Queue<>();
+		String[] comp;
+		do{
+			comp = datosQ.dequeue();
+		} while(Integer.parseInt(comp[2]) > hora);
+		
+		for (int i = 0; i<datosQ.darTamano(); i++) {
+			if(Integer.parseInt(comp[2]) <= Integer.parseInt(datosQ.dequeue()[2])) {
+				clusterQ.enqueue(comp);
+				comp = datosQ.dequeue();
+			}
+		}
+		
+		return clusterQ;
+	}
+	
+	
 }
