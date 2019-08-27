@@ -1,12 +1,14 @@
 package model.logic;
 
-import model.data_structures.ArregloDinamico;
-import model.data_structures.IArregloDinamico;
+import model.data_structures.IStack;
+import model.data_structures.IQueue;
+import model.data_structures.Stack;
+import model.data_structures.Queue;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
- import com.opencsv.CSVReader
+ import com.opencsv.CSVReader;
 /**
  * Definicion del modelo del mundo
  *
@@ -15,7 +17,8 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IArregloDinamico datos;
+	private IQueue cola;
+	private IStack pila;
 
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
@@ -26,7 +29,7 @@ public class MVCModelo {
 
 			reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-2-All-MonthlyAggregate.csv"));
 			for (String[] nextLine : reader) {
-				System.out.println("col1: " + nextLine[0] + ", col2: " + nextLine[1]);
+				//System.out.println("col1: " + nextLine[0] + ", col2: " + nextLine[1]);
 			}
 
 		} catch (FileNotFoundException e) {

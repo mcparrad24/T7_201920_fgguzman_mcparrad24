@@ -5,22 +5,21 @@ public class Stack<T> implements IStack<T> {
 	/**
 	 * Capacidad maxima del arreglo
 	 */
-    private Node<T> top;
+	private Node<T> top;
 	/**
-	 * Numero de elementos presentes en el arreglo (de forma compacta desde la posicion 0)
+	 * Numero de elementos presentes en el arreglo (de forma compacta desde la
+	 * posicion 0)
 	 */
-    private int tamanoAct;
-    
-    
-    private Node<T> bottom;
-    
-	public void push( T dato )
-    {
-          
-   }
+	private int tamanoAct;
 
-	public T pop( ) {
-		
+	private Node<T> bottom;
+
+	public void push(T dato) {
+
+	}
+
+	public T pop() {
+
 		T eliminado = null;
 		return eliminado;
 	}
@@ -34,11 +33,10 @@ public class Stack<T> implements IStack<T> {
 	}
 
 	public T consultarElementoTope() {
-		// TODO implementar
-		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
+		
 		return null;
 	}
-	
+
 	private class Node<T> {
 		T dato;
 		Node next;
