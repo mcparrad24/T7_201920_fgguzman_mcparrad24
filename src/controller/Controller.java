@@ -26,6 +26,7 @@ public class Controller {
 	public void run() {
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
+		int num = 0;
 		String dato = "";
 		String respuesta = "";
 
@@ -36,8 +37,8 @@ public class Controller {
 			switch (option) {
 			case 1:
 				System.out.println("--------- \nRealizar carga de datos");
-
-				System.out.println("Viajes totales: " + modelo.darTamano() + "\n---------");
+				num = modelo.totalViajesTrimestre();
+				System.out.println("Viajes totales: " + num + "\n---------");
 				System.out.println("Primer viaje del trimestre: " + modelo.darTamano() + "\n---------");
 				System.out.println("Último viaje del trimestre: " + modelo.darTamano() + "\n---------");
 				break;
