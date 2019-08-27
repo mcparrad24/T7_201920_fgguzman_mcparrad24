@@ -1,9 +1,9 @@
 package model.logic;
 
-import model.data_structures.IStack;
+import model.data_structures.Queue;
 import model.data_structures.IQueue;
 import model.data_structures.Stack;
-import model.data_structures.Queue;
+import model.data_structures.IStack;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,9 +17,9 @@ public class MVCModelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private IQueue cola;
-	private IStack pila;
-
+	private IQueue datosQ;
+	private IStack datosS;
+	
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
