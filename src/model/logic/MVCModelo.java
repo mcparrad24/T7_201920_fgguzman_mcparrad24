@@ -78,5 +78,16 @@ public class MVCModelo {
 		return clusterQ;
 	}
 	
-	
+	public Queue<String[]> viajesNH(int N, int hora){
+		Queue<String[]> clusterQ = new Queue<>();
+		int i = N;
+		while(i=0 || datosS.darTamano() = 0) {
+			if(Integer.parseInt(comp[2]) <= Integer.parseInt(datosQ.dequeue()[2])) {
+				clusterQ.enqueue(comp);
+				comp = datosQ.dequeue();
+			}
+		}
+		
+		return clusterQ;
+	}
 }

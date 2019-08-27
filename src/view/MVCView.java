@@ -16,7 +16,7 @@ public class MVCView
 		{
 			System.out.println("1. Realizar carga de datos");
 			System.out.println("2. Consulta del cluster más grande en una hora dada");
-			System.out.println("3. Consultar un número de viajes en un hora dada");
+			System.out.println("3. Consultar últimos viajes en un hora dada");
 			System.out.println("4. Exit");
 			System.out.println("Dar el numero de opcion a resolver, luego oprimir tecla Return: (e.g., 1):");
 		}

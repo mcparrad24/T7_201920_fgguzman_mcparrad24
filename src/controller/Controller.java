@@ -31,7 +31,8 @@ public class Controller {
 		boolean fin = false;
 		int num = 0;
 		String dato = "";
-		String respuesta = "";
+		String[] datos;
+		String hora = "", N = "";
 
 		while (!fin) {
 			view.printMenu();
@@ -54,15 +55,13 @@ public class Controller {
 				break;
 
 			case 3:
-				System.out.println("--------- \nConsultar un número de viajes en un hora dada");
+				System.out.println("--------- \nConsultar últimos viajes en un hora dada \nDar el número del viajes seguido por una coma y una hora entera de [0-23] (e.g., 1, 18):");
 				dato = lector.next();
-				respuesta = modelo.buscar(dato);
-				if (respuesta != null) {
-					System.out.println("Dato encontrado: " + respuesta);
-				} else {
-					System.out.println("Dato NO encontrado");
-				}
-				System.out.println("Numero actual de elementos " + modelo.darTamano() + "\n---------");
+				datos = dato.split(",");
+				N = datos[0];
+				hora = datos[1];
+				clus = modelo.viajesNH(Integer.parseInt(N), Integer.parseInt(hora));
+				System.out.println("Últimos viajes de la hora "+N+" \n" + Arrays.toString(clus.dequeue()) + "\n---------");
 				break;
 
 			case 4:
