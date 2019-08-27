@@ -46,21 +46,6 @@ public class MVCModelo {
 		}
 	}
 
-	}
-
-	public MVCModelo() {
-		datos = new ArregloDinamico(7);
-	}
-
-	/**
-	 * Constructor del modelo del mundo con capacidad dada
-	 * 
-	 * @param tamano
-	 */
-	public MVCModelo(int capacidad) {
-		datos = new ArregloDinamico(capacidad);
-	}
-
 	/**
 	 * Servicio de consulta de numero de elementos presentes en el modelo
 	 * 

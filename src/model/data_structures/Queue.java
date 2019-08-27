@@ -20,30 +20,53 @@ public class Queue<T> implements IQueue<T> {
 
 	private Node<T> cola;
 
-	public void enqueue(T dato) {
-
-	}
+	public void enqueue( T dato )
+    {
+		if (cabeza == null) {
+			cabeza = new Node<T>();
+			cabeza.dato = dato;
+		}
+		else {
+			Node<T> nodoActual = cabeza;
+			while (nodoActual.next != null) {
+				nodoActual = nodoActual.next;
+			}
+			cola = new Node<T>();
+			nodoActual.next = cola;
+			cola.dato = dato;
+		}
+    }
 
 	public T dequeue() {
-
-		T eliminado = null;
+		T eliminado = cabeza.dato;
+		cabeza.dato = (T) cabeza.next.dato;
+		cabeza = cabeza.next;
 		return eliminado;
 	}
 
 	public int darTamano() {
+		tamanoAct = 0;
+		Node<T> nodoActual = cabeza;
+		while (nodoActual != null) {
+			nodoActual = nodoActual.next;
+			tamanoAct++;
+		}
 		return tamanoAct;
 	}
 
 	public boolean isEmpty() {
-		return true;
+		if (darTamano() == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public T consultarPrimerElemento() {
-		// TODO implementar
-		// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo())
-		// definido en Strings.
-		return null;
+		return cabeza.dato;
 	}
+
 
 	private class Node<T> {
 		T dato;
