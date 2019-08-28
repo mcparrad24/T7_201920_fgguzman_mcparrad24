@@ -44,24 +44,24 @@ public class Controller {
 				num = modelo.totalViajesTrimestre();
 				System.out.println("Viajes totales: " + num + "\n---------");
 				System.out.println("Primer viaje del trimestre: " + modelo.primerElemento() + "\n---------");
-				System.out.println("Último viaje del trimestre: " + modelo.ultimoElemento() + "\n---------");
+				System.out.println("ï¿½ltimo viaje del trimestre: " + modelo.ultimoElemento() + "\n---------");
 				break;
 
 			case 2:
-				System.out.println("--------- \nConsulta del cluster más grande en una hora dada");
+				System.out.println("--------- \nConsulta del cluster mÃ¡s grande en una hora dada");
 				dato = lector.next();
 				clus = modelo.cluster(Integer.parseInt(dato));
-				System.out.println("Clúster de elementos más grande:\n " + Arrays.toString(clus.dequeue()) + "\n---------");
+				System.out.println("Cluster de elementos mÃ¡s grande:\n " + Arrays.toString(clus.dequeue()) + "\n---------");
 				break;
 
 			case 3:
-				System.out.println("--------- \nConsultar últimos viajes en un hora dada \nDar el número del viajes seguido por una coma y una hora entera de [0-23] (e.g., 1, 18):");
+				System.out.println("--------- \nConsultar Ãºltimos viajes en un hora dada \nDar el nÃºmero del viajes seguido por una coma y una hora entera de [0-23] (e.g., 1, 18):");
 				dato = lector.next();
 				datos = dato.split(",");
 				N = datos[0];
 				hora = datos[1];
 				clus = modelo.viajesNH(Integer.parseInt(N), Integer.parseInt(hora));
-				System.out.println("Últimos viajes de la hora "+N+" \n" + Arrays.toString(clus.dequeue()) + "\n---------");
+				System.out.println("Ãšltimos viajes de la hora "+N+" \n" + Arrays.toString(clus.dequeue()) + "\n---------");
 				break;
 
 			case 4:

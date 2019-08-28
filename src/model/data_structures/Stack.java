@@ -16,36 +16,36 @@ public class Stack<T> implements IStack<T> {
 
 	public void push( T dato )
     {
-		if (top == null) {
-			top = new Node<T>();
-			top.dato = dato;
+		if (bottom == null) {
+			bottom = new Node<T>();
+			bottom.dato = dato;
 		}
 		else {
-			Node<T> nodoActual = top;
+			Node<T> nodoActual = bottom;
 			while (nodoActual.next != null) {
 				nodoActual = nodoActual.next;
 			}
-			bottom = new Node<T>();
-			nodoActual.next = bottom;
-			bottom.dato = dato;
+			top = new Node<T>();
+			nodoActual.next = top;
+			top.dato = dato;
 		}
           
     }
 
 	public T pop( ) {
-		Node<T> nodoActual = top;
+		Node<T> nodoActual = bottom;
 		while (nodoActual.next != null) {
 			nodoActual = nodoActual.next;
 		}
 		T eliminado = (T) nodoActual.next.dato;
 		nodoActual.next = null;
-		bottom = nodoActual;
+		top = nodoActual;
 		return eliminado;
 	}
 
 	public int darTamano() {
 		tamanoAct = 0;
-		Node<T> nodoActual = top;
+		Node<T> nodoActual = bottom;
 		while (nodoActual != null) {
 			nodoActual = nodoActual.next;
 			tamanoAct++;

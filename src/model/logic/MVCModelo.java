@@ -26,7 +26,7 @@ public class MVCModelo {
 		CSVReader reader = null;
 		int total = 0;
 		try {
-			reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-2-All-MonthlyAggregate.csv"));
+			reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
 			for (String[] nextLine : reader) {
 				datosQ.enqueue(nextLine);
 				datosS.push(nextLine);
@@ -79,15 +79,13 @@ public class MVCModelo {
 	}
 	
 	public Queue<String[]> viajesNH(int N, int hora){
+		Stack<String[]> clusterS = new Stack<>();
+		String[] comp = datosS.pop();
+		clusterS.push(comp);
 		Queue<String[]> clusterQ = new Queue<>();
-		int i = N;
-		while(i=0 || datosS.darTamano() = 0) {
-			if(Integer.parseInt(comp[2]) <= Integer.parseInt(datosQ.dequeue()[2])) {
-				clusterQ.enqueue(comp);
-				comp = datosQ.dequeue();
-			}
-		}
-		
+		String[] comp2 = clusterS.pop();
+		clusterQ.enqueue(comp2);
 		return clusterQ;
+		
 	}
 }
