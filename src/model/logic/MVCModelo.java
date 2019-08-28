@@ -114,13 +114,25 @@ public class MVCModelo {
 		return clusterQ;
 	}
 
-	public Queue<String[]> viajesNH(int N, int hora) {
+	public Queue<String[]> viajesNH(int N, String hora) {
 		Stack<String[]> clusterS = new Stack<>();
+		Stack<String[]> clusterS2 = new Stack<>();
 		String[] comp = datosS.pop();
-		clusterS.push(comp);
+		int n = 0;
+		while ((n < N) || (comp != null)) {
+			System.out.println(comp);
+			if (comp[2].equals(hora)) {
+				clusterS.push(comp);
+				n++;
+				clusterS2.push(clusterS.pop());
+				
+			}
+			comp = datosS.pop();
+		}
 		Queue<String[]> clusterQ = new Queue<>();
-		String[] comp2 = clusterS.pop();
-		clusterQ.enqueue(comp2);
+		for (int i = 0; i < clusterS2.darTamano() - 1; i++) {
+			clusterQ.enqueue(clusterS2.pop());
+		}
 		return clusterQ;
 
 	}

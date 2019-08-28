@@ -34,10 +34,15 @@ public class Stack<T> implements IStack<T> {
 
 	public T pop( ) {
 		Node<T> nodoActual = bottom;
-		while (nodoActual.next != null) {
+		T eliminado = nodoActual.dato;
+		while(nodoActual.next != top) {
 			nodoActual = nodoActual.next;
+			if(nodoActual != null) {
+				eliminado = (T) nodoActual.next.dato;
+			} else {
+				return null;
+			}
 		}
-		T eliminado = (T) nodoActual.next.dato;
 		nodoActual.next = null;
 		top = nodoActual;
 		return eliminado;
