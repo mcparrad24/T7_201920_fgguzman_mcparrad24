@@ -40,15 +40,14 @@ public class Controller {
 			int option = lector.nextInt();
 			switch (option) {
 			case 1:
-				System.out.println("--------- \nRealizar carga de datos");
 				num = modelo.totalViajesTrimestre();
 				System.out.println("Viajes totales: " + num + "\n---------");
-				System.out.println("Primer viaje del trimestre: " + modelo.primerElemento() + "\n---------");
-				System.out.println("�ltimo viaje del trimestre: " + modelo.ultimoElemento() + "\n---------");
+				System.out.println("Primer viaje del trimestre: " + Arrays.toString(modelo.primerElemento()) + "\n---------");
+				System.out.println("�ltimo viaje del trimestre: " + Arrays.toString(modelo.ultimoElemento()) + "\n---------");
 				break;
 
 			case 2:
-				System.out.println("--------- \nConsulta del cluster más grande en una hora dada");
+				System.out.println("--------- \nDar una hora entera de [0-23] (e.g., 1)");
 				dato = lector.next();
 				clus = modelo.cluster(Integer.parseInt(dato));
 				System.out.println("Cluster de elementos más grande:\n " + Arrays.toString(clus.dequeue()) + "\n---------");
