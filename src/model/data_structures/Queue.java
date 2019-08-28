@@ -39,8 +39,12 @@ public class Queue<T> implements IQueue<T> {
 
 	public T dequeue() {
 		T eliminado = cabeza.dato;
-		cabeza.dato = (T) cabeza.next.dato;
-		cabeza = cabeza.next;
+		if(cabeza.next != null) {
+			cabeza.dato = (T) cabeza.next.dato;
+			cabeza = cabeza.next;
+		} else {
+			return null;
+		}
 		return eliminado;
 	}
 

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.opencsv.CSVReader;
+
 /**
  * Definicion del modelo del mundo
  *
@@ -19,6 +20,7 @@ public class MVCModelo {
 	 */
 	private Queue<String[]> datosQ = new Queue<>();
 	private Stack<String[]> datosS = new Stack<>();
+
 	/**
 	 * Constructor del modelo del mundo con capacidad predefinida
 	 */
@@ -26,7 +28,8 @@ public class MVCModelo {
 		CSVReader reader = null;
 		int total = 0;
 		try {
-			//reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
+			// reader = new CSVReader(new
+			// FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
 			reader = new CSVReader(new FileReader("./data/datos.csv"));
 			for (String[] nextLine : reader) {
 				datosQ.enqueue(nextLine);
@@ -49,39 +52,69 @@ public class MVCModelo {
 		}
 		return total;
 	}
-	
+
 	public int totalViajesTrimestre() {
 		int totalviajes = this.CVSLector();
 		return totalviajes;
 	}
-	
+
 	public String[] primerElemento() {
 		return datosQ.consultarPrimerElemento();
 	}
-	
+
 	public String[] ultimoElemento() {
 		return datosS.consultarElementoTope();
 	}
-	
-	public Queue<String[]> cluster(int hora){
+
+	public Queue<String[]> cluster(int hora) {
 		Queue<String[]> clusterQ = new Queue<>();
-		String[] comp = datosQ.dequeue();
-		do{
+		int a = 0, b = 1;
+		Queue<String[]> clusterQ1 = new Queue<>();
+		String[] comp = datosQ.dequeue(), cam;
+		do {
 			comp = datosQ.dequeue();
-			System.out.println(comp);
-		} while(Integer.parseInt(comp[2]) > hora);
-		
-		for (int i = 0; i<datosQ.darTamano(); i++) {
-			if(Integer.parseInt(comp[2]) <= Integer.parseInt(datosQ.dequeue()[2])) {
-				clusterQ.enqueue(comp);
+			a++;
+		} while (Integer.parseInt(comp[2]) < hora);
+
+		do {
+			for (int i = 0; i < datosQ.darTamano(); i++) {
+				cam = datosQ.dequeue();
+				if ((cam != null) && (Integer.parseInt(comp[2]) <= Integer.parseInt(cam[2]))) {
+					clusterQ.enqueue(comp);
+					comp = cam;
+					a++;
+				} else {
+					comp = datosQ.dequeue();
+					break;
+				}
+			}
+			for (int i = 0; i < datosQ.darTamano(); i++) {
+				cam = datosQ.dequeue();
+				if ((comp != null) && (Integer.parseInt(comp[2]) <= Integer.parseInt(cam[2]))) {
+					clusterQ1.enqueue(comp);
+					comp = cam;
+					b++;
+				} else {
+					break;
+				}
+			}
+			if (b >= a) {
+				a = 0;
+				b = 0;
+				clusterQ = null;
+				clusterQ = new Queue<>();
+				clusterQ = clusterQ1;
+				clusterQ1 = null;
+				clusterQ1 = new Queue<>();
 				comp = datosQ.dequeue();
 			}
-		}
-		
+
+		} while (comp != null);
+
 		return clusterQ;
 	}
-	
-	public Queue<String[]> viajesNH(int N, int hora){
+
+	public Queue<String[]> viajesNH(int N, int hora) {
 		Stack<String[]> clusterS = new Stack<>();
 		String[] comp = datosS.pop();
 		clusterS.push(comp);
@@ -89,6 +122,6 @@ public class MVCModelo {
 		String[] comp2 = clusterS.pop();
 		clusterQ.enqueue(comp2);
 		return clusterQ;
-		
+
 	}
 }

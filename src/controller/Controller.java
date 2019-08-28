@@ -50,7 +50,10 @@ public class Controller {
 				System.out.println("--------- \nDar una hora entera de [0-23] (e.g., 1)");
 				dato = lector.next();
 				clus = modelo.cluster(Integer.parseInt(dato));
-				System.out.println("Cluster de elementos más grande:\n " + Arrays.toString(clus.dequeue()) + "\n---------");
+				System.out.println("Cluster de elementos más grande: "+ clus.darTamano()); 
+				for (int i = 0; i<clus.darTamano(); i++) {
+					System.out.println(Arrays.toString(clus.dequeue()) + "\n---------");
+				}
 				break;
 
 			case 3:
