@@ -29,7 +29,7 @@ public class Controller {
 	public void run() {
 		Scanner lector = new Scanner(System.in);
 		boolean fin = false;
-		int num = 0;
+		int num = 0, j = 0;
 		String dato = "";
 		String[] datos;
 		String hora = "", N = "";
@@ -67,7 +67,8 @@ public class Controller {
 				hora = datos[1];
 				clus = modelo.viajesNH(Integer.parseInt(N), hora);
 				System.out.println("Últimos viajes de la hora: " + hora);
-				for (int i = -1; i < clus.darTamano(); i++) {
+				j = clus.darTamano();
+				for (int i = 0; i < j; i++) {
 					System.out.println(Arrays.toString(clus.dequeue()) + "\n---------");
 				}
 				break;

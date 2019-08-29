@@ -28,14 +28,11 @@ public class MVCModelo {
 		CSVReader reader = null;
 		int total = 0;
 		try {
-			// reader = new CSVReader(new
-			// FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
-			reader = new CSVReader(new FileReader("./data/datos.csv"));
+			reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
 			for (String[] nextLine : reader) {
 				if(total != 0) {
 					datosQ.enqueue(nextLine);
 					datosS.push(nextLine);
-					System.out.println(total);
 				}		
 				total++;
 			}
@@ -133,6 +130,7 @@ public class MVCModelo {
 		Queue<String[]> clusterQ = new Queue<>();
 		for (int i = 0; i < clusterS2.darTamano(); i++) {
 			clusterQ.enqueue(clusterS2.pop());
+			System.out.println(clusterQ.darTamano());
 		}
 		return clusterQ;
 
