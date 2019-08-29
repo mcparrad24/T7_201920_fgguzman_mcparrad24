@@ -67,7 +67,7 @@ public class Controller {
 				hora = datos[1];
 				clus = modelo.viajesNH(Integer.parseInt(N), hora);
 				System.out.println("Últimos viajes de la hora: " + hora);
-				for (int i = 0; i < clus.darTamano(); i++) {
+				for (int i = -1; i < clus.darTamano(); i++) {
 					System.out.println(Arrays.toString(clus.dequeue()) + "\n---------");
 				}
 				break;

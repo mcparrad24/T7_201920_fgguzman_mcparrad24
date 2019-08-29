@@ -37,13 +37,13 @@ public class Stack<T> implements IStack<T> {
 		T eliminado = nodoActual.dato;
 		while(nodoActual.next != top) {
 			nodoActual = nodoActual.next;
-			if(nodoActual != null) {
-				eliminado = (T) nodoActual.next.dato;
+			if(nodoActual.next != null) {
+				eliminado = (T) nodoActual.dato;
 			} else {
 				return null;
 			}
 		}
-		nodoActual.next = null;
+		top = null;
 		top = nodoActual;
 		return eliminado;
 	}

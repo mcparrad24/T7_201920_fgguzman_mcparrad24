@@ -6,7 +6,7 @@ import model.data_structures.Stack;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import com.opencsv.CSVReader;
 
@@ -32,9 +32,11 @@ public class MVCModelo {
 			// FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
 			reader = new CSVReader(new FileReader("./data/datos.csv"));
 			for (String[] nextLine : reader) {
-				datosQ.enqueue(nextLine);
-				datosS.push(nextLine);
-				System.out.println(total);
+				if(total != 0) {
+					datosQ.enqueue(nextLine);
+					datosS.push(nextLine);
+					System.out.println(total);
+				}		
 				total++;
 			}
 
@@ -119,18 +121,17 @@ public class MVCModelo {
 		Stack<String[]> clusterS2 = new Stack<>();
 		String[] comp = datosS.pop();
 		int n = 0;
-		while ((n < N) || (comp != null)) {
-			System.out.println(comp);
+		while ((n < N) && (comp != null)) {
 			if (comp[2].equals(hora)) {
 				clusterS.push(comp);
 				n++;
 				clusterS2.push(clusterS.pop());
-				
+				System.out.println("num "+Arrays.toString(comp));
 			}
 			comp = datosS.pop();
 		}
 		Queue<String[]> clusterQ = new Queue<>();
-		for (int i = 0; i < clusterS2.darTamano() - 1; i++) {
+		for (int i = 0; i < clusterS2.darTamano(); i++) {
 			clusterQ.enqueue(clusterS2.pop());
 		}
 		return clusterQ;
