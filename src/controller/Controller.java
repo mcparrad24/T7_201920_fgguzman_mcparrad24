@@ -45,14 +45,14 @@ public class Controller {
 				System.out.println(
 						"Primer viaje del trimestre: " + Arrays.toString(modelo.primerElemento()) + "\n---------");
 				System.out.println(
-						"�ltimo viaje del trimestre: " + Arrays.toString(modelo.ultimoElemento()) + "\n---------");
+						"Ultimo viaje del trimestre: " + Arrays.toString(modelo.ultimoElemento()) + "\n---------");
 				break;
 
 			case 2:
 				System.out.println("--------- \nDar una hora entera de [0-23] (e.g., 1)");
 				dato = lector.next();
 				clus = modelo.cluster(Integer.parseInt(dato));
-				System.out.println("Cluster de elementos más grande: " + clus.darTamano());
+				System.out.println("Cluster de elementos mas grande: " + clus.darTamano());
 				for (int i = 0; i < clus.darTamano(); i++) {
 					System.out.println(Arrays.toString(clus.dequeue()) + "\n---------");
 				}
@@ -60,13 +60,13 @@ public class Controller {
 
 			case 3:
 				System.out.println(
-						"--------- \nConsultar últimos viajes en un hora dada \nDar el número del viajes seguido por una coma y una hora entera de [0-23] (e.g., 1, 18):");
+						"--------- \nConsultar ultimos viajes en un hora dada \nDar el numero del viajes seguido por una coma y una hora entera de [0-23] (e.g., 1, 18):");
 				dato = lector.next();
 				datos = dato.split(",");
 				N = datos[0];
 				hora = datos[1];
 				clus = modelo.viajesNH(Integer.parseInt(N), hora);
-				System.out.println("Últimos viajes de la hora: " + hora);
+				System.out.println("Ultimos viajes de la hora: " + hora);
 				j = clus.darTamano();
 				for (int i = 0; i < j; i++) {
 					System.out.println(Arrays.toString(clus.dequeue()) + "\n---------");

@@ -1,79 +1,49 @@
 package model.data_structures;
+import java.lang.reflect.Array;
 
 public class Stack<T> implements IStack<T> {
 
-	/**
-	 * Capacidad maxima del arreglo
-	 */
-	private Node<T> top;
-	/**
-	 * Numero de elementos presentes en el arreglo (de forma compacta desde la
-	 * posicion 0)
-	 */
-	private int tamanoAct;
+	private T[] contenedor;
+	private int top;
+	private int maxT = 10;
 
-	private Node<T> bottom;
-
-	public void push( T dato )
-    {
-		if (bottom == null) {
-			bottom = new Node<T>();
-			bottom.dato = dato;
-		}
-		else {
-			Node<T> nodoActual = bottom;
-			while (nodoActual.next != null) {
-				nodoActual = nodoActual.next;
-			}
-			top = new Node<T>();
-			nodoActual.next = top;
-			top.dato = dato;
-		}
-          
-    }
-
-	public T pop( ) {
-		Node<T> nodoActual = bottom;
-		T eliminado = nodoActual.dato;
-		while(nodoActual.next != top) {
-			nodoActual = nodoActual.next;
-			if(nodoActual.next != null) {
-				eliminado = (T) nodoActual.dato;
-			} else {
-				return null;
-			}
-		}
-		top = null;
-		top = nodoActual;
-		return eliminado;
+	public Stack() {
+        this.contenedor = (T[]) new Object[maxT];
+        this.top = -1;
 	}
 
-	public int darTamano() {
-		tamanoAct = 0;
-		Node<T> nodoActual = bottom;
-		while (nodoActual != null) {
-			nodoActual = nodoActual.next;
-			tamanoAct++;
-		}
-		return tamanoAct;
+	private T[] resizeArray() {
+        /**
+         * create a new array double the size of the old, copy the old elements then return the new array */
+        int newSize = maxT * 2;
+        T[] newArray = (T[]) Array.newInstance(Stack.class, newSize);
+        for(int i = 0; i < maxT; i++) {
+            newArray[i] = this.contenedor[i];
+        }
+        return newArray;
+    }
+	
+	public T consultarElementoTope() {
+		if (top == -1)
+			return null;
+		return contenedor[top];
 	}
 
 	public boolean isEmpty() {
-		if (darTamano() == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (top == -1);
 	}
 
-	public T consultarElementoTope() {
-		return top.dato;
+	public T pop() {
+		if (top == -1)
+			return null;
+		return contenedor[top--];
 	}
 
-	private class Node<T> {
-		T dato;
-		Node next;
+	public void push(T itm) {
+		contenedor[++top] = itm;
 	}
 
+	public int darTamano() {
+		return (top + 1);
+	}
 }
