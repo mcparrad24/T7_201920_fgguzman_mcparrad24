@@ -52,7 +52,11 @@ public class Controller {
 				System.out.println(
 						"Zona con mayor identificador: " + Arrays.toString(modelo.mayorIdentificador()) + "\n---------");
 				break;
-
+			case 6:
+				System.out.println("--------- \n Hasta pronto !! \n---------");
+				lector.close();
+				fin = true;
+				break;
 			default:
 				System.out.println("--------- \n Opcion Invalida !! \n---------");
 				break;

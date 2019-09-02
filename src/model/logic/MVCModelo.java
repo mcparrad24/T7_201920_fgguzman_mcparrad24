@@ -82,8 +82,8 @@ public class MVCModelo {
 		String[] zona = null;
 		String[] cop = null;
 		Queue<String[]> copia = datosH;
-		int menor = 0;
-		int test = 0;
+		int menor = 99;
+		int test = 99;
 		for(int i = 0; i<copia.darTamano(); i++) {
 			cop = copia.dequeue();
 			test = Integer.parseInt(cop[0]);
@@ -130,27 +130,36 @@ public class MVCModelo {
 		for(int i = 0; i<copia.darTamano(); i++) {
 			cop = copia.dequeue();
 			test = Integer.parseInt(cop[0]);
-			if(test < mayor) {
+			if(test > mayor) {
 				mayor = test;
 				zona = cop;
+			}
+			if(test == 1160) {
+				return zona;
 			}
 		}
 		copia = datosW;
 		for(int i = 0; i<copia.darTamano(); i++) {
 			cop = copia.dequeue();
 			test = Integer.parseInt(cop[0]);
-			if(test < mayor) {
+			if(test > mayor) {
 				mayor = test;
 				zona = cop;
+			}
+			if(test == 1160) {
+				return zona;
 			}
 		}
 		copia = datosM;
 		for(int i = 0; i<copia.darTamano(); i++) {
 			cop = copia.dequeue();
 			test = Integer.parseInt(cop[0]);
-			if(test < mayor) {
+			if(test > mayor) {
 				mayor = test;
 				zona = cop;
+			}
+			if(test == 1160) {
+				return zona;
 			}
 		}
 		return zona;
