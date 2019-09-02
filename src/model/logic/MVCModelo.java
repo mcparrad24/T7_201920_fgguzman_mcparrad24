@@ -21,7 +21,7 @@ public class MVCModelo {
 
 	/**
 	 * Lector de los archivos de excel
-	 * @param número de trimestre deseado
+	 * @param nï¿½mero de trimestre deseado
 	 */
 	public void CVSLector(int num) {
 		CSVReader reader = null;
@@ -59,8 +59,8 @@ public class MVCModelo {
 		}
 	}
 	/**
-	 * Los siguientes métodos buscan el tamaño (total) de viajes según el periodo de tiempo
-	 * @return El total (tamaño)
+	 * Los siguientes mï¿½todos buscan el tamaï¿½o (total) de viajes segï¿½n el periodo de tiempo
+	 * @return El total (tamaï¿½o)
 	 */
 	public int totalHora() {
 		int total = datosH.darTamano();
@@ -75,7 +75,7 @@ public class MVCModelo {
 		return total;
 	}
 	/**
-	 * Los siguientes métodos buscan la zona deseada
+	 * Los siguientes mï¿½todos buscan la zona deseada
 	 * @return la zona menor o mayor
 	 */
 	public String[] menorIdentificador() {
@@ -121,6 +121,7 @@ public class MVCModelo {
 		}
 		return zona;
 	}
+	
 	public String[] mayorIdentificador() {
 		String[] zona = null;
 		String[] cop = null;
