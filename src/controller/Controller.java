@@ -18,8 +18,6 @@ public class Controller {
 
 	/**
 	 * Crear la vista y el modelo del proyecto
-	 * 
-	 * @param capacidad tamaNo inicial del arreglo
 	 */
 	public Controller() {
 		view = new MVCView();
@@ -40,12 +38,19 @@ public class Controller {
 			int option = lector.nextInt();
 			switch (option) {
 			case 1:
-				num = modelo.totalViajesTrimestre();
-				System.out.println("Viajes totales: " + num + "\n---------");
+				System.out.println("--------- \nDar el número del trimestre deseado");
+				dato = lector.next();
+				modelo.CVSLector(Integer.parseInt(dato));
 				System.out.println(
-						"Primer viaje del trimestre: " + Arrays.toString(modelo.primerElemento()) + "\n---------");
+						"Total viajes por hora: " + modelo.totalHora() + "\n---------");
 				System.out.println(
-						"Ultimo viaje del trimestre: " + Arrays.toString(modelo.ultimoElemento()) + "\n---------");
+						"Total viajes por semana: " + modelo.totalSemana() + "\n---------");
+				System.out.println(
+						"Total viajes por mes: " + modelo.totalMes() + "\n---------");
+				System.out.println(
+						"Ultimo viaje del trimestre: " + Arrays.toString(modelo.menorIdentificador()) + "\n---------");
+				System.out.println(
+						"Ultimo viaje del trimestre: " + Arrays.toString(modelo.mayorIdentificador()) + "\n---------");
 				break;
 
 			case 2:

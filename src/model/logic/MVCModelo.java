@@ -15,29 +15,37 @@ import com.opencsv.CSVReader;
  *
  */
 public class MVCModelo {
-	/**
-	 * Atributos del modelo del mundo
-	 */
-	private Queue<String[]> datosQ = new Queue<>();
-	private Stack<String[]> datosS = new Stack<>();
+	private Queue<String[]> datosH = new Queue<>();
+	private Queue<String[]> datosM = new Queue<>();
+	private Queue<String[]> datosW = new Queue<>();
 
 	/**
-	 * Constructor del modelo del mundo con capacidad predefinida
+	 * Lector de los archivos de excel
+	 * @param número de trimestre deseado
 	 */
-	public int CVSLector() {
+	public void CVSLector(int num) {
 		CSVReader reader = null;
-		int total = 0;
+		String archivoH = "./data/bogota-cadastral-2018-"+num+"-All-HourlyAggregate.csv";
+		String archivoM = "./data/bogota-cadastral-2018-"+num+"-All-MonthlyAggregate.csv";
+		String archivoW = "./data/bogota-cadastral-2018-"+num+"-All-WeeklyAggregate.csv";
+		String[] header = new String[1];
 		try {
-			reader = new CSVReader(new FileReader("./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv"));
+			reader = new CSVReader(new FileReader(archivoH));
+			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				if(total != 0) {
-					datosQ.enqueue(nextLine);
-					datosS.push(nextLine);
-				}		
-				total++;
+				datosH.enqueue(nextLine);
 			}
-
-		} catch (FileNotFoundException e) {
+			reader = new CSVReader(new FileReader(archivoM));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				datosM.enqueue(nextLine);
+			}
+			reader = new CSVReader(new FileReader(archivoW));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				datosW.enqueue(nextLine);
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (reader != null) {
@@ -49,90 +57,33 @@ public class MVCModelo {
 			}
 
 		}
+	}
+	/**
+	 * Los siguientes métodos buscan el tamaño (total) de viajes según el periodo de tiempo
+	 * @return El total (tamaño)
+	 */
+	public int totalHora() {
+		int total = datosH.darTamano();
 		return total;
 	}
-
-	public int totalViajesTrimestre() {
-		int totalviajes = this.CVSLector();
-		return totalviajes;
+	public int totalSemana() {
+		int total = datosW.darTamano();
+		return total;
 	}
-
-	public String[] primerElemento() {
-		return datosQ.consultarPrimerElemento();
+	public int totalMes() {
+		int total = datosM.darTamano();
+		return total;
 	}
-
-	public String[] ultimoElemento() {
-		return datosS.consultarElementoTope();
+	/**
+	 * Los siguientes métodos buscan la zona deseada
+	 * @return la zona menor o mayor
+	 */
+	public String[] menorIdentificador() {
+		String[] zona = null;
+		return zona;
 	}
-
-	public Queue<String[]> cluster(int hora) {
-		Queue<String[]> clusterQ = new Queue<>();
-		int a = 0, b = 1;
-		Queue<String[]> clusterQ1 = new Queue<>();
-		String[] comp = datosQ.dequeue(), cam;
-		do {
-			comp = datosQ.dequeue();
-			a++;
-		} while (Integer.parseInt(comp[2]) < hora);
-
-		do {
-			for (int i = 0; i < datosQ.darTamano(); i++) {
-				cam = datosQ.dequeue();
-				if ((cam != null) && (Integer.parseInt(comp[2]) <= Integer.parseInt(cam[2]))) {
-					clusterQ.enqueue(comp);
-					comp = cam;
-					a++;
-				} else {
-					comp = datosQ.dequeue();
-					break;
-				}
-			}
-			for (int i = 0; i < datosQ.darTamano(); i++) {
-				cam = datosQ.dequeue();
-				if ((comp != null) && (Integer.parseInt(comp[2]) <= Integer.parseInt(cam[2]))) {
-					clusterQ1.enqueue(comp);
-					comp = cam;
-					b++;
-				} else {
-					break;
-				}
-			}
-			if (b >= a) {
-				a = 0;
-				b = 0;
-				clusterQ = null;
-				clusterQ = new Queue<>();
-				clusterQ = clusterQ1;
-				clusterQ1 = null;
-				clusterQ1 = new Queue<>();
-				comp = datosQ.dequeue();
-			}
-
-		} while (comp != null);
-
-		return clusterQ;
-	}
-
-	public Queue<String[]> viajesNH(int N, String hora) {
-		Stack<String[]> clusterS = new Stack<>();
-		Stack<String[]> clusterS2 = new Stack<>();
-		String[] comp = datosS.pop();
-		int n = 0;
-		while ((n < N) && (comp != null)) {
-			if (comp[2].equals(hora)) {
-				clusterS.push(comp);
-				n++;
-				clusterS2.push(clusterS.pop());
-				System.out.println("num "+Arrays.toString(comp));
-			}
-			comp = datosS.pop();
-		}
-		Queue<String[]> clusterQ = new Queue<>();
-		for (int i = 0; i < clusterS2.darTamano(); i++) {
-			clusterQ.enqueue(clusterS2.pop());
-			System.out.println(clusterQ.darTamano());
-		}
-		return clusterQ;
-
+	public String[] mayorIdentificador() {
+		String[] zona = null;
+		return zona;
 	}
 }
