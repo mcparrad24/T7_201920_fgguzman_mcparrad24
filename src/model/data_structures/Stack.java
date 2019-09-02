@@ -4,18 +4,16 @@ import java.lang.reflect.Array;
 public class Stack<T> implements IStack<T> {
 
 	private T[] contenedor;
-	private T[] copia;
 	private int top;
 	private int maxT = 10;
 
 	public Stack() {
         this.contenedor = (T[]) new Object[maxT];
-        this.copia = (T[]) new Object[maxT];
         this.top = -1;
 	}
 
 	private T[] resizeArray() {
-        //crea un arreglo más grande y emte los elementos al nuevo
+        //crea un arreglo más grande y mete los elementos al nuevo
         int newSize = maxT * 2;
         T[] newArray = (T[]) Array.newInstance(Stack.class, newSize);
         for(int i = 0; i < maxT; i++) {
@@ -50,7 +48,7 @@ public class Stack<T> implements IStack<T> {
             contenedor[top] = item;
         }
         else {
-            this.contenedor = resizeArray();
+            contenedor = resizeArray();
             contenedor[top++] = item;
         }
 	}

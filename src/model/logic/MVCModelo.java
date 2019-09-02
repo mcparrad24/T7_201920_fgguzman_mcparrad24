@@ -27,7 +27,7 @@ public class MVCModelo {
 		CSVReader reader = null;
 		String archivoH = "./data/bogota-cadastral-2018-"+num+"-All-HourlyAggregate.csv";
 		String archivoM = "./data/bogota-cadastral-2018-"+num+"-All-MonthlyAggregate.csv";
-		String archivoW = "./data/bogota-cadastral-2018-"+num+"-All-WeeklyAggregate.csv";
+		String archivoW = "./data/bogota-cadastral-2018-"+num+"-WeeklyAggregate.csv";
 		String[] header = new String[1];
 		try {
 			reader = new CSVReader(new FileReader(archivoH));
@@ -80,10 +80,79 @@ public class MVCModelo {
 	 */
 	public String[] menorIdentificador() {
 		String[] zona = null;
+		String[] cop = null;
+		Queue<String[]> copia = datosH;
+		int menor = 0;
+		int test = 0;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < menor) {
+				menor = test;
+				zona = cop;
+			}
+			if(test == 1) {
+				return zona;
+			}
+		}
+		copia = datosW;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < menor) {
+				menor = test;
+				zona = cop;
+			}
+			if(test == 1) {
+				return zona;
+			}
+		}
+		copia = datosM;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < menor) {
+				menor = test;
+				zona = cop;
+			}
+			if(test == 1) {
+				return zona;
+			}
+		}
 		return zona;
 	}
 	public String[] mayorIdentificador() {
 		String[] zona = null;
+		String[] cop = null;
+		Queue<String[]> copia = datosH;
+		int mayor = 0;
+		int test = 0;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < mayor) {
+				mayor = test;
+				zona = cop;
+			}
+		}
+		copia = datosW;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < mayor) {
+				mayor = test;
+				zona = cop;
+			}
+		}
+		copia = datosM;
+		for(int i = 0; i<copia.darTamano(); i++) {
+			cop = copia.dequeue();
+			test = Integer.parseInt(cop[0]);
+			if(test < mayor) {
+				mayor = test;
+				zona = cop;
+			}
+		}
 		return zona;
 	}
 }
