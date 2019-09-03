@@ -18,15 +18,12 @@ public class TestQueue {
 	
 	public void setUp1() {
 		CSVReader reader = null;
-		int total = 0;
+		String[] header = new String[1];
 		try {
-			reader = new CSVReader(new FileReader("./data/Prueba.csv"));
+			reader = new CSVReader(new FileReader("./data/datos_de_prueba.csv"));
+			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				if (total != 0) {
-					datosH.enqueue(nextLine);
-					System.out.println(total);
-				}
-				total++;
+				datosH.enqueue(nextLine);
 			}
 		} catch (Exception e) {
 			fail("Falló la lectura del archivo csv");
@@ -51,17 +48,21 @@ public class TestQueue {
 	@Test
 	public void testEnqueue2() {
 		setUp1();
-		String[] nuevoDato = new String[]{Integer.toString(5), Integer.toString(7), Integer.toString(3), String.valueOf(1440.57), String.valueOf(198.16), String.valueOf(1029.94), String.valueOf(1.36)};
 		String[] ultimo = null;
+		String[] nuevoDato = new String[]{Integer.toString(5), Integer.toString(7), Integer.toString(3), String.valueOf(1440.57), String.valueOf(198.16), String.valueOf(1029.94), String.valueOf(1.36)};
 		datosH.enqueue(nuevoDato);
-		Queue<String[]> copia = datosH;
-		for (int i = 0; i <= datosH.darTamano()-1; i++) {
-			String [] actual = copia.dequeue();
+		int tamaño = datosH.darTamano();
+		for (int i = 0; i <= (tamaño-1); i++) {
+			String [] actual = datosH.dequeue();
 			if (actual != null) {
 				ultimo = actual;
 			}
 		}
-		assertEquals("El último dato no es el correcto", nuevoDato, ultimo);
+		boolean siEs = false;
+		if ((ultimo[0].equals(Integer.toString(5)))&&(ultimo[1].equals(Integer.toString(7)))&&(ultimo[2].equals(Integer.toString(3)))) {
+			siEs = true;
+		}
+		assertEquals("El último dato no es el correcto", true, siEs);
 	}
 	
 	@Test
@@ -75,9 +76,8 @@ public class TestQueue {
 	public void testDequeue2() {
 		setUp1();
 		String[] eliminado = datosH.dequeue();
-		System.out.println(eliminado[0]);
 		boolean siEs = false;
-		if ((eliminado[0].equals(Integer.toString(4))) && (eliminado[1].equals(Integer.toString(5))) && (eliminado[2].equals(Integer.toString(13)))) {
+		if ((eliminado[0].equals(Integer.toString(1))) && (eliminado[1].equals(Integer.toString(4))) && (eliminado[2].equals(Integer.toString(20)))) {
 			siEs = true;
 		}
 		assertEquals("El dato eliminado no es el correcto", true, siEs);
@@ -99,7 +99,7 @@ public class TestQueue {
 	public void testConsultarPrimerElemento() {
 		setUp1();
 		boolean siEs = false;
-		if ((datosH.consultarPrimerElemento()[0].equals(Integer.toString(4))) && (datosH.consultarPrimerElemento()[1].equals(Integer.toString(5))) && (datosH.consultarPrimerElemento()[2].equals(Integer.toString(13)))) {
+		if ((datosH.consultarPrimerElemento()[0].equals(Integer.toString(1))) && (datosH.consultarPrimerElemento()[1].equals(Integer.toString(4))) && (datosH.consultarPrimerElemento()[2].equals(Integer.toString(20)))) {
 			siEs = true;
 		}
 		assertEquals("El primer elemento es incorrecto", true, siEs);
