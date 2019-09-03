@@ -1,13 +1,13 @@
 package test.data_structures;
 
-import model.data_structures.ArregloDinamico;
+import model.data_structures.Stack;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestArregloDinamico {
+public class TestStack {
 
 	private ArregloDinamico arreglo;
 	private static int TAMANO=100;
