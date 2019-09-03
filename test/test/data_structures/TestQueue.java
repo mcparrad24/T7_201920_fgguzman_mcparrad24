@@ -40,7 +40,7 @@ public class TestQueue {
 	@Test
 	public void testEnqueue() {
 		setUp1();
-		String[] nuevoDato = new String[]{Integer.toString(5), Integer.toString(7), Integer.toString(3), String.valueOf(1440.57), String.valueOf(198.16), String.valueOf(1029.94), String.valueOf(1.36)};
+		String[] nuevoDato = {"5","7","3","1440.57","198.16","1029.94","1.36"};
 		datosH.enqueue(nuevoDato);
 		assertEquals("El número de datos no es correcto", 11, datosH.darTamano());
 	}
@@ -49,7 +49,7 @@ public class TestQueue {
 	public void testEnqueue2() {
 		setUp1();
 		String[] ultimo = null;
-		String[] nuevoDato = new String[]{Integer.toString(5), Integer.toString(7), Integer.toString(3), String.valueOf(1440.57), String.valueOf(198.16), String.valueOf(1029.94), String.valueOf(1.36)};
+		String[] nuevoDato = {"5","7","3","1440.57","198.16","1029.94","1.36"};
 		datosH.enqueue(nuevoDato);
 		int tamaño = datosH.darTamano();
 		for (int i = 0; i <= (tamaño-1); i++) {
@@ -58,6 +58,7 @@ public class TestQueue {
 				ultimo = actual;
 			}
 		}
+		System.out.println(ultimo[0]);
 		boolean siEs = false;
 		if ((ultimo[0].equals(Integer.toString(5)))&&(ultimo[1].equals(Integer.toString(7)))&&(ultimo[2].equals(Integer.toString(3)))) {
 			siEs = true;

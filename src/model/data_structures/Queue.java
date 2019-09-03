@@ -25,36 +25,35 @@ public class Queue<T> implements IQueue<T> {
 		if (cabeza == null) {
 			cabeza = new Node<T>();
 			cabeza.dato = dato;
+			cola = cabeza;
+			tamanoAct = 1;
 		}
 		else {
-			Node<T> nodoActual = cabeza;
-			while (nodoActual.next != null) {
-				nodoActual = nodoActual.next;
-			}
-			cola = new Node<T>();
-			nodoActual.next = cola;
-			cola.dato = dato;
+			Node <T> nuevo = new Node<T>();
+			nuevo.dato = dato;
+			cola.next = nuevo;
+			cola = nuevo;
+			tamanoAct++;
 		}
     }
 
 	public T dequeue() {
-		T eliminado = cabeza.dato;
-		if(cabeza.next != null) {
-			cabeza.dato = (T) cabeza.next.dato;
-			cabeza = cabeza.next;
-		} else {
-			return null;
+		T eliminado = null;
+		if (cabeza != null) {
+			eliminado = cabeza.dato;
+			if(cabeza.next != null) {
+				cabeza = cabeza.next;
+				tamanoAct--;
+			} else {
+				cabeza = null;
+				cola = null;
+				tamanoAct = 0;
+			}
 		}
 		return eliminado;
 	}
 
 	public int darTamano() {
-		tamanoAct = 0;
-		Node<T> nodoActual = cabeza;
-		while (nodoActual != null) {
-			nodoActual = nodoActual.next;
-			tamanoAct++;
-		}
 		return tamanoAct;
 	}
 
