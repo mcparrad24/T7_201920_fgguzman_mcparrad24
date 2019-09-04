@@ -191,17 +191,7 @@ public class MVCModelo {
 	}
 	
 	public Queue<String[]> ordenar(Queue<String[]> datos){
-		Queue<String[]> resultado = null;
-		int N = datosM.darTamano();
-		int h = 1;
-		while (h < (N/3)) {
-			h = 3*h + 1;
-		}
-		while (h >= 1) {
-			for (int i = h;i < N; i++) {//falta terminar
-			}
-		}
-		return resultado;
+		
 	}
 	
 	public Queue<String[]> tiemposPromediosMes(String mes){
@@ -216,59 +206,8 @@ public class MVCModelo {
 		
 	}
 	
-	public String tiemposZonaRango(String zona, String mes) { //terminar
-		Queue <String[]> copia = datosM;
-		Queue <String[]> sentido1menor = null;
-		Queue <String[]> sentido2menor = null;
-		Queue <String[]> sentido1mayor = null;
-		Queue <String[]> sentido2mayor = null;
-		String mensaje = " ";
-		for (int i = 0; i <= datosM.darTamano()-1; i++) {
-			String[] actual = copia.dequeue();
-			if (actual[0].equals(zona) && actual[1].equals(menorIdentificador()) && actual[3].equals(mes)) {
-				sentido1menor.enqueue(actual);
-			}
-			if (actual[0].equals(menorIdentificador()) && actual[1].equals(zona) && actual[3].equals(mes)) {
-				sentido2menor.enqueue(actual);
-			}
-			if (actual[0].equals(zona) && actual[1].equals(mayorIdentificador()) && actual[3].equals(mes)) {
-				sentido1mayor.enqueue(actual);
-			}
-			if (actual[0].equals(mayorIdentificador()) && actual[1].equals(zona) && actual[3].equals(mes)) {
-				sentido2mayor.enqueue(actual);
-			}
-		}
-		int tPromSen1Men = 0;
-		int tamS1Me = sentido1menor.darTamano();
-		int tPromSen2Men = 0;
-		int tamS2Me = sentido2menor.darTamano();
-		int tPromSen1May = 0;
-		int tamS1Ma = sentido1mayor.darTamano();
-		int tPromSen2May = 0;
-		int tamS2Ma = sentido2mayor.darTamano();
-		for (int i = 0; i <= sentido1menor.darTamano()-1; i++) {
-			String [] actual = sentido1menor.dequeue();
-			tPromSen1Men = tPromSen1Men + Integer.parseInt(actual[4]);
-		}
-		tPromSen1Men = tPromSen1Men/(tamS1Me);
-		for (int i = 0; i <= sentido2menor.darTamano()-1; i++) {
-			String [] actual = sentido2menor.dequeue();
-			tPromSen2Men = tPromSen2Men + Integer.parseInt(actual[4]);
-		}
-		tPromSen2Men = tPromSen2Men/(tamS2Me);
-		for (int i = 0; i <= sentido1mayor.darTamano()-1; i++) {
-			String [] actual = sentido1mayor.dequeue();
-			tPromSen1May = tPromSen1May + Integer.parseInt(actual[4]);
-		}
-		tPromSen1May = tPromSen1May/(tamS1Ma);
-		for (int i = 0; i <= sentido2mayor.darTamano()-1; i++) {
-			String [] actual = sentido2mayor.dequeue();
-			tPromSen2May = tPromSen2May + Integer.parseInt(actual[4]);
-		}
-		tPromSen2May = tPromSen2May/(tamS2Ma);
+	public String tiemposZonaRango(String zona, String mes) {
 		
-		
-		return mensaje;
 	}
 	
 }

@@ -13,9 +13,14 @@ import org.junit.Test;
 
 public class TestQueue {
 
-	
+	/**
+	 * Cola que contiene los datos del archivo de prueba.
+	 */
 	Queue<String[]> datosH = new Queue<>();
 	
+	/**
+	 * Inicializa la cola con los datos que lee el lector.
+	 */
 	public void setUp1() {
 		CSVReader reader = null;
 		String[] header = new String[1];
@@ -37,6 +42,10 @@ public class TestQueue {
 			}
 		}
 	}
+	
+	/**
+	 * Verifica el método enqueue con el tamaño actual de la lista.
+	 */
 	@Test
 	public void testEnqueue() {
 		setUp1();
@@ -45,6 +54,9 @@ public class TestQueue {
 		assertEquals("El número de datos no es correcto", 11, datosH.darTamano());
 	}
 	
+	/**
+	 * Verifica el método enqueue confirmando que el elemento que se agrego se convierta en el último elemento de la lista.
+	 */
 	@Test
 	public void testEnqueue2() {
 		setUp1();
@@ -66,6 +78,9 @@ public class TestQueue {
 		assertEquals("El último dato no es el correcto", true, siEs);
 	}
 	
+	/**
+	 * Verifica el método dequeue con el tamaño actual de la lista.
+	 */
 	@Test
 	public void testDequeue() {
 		setUp1();
@@ -73,6 +88,9 @@ public class TestQueue {
 		assertEquals("El número de datos no es correcto", 9, datosH.darTamano());
 	}
 	
+	/**
+	 * Verifica el método dequeue confirmando que el elemento eliminado haya sido aquel que se encontraba en la cabeza de la lista.
+	 */
 	@Test
 	public void testDequeue2() {
 		setUp1();
@@ -84,18 +102,27 @@ public class TestQueue {
 		assertEquals("El dato eliminado no es el correcto", true, siEs);
 	}
 	
+	/**
+	 * Verifica el método darTamaño.
+	 */
 	@Test
 	public void testDarTamaño() {
 		setUp1();
 		assertEquals("El tamaño de la lista es incorrecta", 10, datosH.darTamano());
 	}
 	
+	/**
+	 * Verifica el método isEmpty.
+	 */
 	@Test
 	public void testIsEmpty() {
 		setUp1();
 		assertEquals("El arreglo no está vacio", false, datosH.isEmpty());
 	}
 	
+	/**
+	 * Verifica el método consultarPrimerElemento confirmando que el elemento retornado sea el que se encuentra en la cabeza de la lista.
+	 */
 	@Test
 	public void testConsultarPrimerElemento() {
 		setUp1();

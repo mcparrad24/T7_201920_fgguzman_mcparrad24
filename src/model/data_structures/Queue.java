@@ -9,17 +9,25 @@ package model.data_structures;
  */
 public class Queue<T> implements IQueue<T> {
 	/**
-	 * Capacidad maxima del arreglo
+	 * Referencia al primer nodo de la lista.
 	 */
 	private Node<T> cabeza;
+	
 	/**
 	 * Numero de elementos presentes en el arreglo (de forma compacta desde la
 	 * posicion 0)
 	 */
 	private int tamanoAct;
 
+	/**
+	 * Referencia al último nodo de la lista.
+	 */
 	private Node<T> cola;
 
+	/**
+	 * Agrega un nodo con su dato al final de la lista.
+	 * @param dato Dato que se debe agregar a la cola.
+	 */
 	public void enqueue( T dato )
     {
 		if (cabeza == null) {
@@ -37,6 +45,10 @@ public class Queue<T> implements IQueue<T> {
 		}
     }
 
+	/**
+	 * Elimina el nodo que se encuentra en la cabeza de la lista.
+	 * @return Nodo que fue eliminado.
+	 */
 	public T dequeue() {
 		T eliminado = null;
 		if (cabeza != null) {
@@ -53,10 +65,18 @@ public class Queue<T> implements IQueue<T> {
 		return eliminado;
 	}
 
+	/**
+	 * Retorna el tamaño actual de la lista.
+	 * @return Tamaño actual de la lista.
+	 */
 	public int darTamano() {
 		return tamanoAct;
 	}
 
+	/**
+	 * Retorna el indicador que dice si la lista esta vacía o no.
+	 * @return Indicador si la lista esta vacía o no.
+	 */
 	public boolean isEmpty() {
 		if (darTamano() == 0) {
 			return true;
@@ -66,11 +86,18 @@ public class Queue<T> implements IQueue<T> {
 		}
 	}
 
+	/**
+	 * Consulta el nodo que se encuentra en la cabeza de la lista.
+	 * @return Dato del nodo que está en la cabeza de la lista.
+	 */
 	public T consultarPrimerElemento() {
 		return cabeza.dato;
 	}
 
-
+	/**
+	 * Clase privada que crea un nodo junto con sus referencias a su dato y al nodo siguiente.
+	 * @param <T> Dato de tipo T
+	 */
 	private class Node<T> {
 		T dato;
 		Node next;
