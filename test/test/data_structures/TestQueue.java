@@ -31,7 +31,7 @@ public class TestQueue {
 				datosH.enqueue(nextLine);
 			}
 		} catch (Exception e) {
-			fail("Falló la lectura del archivo csv");
+			fail("Fallo la lectura del archivo csv");
 		} finally {
 			if (reader != null) {
 				try {
@@ -51,7 +51,7 @@ public class TestQueue {
 		setUp1();
 		String[] nuevoDato = {"5","7","3","1440.57","198.16","1029.94","1.36"};
 		datosH.enqueue(nuevoDato);
-		assertEquals("El número de datos no es correcto", 11, datosH.darTamano());
+		assertEquals("El numero de datos no es correcto", 11, datosH.darTamano());
 	}
 	
 	/**
@@ -63,8 +63,8 @@ public class TestQueue {
 		String[] ultimo = null;
 		String[] nuevoDato = {"5","7","3","1440.57","198.16","1029.94","1.36"};
 		datosH.enqueue(nuevoDato);
-		int tamaño = datosH.darTamano();
-		for (int i = 0; i <= (tamaño-1); i++) {
+		int tamano = datosH.darTamano();
+		for (int i = 0; i <= (tamano-1); i++) {
 			String [] actual = datosH.dequeue();
 			if (actual != null) {
 				ultimo = actual;
@@ -79,7 +79,7 @@ public class TestQueue {
 	}
 	
 	/**
-	 * Verifica el método dequeue con el tamaño actual de la lista.
+	 * Verifica el metodo dequeue con el tamano actual de la lista.
 	 */
 	@Test
 	public void testDequeue() {
@@ -89,7 +89,7 @@ public class TestQueue {
 	}
 	
 	/**
-	 * Verifica el método dequeue confirmando que el elemento eliminado haya sido aquel que se encontraba en la cabeza de la lista.
+	 * Verifica el metodo dequeue confirmando que el elemento eliminado haya sido aquel que se encontraba en la cabeza de la lista.
 	 */
 	@Test
 	public void testDequeue2() {
@@ -103,12 +103,12 @@ public class TestQueue {
 	}
 	
 	/**
-	 * Verifica el método darTamaño.
+	 * Verifica el metodo darTamaño.
 	 */
 	@Test
-	public void testDarTamaño() {
+	public void testDarTamano() {
 		setUp1();
-		assertEquals("El tamaño de la lista es incorrecta", 10, datosH.darTamano());
+		assertEquals("El tamano de la lista es incorrecta", 10, datosH.darTamano());
 	}
 	
 	/**
@@ -117,11 +117,11 @@ public class TestQueue {
 	@Test
 	public void testIsEmpty() {
 		setUp1();
-		assertEquals("El arreglo no está vacio", false, datosH.isEmpty());
+		assertEquals("El arreglo no esta vacio", false, datosH.isEmpty());
 	}
 	
 	/**
-	 * Verifica el método consultarPrimerElemento confirmando que el elemento retornado sea el que se encuentra en la cabeza de la lista.
+	 * Verifica el metodo consultarPrimerElemento confirmando que el elemento retornado sea el que se encuentra en la cabeza de la lista.
 	 */
 	@Test
 	public void testConsultarPrimerElemento() {

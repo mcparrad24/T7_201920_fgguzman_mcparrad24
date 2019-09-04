@@ -1,7 +1,6 @@
 package model.logic;
 
 import model.data_structures.Queue;
-import model.data_structures.Stack;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,7 +20,7 @@ public class MVCModelo {
 
 	/**
 	 * Lector de los archivos de excel
-	 * @param n�mero de trimestre deseado
+	 * @param numero de trimestre deseado
 	 */
 	public void CVSLector(int num) {
 		CSVReader reader = null;
@@ -59,8 +58,8 @@ public class MVCModelo {
 		}
 	}
 	/**
-	 * Los siguientes m�todos buscan el tama�o (total) de viajes seg�n el periodo de tiempo
-	 * @return El total (tama�o)
+	 * Los siguientes metodos buscan el tamano (total) de viajes segun el periodo de tiempo
+	 * @return El total (tamano)
 	 */
 	public int totalHora() {
 		int total = datosH.darTamano();
@@ -75,7 +74,7 @@ public class MVCModelo {
 		return total;
 	}
 	/**
-	 * Los siguientes m�todos buscan la zona deseada
+	 * Los siguientes metodos buscan la zona deseada
 	 * @return la zona menor o mayor
 	 */
 	public String[] menorIdentificador() {
@@ -166,6 +165,7 @@ public class MVCModelo {
 		return zona;
 	}
 	
+	/*
 	public Queue<String[]> tiempoPromedioDesviacionMes(String zonaOrigen, String zonaDestino, String mes) {
 		Queue <String[]> copia = datosM;
 		Queue <String[]> zonas = null;
@@ -209,5 +209,5 @@ public class MVCModelo {
 	public String tiemposZonaRango(String zona, String mes) {
 		
 	}
-	
+	*/
 }

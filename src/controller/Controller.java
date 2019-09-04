@@ -55,41 +55,41 @@ public class Controller {
 			case 2:
 				System.out.println("--------- \nHacer la consulta con:");
 				System.out.println("1. Mes");
-				System.out.println("2. Día de la semana");
+				System.out.println("2. Dia de la semana");
 				int eleccion = lector.nextInt();
 				if (eleccion == 1) {
 					System.out.println("--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del mes (eg. 955,206,2");
 				}
 				else if (eleccion == 2) {
-					System.out.println("--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del día de la semana, siendo 1 el domingo (eg. 955,206,2");
+					System.out.println("--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del dia de la semana, siendo 1 el domingo (eg. 955,206,2");
 				}
 				break;
 			case 3:
 				System.out.println("--------- \nHacer la consulta con:");
 				System.out.println("1. Mes");
-				System.out.println("2. Día de la semana");
-				System.out.println("3. Hora del día");
+				System.out.println("2. Dia de la semana");
+				System.out.println("3. Hora del dia");
 				int election = lector.nextInt();
 				if (election == 1) {
-					System.out.println("--------- \nDar el número de viajes que desea consultar y el numero del mes (eg. 10,2");
+					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero del mes (eg. 10,2");
 				}
 				else if (election == 2) {
-					System.out.println("--------- \nDar el número de viajes que desea consultar y el numero del día de la semana, siendo 1 el domingo (eg. 10,2");
+					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero del dia de la semana, siendo 1 el domingo (eg. 10,2");
 				}
 				else if (election == 3) {
-					System.out.println("--------- \nDar el número de viajes que desea consultar y el numero de la hora del día (eg. 10,2");
+					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero de la hora del dia (eg. 10,2");
 				}
 				break;
 			case 4:
 				System.out.println("--------- \nHacer la consulta con:");
 				System.out.println("1. Mes");
-				System.out.println("2. Día de la semana");
+				System.out.println("2. Dia de la semana");
 				int seleccion = lector.nextInt();
 				if (seleccion == 1) {
 					System.out.println("--------- \nDar el ID de la zona y el numero del mes (eg. 110,2");
 				}
 				else if (seleccion == 2) {
-					System.out.println("--------- \nDar el ID de la zona y el numero del día de la semana, siendo 1 el domingo (eg. 110,2");
+					System.out.println("--------- \nDar el ID de la zona y el numero del dia de la semana, siendo 1 el domingo (eg. 110,2");
 				}
 				break;
 			case 5:
