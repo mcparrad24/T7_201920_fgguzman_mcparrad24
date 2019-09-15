@@ -132,4 +132,18 @@ public class TestQueue {
 		}
 		assertEquals("El primer elemento es incorrecto", true, siEs);
 	}
+	
+	/**
+	 * Verifica el metodo darElemento confirmando que el elemento retornado sea el que se encuentra en la posicion dada de la lista.
+	 */
+	@Test
+	public void testDarElemento() {
+		setUp1();
+		int pos = 5;
+		boolean siEs = false;
+		if ((datosH.darElemento(pos)[0].equals(String.valueOf(5))) && (datosH.darElemento(pos)[1].equals(String.valueOf(4))) && (datosH.darElemento(pos)[2].equals(String.valueOf(14)))){
+			siEs = true;
+		}
+		assertEquals("El elemento en la posicion dada es incorrecto", true, siEs);
+	}
 }

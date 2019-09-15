@@ -94,6 +94,11 @@ public class Queue<T> implements IQueue<T> {
 		return cabeza.dato;
 	}
 	
+	/**
+	 * Consulta el nodo que se encuentra en la posicion dada.
+	 * @param pos Posicion en la que se encuentra el nodo a buscar.
+	 * @return Dato del nodo que esta en la posicion dada.
+	 */
 	public T darElemento(int pos) {
 		int tam = tamanoAct;
 		T dato = null;

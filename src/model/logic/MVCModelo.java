@@ -210,7 +210,6 @@ public class MVCModelo {
 	}
 	
 	public Queue<String[]> ordenarViajesQuickSort(Queue<String[]> datos) {
-		int tam = datos.darTamano();
 		int izq = 0;
 		int der = datos.darTamano() - 1;
 		int pivote = quicksort(datos, izq, der);
@@ -226,7 +225,7 @@ public class MVCModelo {
 		int i = izq-1;
 		String[] aux = new String[datos.darElemento(izq).length];
 		for (int j = izq; j < der; j++) {
-			if (Integer.parseInt(datos.darElemento(j)[3]) < Integer.parseInt(pivote[3])) {
+			if (Integer.parseInt(datos.darElemento(j)[3]) > Integer.parseInt(pivote[3])) {
 				i++;
 				aux = datos.darElemento(i);
 				for (int k = 0; k < datos.darElemento(i).length; k++) {
