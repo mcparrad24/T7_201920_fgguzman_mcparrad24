@@ -93,6 +93,25 @@ public class Queue<T> implements IQueue<T> {
 	public T consultarPrimerElemento() {
 		return cabeza.dato;
 	}
+	
+	public T darElemento(int pos) {
+		int tam = tamanoAct;
+		T dato = null;
+		if (pos == 0) {
+			dato = cabeza.dato;
+		}
+		else if (pos == tam-1) {
+			dato = cola.dato;
+		}
+		else {
+			Node<T> actual = cabeza;
+			for (int i = 0; i < pos; i++) {
+				actual = actual.next;
+				dato = actual.dato;
+			}
+		}
+		return dato;
+	}
 
 	/**
 	 * Clase privada que crea un nodo junto con sus referencias a su dato y al nodo siguiente.

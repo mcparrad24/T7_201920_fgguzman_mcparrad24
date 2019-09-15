@@ -59,9 +59,41 @@ public class Controller {
 				int eleccion = lector.nextInt();
 				if (eleccion == 1) {
 					System.out.println("--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del mes (eg. 955,206,2");
+					String rta = lector.next();
+					String [] datosMes = rta.split(",");
+					String zonaO = datosMes[0];
+					String zonaD = datosMes[1];
+					String mes = datosMes[2];
+					String ans = modelo.tiempoPromedioDesviacionMes(zonaO, zonaD, mes);
+					if (ans == null) {
+						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el mes dado identificado con el numero " + mes);
+					}
+					else {
+						String[] promedio = ans.split(",");
+						String tP = promedio[0];
+						String dE = promedio[1];
+						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el mes dado identificado con el numero " + mes + " es: " + tP + "\n---------");
+						System.out.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el mes dado identificado con el numero " + mes + " es: " + dE + "\n---------");
+					}
 				}
 				else if (eleccion == 2) {
 					System.out.println("--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del dia de la semana, siendo 1 el domingo (eg. 955,206,2");
+					String rta = lector.next();
+					String [] datosDia = rta.split(",");
+					String zonaO = datosDia[0];
+					String zonaD = datosDia[1];
+					String dia = datosDia[2];
+					String ans = modelo.tiempoPromedioDesviacionDia(zonaO, zonaD, dia);
+					if (ans == null) {
+						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el dia de la semana dado identificado con el numero " + dia);
+					}
+					else {
+						String[] promedio = ans.split(",");
+						String tP = promedio[0];
+						String dE = promedio[1];
+						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el dia de la semana dado identificado con el numero " + dia + " es: " + tP + "\n---------");
+						System.out.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID " + zonaO + " hasta la zona destino con ID " + zonaD + " en el dia de la semana dado identificado con el numero " + dia + " es: " + dE + "\n---------");
+					}
 				}
 				break;
 			case 3:
@@ -72,12 +104,36 @@ public class Controller {
 				int election = lector.nextInt();
 				if (election == 1) {
 					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero del mes (eg. 10,2");
+					String nYM = lector.next();
+					String[] ans = nYM.split(",");
+					clus = modelo.tiempoPromViajesMes(ans[0], ans[1]);
+					System.out.println("Primeros " + ans[0] + " viajes: \n");
+					for (int i = 0; i < Integer.parseInt(ans[0]); i++) {
+						String [] actual = clus.dequeue();
+						System.out.println(actual[0] + actual[1] + actual[2] + actual[3] + "\n---------");
+					}
 				}
 				else if (election == 2) {
 					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero del dia de la semana, siendo 1 el domingo (eg. 10,2");
+					String nYD = lector.next();
+					String[] ans = nYD.split(",");
+					clus = modelo.tiempoPromViajesDia(ans[0], ans[1]);
+					System.out.println("Primeros " + ans[0] + " viajes: \n");
+					for (int i = 0; i < Integer.parseInt(ans[0]); i++) {
+						String [] actual = clus.dequeue();
+						System.out.println(actual[0] + actual[1] + actual[2] + actual[3] + "\n---------");
+					}
 				}
 				else if (election == 3) {
 					System.out.println("--------- \nDar el numero de viajes que desea consultar y el numero de la hora del dia (eg. 10,2");
+					String nYH = lector.next();
+					String[] ans = nYH.split(",");
+					clus = modelo.tiempoPromViajesHora(ans[0], ans[1]);
+					System.out.println("Primeros " + ans[0] + " viajes: \n");
+					for (int i = 0; i < Integer.parseInt(ans[0]); i++) {
+						String [] actual = clus.dequeue();
+						System.out.println(actual[0] + actual[1] + actual[2] + actual[3] + "\n---------");
+					}
 				}
 				break;
 			case 4:

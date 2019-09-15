@@ -165,49 +165,159 @@ public class MVCModelo {
 		return zona;
 	}
 	
-	/*
-	public Queue<String[]> tiempoPromedioDesviacionMes(String zonaOrigen, String zonaDestino, String mes) {
+	
+	public String tiempoPromedioDesviacionMes(String zonaOrigen, String zonaDestino, String mes) {
+		String rta = "";
+		int tam = datosM.darTamano();
 		Queue <String[]> copia = datosM;
-		Queue <String[]> zonas = null;
-		for (int i = 0; i <= datosM.darTamano()-1; i++) {
+		Queue <String[]> zonas = new Queue<String[]>();
+		for (int i = 0; i <= tam-1; i++) {
 			String[] actual = copia.dequeue();
 			if (actual[0].equals(zonaOrigen) && actual[1].equals(zonaDestino) && actual[3].equals(mes)) {
 				zonas.enqueue(actual);
 			}
 		}
-		return zonas;
+		if (zonas.isEmpty()) {
+			rta = null;
+		}
+		else {
+			double tPromedio = tiempoPromedio(zonas);
+			double desvEstPromedio = desviacionEstandarPromedio(zonas);
+			rta = tPromedio + ", " + desvEstPromedio;
+		}
+		return rta;
 	}
 	
-	public Queue<String[]> tiempoPromedioDesviacionDia(String zonaOrigen, String zonaDestino, String dia) {
+	public String tiempoPromedioDesviacionDia(String zonaOrigen, String zonaDestino, String dia) {
+		String rta = "";
 		Queue <String[]> copia = datosW;
-		Queue <String[]> zonas = null;
+		Queue <String[]> zonas = new Queue<String[]>();
 		for (int i = 0; i <= datosW.darTamano()-1; i++) {
 			String[] actual = copia.dequeue();
 			if (actual[0].equals(zonaOrigen) && actual[1].equals(zonaDestino) && actual[3].equals(dia)) {
 				zonas.enqueue(actual);
 			}
 		}
-		return zonas;
+		if (zonas.isEmpty()) {
+			rta = null;
+		}
+		else {
+			double tPromedio = tiempoPromedio(zonas);
+			double desvEstPromedio = desviacionEstandarPromedio(zonas);
+			rta = tPromedio + ", " + desvEstPromedio;
+		}
+		return rta;
 	}
 	
-	public Queue<String[]> ordenar(Queue<String[]> datos){
-		
+	public Queue<String[]> ordenarViajesQuickSort(Queue<String[]> datos) {
+		int tam = datos.darTamano();
+		int izq = 0;
+		int der = datos.darTamano() - 1;
+		int pivote = quicksort(datos, izq, der);
+		if(izq < pivote-1 && pivote+1 > der) {
+			quicksort(datos, izq, pivote-1);
+			quicksort(datos, pivote+1, der);
+		}	
+		return datos;
 	}
 	
-	public Queue<String[]> tiemposPromediosMes(String mes){
-		
+	public int quicksort(Queue<String[]> datos, int izq, int der) {
+		String[] pivote = datos.darElemento(izq);
+		int i = izq-1;
+		String[] aux = new String[datos.darElemento(izq).length];
+		for (int j = izq; j < der; j++) {
+			if (Integer.parseInt(datos.darElemento(j)[3]) < Integer.parseInt(pivote[3])) {
+				i++;
+				aux = datos.darElemento(i);
+				for (int k = 0; k < datos.darElemento(i).length; k++) {
+					datos.darElemento(i)[k] = datos.darElemento(j)[k];
+				}
+				for (int k = 0; k < datos.darElemento(i).length; k++) {
+					datos.darElemento(j)[k] = aux[k];
+				}
+			}
+		}
+		aux = datos.darElemento(i+1);
+		for (int k = 0; k < datos.darElemento(i).length; k++) {
+			datos.darElemento(i+1)[k] = datos.darElemento(der)[k];
+		}
+		for (int k = 0; k < datos.darElemento(i).length; k++) {
+			datos.darElemento(der)[k] = aux[k];
+		}
+		return i+1;
 	}
 	
-	public Queue<String[]> tiempoPromedioDia(String dia){
-		
+	public double tiempoPromedio(Queue<String[]> datos){
+		int tam = datos.darTamano();
+		double tiempo = 0;
+		double tPromedio = 0;
+		for (int i = 0; i <= tam - 1; i++) {
+			String[] actual = datos.dequeue();
+			tiempo = tiempo * Double.valueOf(actual[3]);
+		}
+		tPromedio = (tiempo/tam);
+		return tPromedio;
 	}
 	
-	public Queue<String[]> tiempoPromedioHora(String hora){
-		
+	public double desviacionEstandarPromedio(Queue<String[]> datos) {
+		int tam = datos.darTamano();
+		double desvEst = 0;
+		double desvEstPromedio = 0;
+		for (int i = 0; i <= tam - 1; i++) {
+			String[] actual = datos.dequeue();
+			desvEst = desvEst * Double.valueOf(actual[4]);
+		}
+		desvEstPromedio = (desvEst/tam);
+		return desvEstPromedio;
 	}
 	
-	public String tiemposZonaRango(String zona, String mes) {
-		
+	public Queue<String[]> tiempoPromViajesMes(String N, String mes) {
+		int tam = datosM.darTamano();
+		Queue<String[]> viajesMes = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String [] actual = datosM.dequeue();
+			if (Integer.parseInt(actual[2]) == Integer.parseInt(mes)) {
+				viajesMes.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesMes);
+		Queue<String[]> nViajes = new Queue<String[]>();
+		for (int i = 0; i < Integer.parseInt(N); i++) {
+			nViajes.enqueue(ordenados.dequeue());
+		}
+		return nViajes;
 	}
-	*/
+	public Queue<String[]> tiempoPromViajesDia(String N, String dia) {
+		int tam = datosW.darTamano();
+		Queue<String[]> viajesDia = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String [] actual = datosW.dequeue();
+			if (Integer.parseInt(actual[2]) == Integer.parseInt(dia)) {
+				viajesDia.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesDia);
+		Queue<String[]> nViajes = new Queue<String[]>();
+		for (int i = 0; i < Integer.parseInt(N); i++) {
+			nViajes.enqueue(ordenados.dequeue());
+		}
+		return nViajes;
+	}
+	public Queue<String[]> tiempoPromViajesHora(String N, String hora) {
+		int tam = datosH.darTamano();
+		Queue<String[]> viajesHora = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String [] actual = datosH.dequeue();
+			if (Integer.parseInt(actual[2]) == Integer.parseInt(hora)) {
+				viajesHora.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesHora);
+		Queue<String[]> nViajes = new Queue<String[]>();
+		for (int i = 0; i < Integer.parseInt(N); i++) {
+			nViajes.enqueue(ordenados.dequeue());
+		}
+		return nViajes;
+	}
+	
 }
