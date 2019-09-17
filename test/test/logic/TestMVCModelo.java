@@ -18,6 +18,7 @@ public class TestMVCModelo {
 	
 	private MVCModelo modelo = new MVCModelo();
 	Queue<String[]> datosH = new Queue<>();
+	Queue<String[]> datosHDes = new Queue<>();
 
 	public void setUp1() {
 		CSVReader reader = null;
@@ -40,7 +41,28 @@ public class TestMVCModelo {
 			}
 		}
 	}
-
+	
+	public void setUp2() {
+		CSVReader reader = null;
+		String[] header = new String[1];
+		try {
+			reader = new CSVReader(new FileReader("./data/datos_de_prueba_2_desc.csv"));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				datosHDes.enqueue(nextLine);
+			}
+		} catch (Exception e) {
+			fail("Fallo la lectura del archivo csv");
+		} finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				} catch (IOException e) {
+					fail("No se pudo cerrar el lector");
+				}	
+			}
+		}
+	}
 	@Test
 	public void testTotalHora() {
 		setUp1();
@@ -82,17 +104,19 @@ public class TestMVCModelo {
 	@Test
 	public void testOrdenarViajesQuickSort() {
 		setUp1();
+		setUp2();
 		Queue<String[]> ordenado = modelo.ordenarViajesQuickSort(datosH);
+		int tam = ordenado.darTamano();
 		boolean estaBien = false;
 		int correctos = 0;
-		//for (int i = 0; i < 14; i++) {
-			//if (ordenado[i].equals(arregloD1[i])){
-			//	correctos++;
-			//}
-		//}
-		//if (correctos == ordenado.length) {
-		//	estaBien = true;
-		//}
+		for (int i = 0; i < 14; i++) {
+			if (ordenado.darElemento(i).equals(datosHDes.darElemento(i))){
+				correctos++;
+			}
+		}
+		if (correctos == tam) {
+			estaBien = true;
+		}
 		assertEquals("El arreglo no se ordeno correctamente", true, estaBien);
 	}
 }
