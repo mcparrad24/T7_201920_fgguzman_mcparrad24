@@ -57,7 +57,7 @@ public class Controller {
 				int eleccion = lector.nextInt();
 				if (eleccion == 1) {
 					System.out.println(
-							"--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del mes (eg. 955,206,2");
+							"--------- \nDar el ID en la zona de origen, el ID de la zona destino y el numero del mes (eg. 955,206,2)");
 					String rta = lector.next();
 					String[] datosMes = rta.split(",");
 					String zonaO = datosMes[0];
@@ -118,7 +118,7 @@ public class Controller {
 				int election = lector.nextInt();
 				if (election == 1) {
 					System.out.println(
-							"--------- \nDar el numero de viajes que desea consultar y el numero del mes (eg. 10,2");
+							"--------- \nDar el numero de viajes que desea consultar y el numero del mes (eg. 10,2)");
 					String nYM = lector.next();
 					String[] ans = nYM.split(",");
 					clus = modelo.tiempoPromViajesMes(ans[0], ans[1]);
@@ -129,7 +129,7 @@ public class Controller {
 					}
 				} else if (election == 2) {
 					System.out.println(
-							"--------- \nDar el numero de viajes que desea consultar y el numero del dia de la semana, siendo 1 el domingo (eg. 10,2");
+							"--------- \nDar el numero de viajes que desea consultar y el numero del dia de la semana, siendo 1 el domingo (eg. 10,2)");
 					String nYD = lector.next();
 					String[] ans = nYD.split(",");
 					clus = modelo.tiempoPromViajesDia(ans[0], ans[1]);
@@ -140,7 +140,7 @@ public class Controller {
 					}
 				} else if (election == 3) {
 					System.out.println(
-							"--------- \nDar el numero de viajes que desea consultar y el numero de la hora del dia (eg. 10,2");
+							"--------- \nDar el numero de viajes que desea consultar y el numero de la hora del dia (eg. 10,2)");
 					String nYH = lector.next();
 					String[] ans = nYH.split(",");
 					clus = modelo.tiempoPromViajesHora(ans[0], ans[1]);
@@ -157,10 +157,60 @@ public class Controller {
 				System.out.println("2. Dia de la semana");
 				int seleccion = lector.nextInt();
 				if (seleccion == 1) {
-					System.out.println("--------- \nDar el ID de la zona y el numero del mes (eg. 110,2");
+					System.out.println(
+							"--------- \nDar el ID en la zona deseada, el ID de la zona menor, el ID de la zona mayor y el numero del mes (eg. 153,4,206,8)");
+					String rta = lector.next();
+					String[] datosMes = rta.split(",");
+					String zonaD = datosMes[0];
+					String zonaMe = datosMes[1];
+					String zonaMa = datosMes[2];
+					String mes = datosMes[3];
+					clus = modelo.tiempoPromRangoMes(zonaD, zonaMe, zonaMa, mes);
+					if (ans == null) {
+						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO
+								+ " hasta la zona destino con ID " + zonaD
+								+ " en el mes dado identificado con el numero " + mes);
+					} else {
+						String[] promedio = ans.split(",");
+						String tP = promedio[0];
+						String dE = promedio[1];
+						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO
+								+ " hasta la zona destino con ID " + zonaD
+								+ " en el mes dado identificado con el numero " + mes + " es: " + tP + "\n---------");
+						System.out
+								.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID "
+										+ zonaO + " hasta la zona destino con ID " + zonaD
+										+ " en el mes dado identificado con el numero " + mes + " es: " + dE
+										+ "\n---------");
+					}
 				} else if (seleccion == 2) {
 					System.out.println(
-							"--------- \nDar el ID de la zona y el numero del dia de la semana, siendo 1 el domingo (eg. 110,2");
+							"--------- \nDar el ID en la zona deseada, el ID de la zona menor, el ID de la zona mayor y el numero del dia de la semana, siendo 1 el domingo (eg. 153,4,206,5)");
+					String rta = lector.next();
+					String[] datosDia = rta.split(",");
+					String zonaD = datosDia[0];
+					String zonaMe = datosDia[1];
+					String zonaMa= datosDia[2];
+					String dia = datosDia[3];
+					clus = modelo.tiempoPromRangoDia(zonaD, zonaMe, zonaMa, dia);
+					if (ans == null) {
+						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO
+								+ " hasta la zona destino con ID " + zonaD
+								+ " en el dia de la semana dado identificado con el numero " + dia);
+					} else {
+						String[] promedio = ans.split(",");
+						String tP = promedio[0];
+						String dE = promedio[1];
+						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO
+								+ " hasta la zona destino con ID " + zonaD
+								+ " en el dia de la semana dado identificado con el numero " + dia + " es: " + tP
+								+ "\n---------");
+						System.out
+								.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID "
+										+ zonaO + " hasta la zona destino con ID " + zonaD
+										+ " en el dia de la semana dado identificado con el numero " + dia + " es: "
+										+ dE + "\n---------");
+					}
 				}
 				break;
 			case 5:

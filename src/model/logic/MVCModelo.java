@@ -2,7 +2,6 @@ package model.logic;
 
 import model.data_structures.Queue;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -18,7 +17,7 @@ public class MVCModelo {
 	private Queue<String[]> datosM = new Queue<>();
 	private Queue<String[]> datosW = new Queue<>();
 
-	// CARGA DE INFORMACI�N
+	// CARGA DE INFORMACION
 	/**
 	 * Lector de los archivos de excel
 	 * 
@@ -182,7 +181,7 @@ public class MVCModelo {
 
 	// PARTE A
 	/**
-	 * 1A Consultar el tiempo promedio de viaje y su desviaci�n est�ndar de los
+	 * 1A Consultar el tiempo promedio de viaje y su desviacion estandar de los
 	 * viajes entre una zona de origen y una zona destino para un mes dado.
 	 * @param zonaOrigen ID de la zona de origen
 	 * zonaDestino ID de la zona destino
@@ -211,10 +210,10 @@ public class MVCModelo {
 	}
 
 	/**
-	 * 2A Consultar la informaci�n de los N viajes con mayor tiempo promedio para un
+	 * 2A Consultar la informacion de los N viajes con mayor tiempo promedio para un
 	 * mes dado.
 	 * @param N Numero de viajes a consultar
-	 * mes Numero que representa el mes del año
+	 * mes Numero que representa el mes del ano
 	 * @return Queue de los viajes ordenados
 	 */
 	public Queue<String[]> tiempoPromViajesMes(String N, String mes) {
@@ -244,7 +243,7 @@ public class MVCModelo {
 	 * viajes" (en el sentido respectivo). Los resultados deben estar ordenados
 	 * ascendentemente por el identificador de la zona X en el rango dado.
 	 * 
-	 * @return
+	 * @return 
 	 */
 
 	// PARTE B
@@ -303,23 +302,35 @@ public class MVCModelo {
 	/**
 	 * 3A Comparar los tiempos promedios de los viajes para una zona dada contra
 	 * cada zona X en un rango de zonas dado [Zona menor, Zona Mayor] en ambos
-	 * sentidos (zona dada �zona X vs. zona X �zona dada) para un d�a dado. Mostrar
-	 * los resultados de comparaci�n con cada zona X en una l�nea de la siguiente
+	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un dia dado. Mostrar
+	 * los resultados de comparacion con cada zona X en una linea de la siguiente
 	 * forma: <tiempo promedio> de <Zona dada> a <Zona X> vs <tiempo promedio> de
-	 * <Zona X> a <Zona dada> Si no hay viajes en alg�n sentido o en ambos entre la
+	 * <Zona X> a <Zona dada> Si no hay viajes en algun sentido o en ambos entre la
 	 * zona dada y una zona X debe reemplazarse <tiempo promedio> por "No hay
 	 * viajes" (en el sentido respectivo). Los resultados deben estar ordenados
 	 * ascendentemente por el identificador de la zona X en el rango dado.
 	 * 
 	 * @return
 	 */
+	public Queue<String[]> tiempoPromRangoDia(String zonaDada, String zonaMenor, String zonaMayor, String dia){
+		int tam = datosW.darTamano();
+		Queue<String[]> viajesDia = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String[] actual = datosW.dequeue();
+			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))&&((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))&&(Integer.parseInt(actual[2]) == Integer.parseInt(dia))) {
+				viajesDia.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesDia);
+		return ordenados;
+	}
 
 	// PARTE C
 	/**
 	 * 1C Consultar los viajes entre una zona de origen y una zona destino en una
-	 * franja horaria (hora inicial �hora final) dada. La franja horaria se define
+	 * franja horaria (hora inicial - hora final) dada. La franja horaria se define
 	 * con horas enteras. Mostrar los viajes indicando el tiempo promedio de viaje y
-	 * su desviaci�n est�ndar para cada hora entera iniciando en la hora inicial y
+	 * su desviacion estandar para cada hora entera iniciando en la hora inicial y
 	 * terminando en la hora final.
 	 * 
 	 * @return
@@ -350,10 +361,10 @@ public class MVCModelo {
 	}
 
 	/**
-	 * 3C Generar una gr�fica ASCII que muestre el tiempo promedio de los viajes
-	 * entre una zona origen y una zona destino para cada hora del d�a. Cada * en la
-	 * gr�fica corresponde a 1 minuto. Un tiempo promedio se aproxima a los minutos
-	 * m�s cercanos.
+	 * 3C Generar una grafica ASCII que muestre el tiempo promedio de los viajes
+	 * entre una zona origen y una zona destino para cada hora del dia. Cada * en la
+	 * grafica corresponde a 1 minuto. Un tiempo promedio se aproxima a los minutos
+	 * mas cercanos.
 	 * @param zonaOrigen ID de la zona de origen
 	 * zonaDestino ID de la zona destino
 	 * @return Arreglo con los viajes
@@ -396,7 +407,7 @@ public class MVCModelo {
 		return viajesAscii;
 	}
 
-	// M�TODOS �TILES
+	// METODOS UTILES
 	/**
 	 * Ordena los viajes del queue de arreglos de string dado por parametro.
 	 * @param datos Queue de los datos a ordenar
