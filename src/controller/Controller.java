@@ -41,7 +41,7 @@ public class Controller {
 			case 1:
 				System.out.println("--------- \nDar el numero del trimestre deseado");
 				trimestre = lector.next();
-				modelo.CVSLector(Integer.parseInt(trimestre));
+				modelo.CSVLector(Integer.parseInt(trimestre));
 				System.out.println("Total viajes por hora: " + modelo.totalHora() + "\n---------");
 				System.out.println("Total viajes por semana: " + modelo.totalSemana() + "\n---------");
 				System.out.println("Total viajes por mes: " + modelo.totalMes() + "\n---------");
@@ -222,8 +222,8 @@ public class Controller {
 				dato = lector.next();
 				datos = dato.split(",");
 				String[] resp = modelo.graficaASCII(datos[0], datos[1]);
-				System.out.println("Aproximación en minutos de viajes entre zona origen y zona destino.\n"
-						+ "Trimestre "+trimestre+" del 2018 detallado por cada hora del día.\n"
+				System.out.println("Aproximaciï¿½n en minutos de viajes entre zona origen y zona destino.\n"
+						+ "Trimestre "+trimestre+" del 2018 detallado por cada hora del dï¿½a.\n"
 						+ "Zona Origen: "+datos[0]+" Zona Destino: "+datos[1]+"\n"
 						+ "Hora|  # de minutos\n");
 				for (int i = 0; i < resp.length; i++) {

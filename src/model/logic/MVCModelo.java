@@ -23,7 +23,7 @@ public class MVCModelo {
 	 * 
 	 * @param numero de trimestre deseado
 	 */
-	public void CVSLector(int num) {
+	public void CSVLector(int num) {
 		CSVReader reader = null;
 		String archivoH = "./data/bogota-cadastral-2018-" + num + "-All-HourlyAggregate.csv";
 		String archivoM = "./data/bogota-cadastral-2018-" + num + "-All-MonthlyAggregate.csv";
@@ -344,11 +344,16 @@ public class MVCModelo {
 	 * @return Queue de los viajes ordenados
 	 */
 	public Queue<String[]> tiempoPromViajesHora(String N, String hora) {
-		int tam = datosH.darTamano();
+		return tPromViaHora(N, hora, datosH);
+	}
+	
+	public Queue<String[]> tPromViaHora(String N, String hora, Queue<String[]> datos){
+		int tam = datos.darTamano();
+		int horas = Integer.parseInt(hora);
 		Queue<String[]> viajesHora = new Queue<String[]>();
 		for (int i = 0; i < tam; i++) {
-			String[] actual = datosH.dequeue();
-			if (Integer.parseInt(actual[2]) == Integer.parseInt(hora)) {
+			String[] actual = datos.dequeue();
+			if (Integer.parseInt(actual[2]) == horas) {
 				viajesHora.enqueue(actual);
 			}
 		}
@@ -415,8 +420,7 @@ public class MVCModelo {
 	 */
 	public Queue<String[]> ordenarViajesQuickSort(Queue<String[]> datos) {
 		int izq = 0;
-		int tam = datos.darTamano();
-		int der = tam - 1;
+		int der = datos.darTamano() - 1;
 		int pivote = quicksort(datos, izq, der);
 		if (izq < pivote - 1 && pivote + 1 > der) {
 			quicksort(datos, izq, pivote - 1);
@@ -434,10 +438,12 @@ public class MVCModelo {
 	 */
 	public int quicksort(Queue<String[]> datos, int izq, int der) {
 		String[] pivote = datos.darElemento(izq);
-		int i = izq - 1;
+		double horaP = Double.parseDouble(pivote[3]);
+		int i = izq-1;
 		String[] aux = new String[datos.darElemento(izq).length];
 		for (int j = izq; j < der; j++) {
-			if (Integer.parseInt(datos.darElemento(j)[3]) > Integer.parseInt(pivote[3])) {
+			String[] eleJ = datos.darElemento(j);
+			if (Double.parseDouble(eleJ[3]) > horaP) {
 				i++;
 				aux = datos.darElemento(i);
 				for (int k = 0; k < datos.darElemento(i).length; k++) {

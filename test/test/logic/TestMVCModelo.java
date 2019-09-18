@@ -73,7 +73,7 @@ public class TestMVCModelo {
 	@Test
 	public void testTiempoPromViajesHora() {
 		setUp1();
-		Queue<String[]> retornados = modelo.tiempoPromViajesHora("4", "3");
+		Queue<String[]> retornados = modelo.tPromViaHora("4", "3", datosH);
 		String[] prim = {"6", "30", "3", "1917.27", "404.69", "1873.46", "1.24"};
 		String[] seg = {"3", "60", "3", "1321.8", "220.58", "1303.62", "1.18"};
 		String[] ter = {"1", "80", "3", "1138.68", "538.33", "1035.88", "1.52"};
