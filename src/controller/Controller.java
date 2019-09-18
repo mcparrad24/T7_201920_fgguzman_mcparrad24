@@ -166,22 +166,26 @@ public class Controller {
 					String zonaMa = datosMes[2];
 					String mes = datosMes[3];
 					clus = modelo.tiempoPromRangoMes(zonaD, zonaMe, zonaMa, mes);
-					if (ans == null) {
-						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO
-								+ " hasta la zona destino con ID " + zonaD
-								+ " en el mes dado identificado con el numero " + mes);
+					if (clus == null) {
+						System.out.println("No existen viajes de o hacia la zona" + zonaD + " entre el rango " + zonaMe
+								+ "-" + zonaMa + " en el mes dado identificado con el numero " + mes);
 					} else {
-						String[] promedio = ans.split(",");
-						String tP = promedio[0];
-						String dE = promedio[1];
-						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO
-								+ " hasta la zona destino con ID " + zonaD
-								+ " en el mes dado identificado con el numero " + mes + " es: " + tP + "\n---------");
-						System.out
-								.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID "
-										+ zonaO + " hasta la zona destino con ID " + zonaD
-										+ " en el mes dado identificado con el numero " + mes + " es: " + dE
-										+ "\n---------");
+						for (int i = 0; i < clus.darTamano(); i++) {
+							String[] actual = clus.darElemento(i);
+							String t1 = "", t2 = "";
+							if (actual[0].equals(zonaD)) {
+								t1 = actual[3];
+							} else {
+								t1 = "No hay viajes";
+							}
+							if (actual[1].equals(zonaD)) {
+								t2 = actual[3];
+							} else {
+								t2 = "No hay viajes";
+							}
+							System.out.println(t1 + " de " + zonaD + " a " + actual[1] + " vs " + t2 + " de "
+									+ actual[0] + " a " + zonaD);
+						}
 					}
 				} else if (seleccion == 2) {
 					System.out.println(
@@ -190,32 +194,52 @@ public class Controller {
 					String[] datosDia = rta.split(",");
 					String zonaD = datosDia[0];
 					String zonaMe = datosDia[1];
-					String zonaMa= datosDia[2];
+					String zonaMa = datosDia[2];
 					String dia = datosDia[3];
 					clus = modelo.tiempoPromRangoDia(zonaD, zonaMe, zonaMa, dia);
-					if (ans == null) {
-						System.out.println("No existen viajes desde la zona de origen con ID " + zonaO
-								+ " hasta la zona destino con ID " + zonaD
-								+ " en el dia de la semana dado identificado con el numero " + dia);
+					if (clus == null) {
+						System.out.println("No existen viajes de o hacia la zona" + zonaD + " entre el rango " + zonaMe
+								+ "-" + zonaMa + " en el mes dado identificado con el numero " + dia);
 					} else {
-						String[] promedio = ans.split(",");
-						String tP = promedio[0];
-						String dE = promedio[1];
-						System.out.println("El tiempo promedio de los viajes desde la zona de origen con ID " + zonaO
-								+ " hasta la zona destino con ID " + zonaD
-								+ " en el dia de la semana dado identificado con el numero " + dia + " es: " + tP
-								+ "\n---------");
-						System.out
-								.println("La desviacion estandar promedio de los viajes desde la zona de origen con ID "
-										+ zonaO + " hasta la zona destino con ID " + zonaD
-										+ " en el dia de la semana dado identificado con el numero " + dia + " es: "
-										+ dE + "\n---------");
+						for (int i = 0; i < clus.darTamano(); i++) {
+							String[] actual = clus.darElemento(i);
+							String t1 = "", t2 = "";
+							if (actual[0].equals(zonaD)) {
+								t1 = actual[3];
+							} else {
+								t1 = "No hay viajes";
+							}
+							if (actual[1].equals(zonaD)) {
+								t2 = actual[3];
+							} else {
+								t2 = "No hay viajes";
+							}
+							System.out.println(t1 + " de " + zonaD + " a " + actual[1] + " vs " + t2 + " de "
+									+ actual[0] + " a " + zonaD);
+						}
 					}
 				}
 				break;
 			case 5:
 				System.out.println(
-						"--------- \nDar el ID de la zona de origen, el ID de la zona destino y la franja horaria entre parentesis (eg.955,206,(2-5)");
+						"--------- \nDar el ID de la zona de origen, el ID de la zona destino y la franja horaria separada por comas (eg.955,206,2,5)");
+				String rta = lector.next();
+				String[] datosDia = rta.split(",");
+				String zonaO = datosDia[0];
+				String zonaD = datosDia[1];
+				String hora1 = datosDia[2];
+				String hora2 = datosDia[2];
+				clus = modelo.viajesFranja(zonaO, zonaD, hora1, hora2);
+				if (clus == null) {
+					System.out.println("No existen viajes desde la zona de origen con ID " + zonaO
+							+ " hasta la zona destino con ID " + zonaD + " en la franja horaria " + hora1 + "-"
+							+ hora2);
+				} else {
+					for (int i = 0; i < clus.darTamano(); i++) {
+						String[] actual = clus.dequeue();
+						System.out.println(actual[0] + actual[1] + actual[2] + actual[3] + "\n---------");
+					}
+				}
 				break;
 			case 6:
 				System.out.println("--------- \nDar el ID de la zona de origen y el ID de la zona destino (eg. 6,22)");
@@ -223,11 +247,10 @@ public class Controller {
 				datos = dato.split(",");
 				String[] resp = modelo.graficaASCII(datos[0], datos[1]);
 				System.out.println("Aproximaci�n en minutos de viajes entre zona origen y zona destino.\n"
-						+ "Trimestre "+trimestre+" del 2018 detallado por cada hora del d�a.\n"
-						+ "Zona Origen: "+datos[0]+" Zona Destino: "+datos[1]+"\n"
-						+ "Hora|  # de minutos\n");
+						+ "Trimestre " + trimestre + " del 2018 detallado por cada hora del d�a.\n" + "Zona Origen: "
+						+ datos[0] + " Zona Destino: " + datos[1] + "\n" + "Hora|  # de minutos\n");
 				for (int i = 0; i < resp.length; i++) {
-					System.out.println(i+"  |  "+resp[i]+"\n");
+					System.out.println(i + "  |  " + resp[i] + "\n");
 				}
 			case 7:
 				System.out.println("--------- \n Hasta pronto !! \n---------");

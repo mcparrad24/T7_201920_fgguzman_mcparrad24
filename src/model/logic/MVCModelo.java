@@ -185,7 +185,7 @@ public class MVCModelo {
 	 * viajes entre una zona de origen y una zona destino para un mes dado.
 	 * @param zonaOrigen ID de la zona de origen
 	 * zonaDestino ID de la zona destino
-	 * mes Número que representa el mes del año
+	 * mes Numero que representa el mes del año
 	 * @return String de tiempo promedio y desviaci�n est�ndar
 	 */
 	public String tiempoPromedioDesviacionMes(String zonaOrigen, String zonaDestino, String mes) {
@@ -235,26 +235,34 @@ public class MVCModelo {
 	/**
 	 * 3A Comparar los tiempos promedios de los viajes para una zona dada contra
 	 * cada zona X en un rango de zonas dado [Zona menor, Zona Mayor] en ambos
-	 * sentidos (zona dada �zona X vs. zona X �zona dada) para un mes dado. Mostrar
-	 * los resultados de comparaci�n con cada zona X en una l�nea de la siguiente
-	 * forma: <tiempo promedio> de <Zona dada> a <Zona X> vs <tiempo promedio> de
-	 * <Zona X> a <Zona dada> Si no hay viajes en alg�n sentido o en ambos entre la
-	 * zona dada y una zona X debe reemplazarse <tiempo promedio> por "No hay
-	 * viajes" (en el sentido respectivo). Los resultados deben estar ordenados
-	 * ascendentemente por el identificador de la zona X en el rango dado.
+	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un mes dado.
+	 * Los resultados deben estar ordenados ascendentemente por el identificador
+	 * de la zona X en el rango dado.
 	 * 
-	 * @return 
+	 * @return Los datos ordenados en el rango deseado y el mes dado
 	 */
-
+	public Queue<String[]> tiempoPromRangoMes(String zonaDada, String zonaMenor, String zonaMayor, String mes){
+		int tam = datosM.darTamano();
+		Queue<String[]> viajesMes = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String[] actual = datosM.dequeue();
+			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))&&((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))&&(actual[2].equals(mes))) {
+				viajesMes.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesMes);
+		return ordenados;
+	}
+	
 	// PARTE B
 	/**
-	 * 1B Consultar el tiempo promedio de viaje y su desviaci�n est�ndar de los
-	 * viajes entre una zona de origen y una zona destino para un d�a dado de la
+	 * 1B Consultar el tiempo promedio de viaje y su desviacion estandar de los
+	 * viajes entre una zona de origen y una zona destino para un dia dado de la
 	 * semana.
 	 * @param zonaOrigen ID de la zona de origen
 	 * zonaDestino ID de la zona destino
 	 * dia Numero que representa el dia de la semana
-	 * @return String de tiempo promedio y desviaci�n est�ndar
+	 * @return String de tiempo promedio y desviacion estandar
 	 */
 	public String tiempoPromedioDesviacionDia(String zonaOrigen, String zonaDestino, String dia) {
 		String rta = "";
@@ -277,8 +285,8 @@ public class MVCModelo {
 	}
 
 	/**
-	 * 2B Consultar la informaci�n de los N viajes con mayor tiempo promedio para un
-	 * d�a dado.
+	 * 2B Consultar la informacion de los N viajes con mayor tiempo promedio para un
+	 * dia dado.
 	 * @param N Numero de viajes a consultar
 	 * dia Numero que representa el dia de la semana
 	 * @return Queue de los viajes ordenados
@@ -300,24 +308,20 @@ public class MVCModelo {
 		return nViajes;
 	}
 	/**
-	 * 3A Comparar los tiempos promedios de los viajes para una zona dada contra
+	 * 3B Comparar los tiempos promedios de los viajes para una zona dada contra
 	 * cada zona X en un rango de zonas dado [Zona menor, Zona Mayor] en ambos
-	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un dia dado. Mostrar
-	 * los resultados de comparacion con cada zona X en una linea de la siguiente
-	 * forma: <tiempo promedio> de <Zona dada> a <Zona X> vs <tiempo promedio> de
-	 * <Zona X> a <Zona dada> Si no hay viajes en algun sentido o en ambos entre la
-	 * zona dada y una zona X debe reemplazarse <tiempo promedio> por "No hay
-	 * viajes" (en el sentido respectivo). Los resultados deben estar ordenados
-	 * ascendentemente por el identificador de la zona X en el rango dado.
+	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un dia dado.
+	 * Los resultados deben estar ordenados ascendentemente por el identificador
+	 * de la zona X en el rango dado.
 	 * 
-	 * @return
+	 * @return Los datos ordenados en el rango deseado y el mes dado
 	 */
 	public Queue<String[]> tiempoPromRangoDia(String zonaDada, String zonaMenor, String zonaMayor, String dia){
 		int tam = datosW.darTamano();
 		Queue<String[]> viajesDia = new Queue<String[]>();
 		for (int i = 0; i < tam; i++) {
 			String[] actual = datosW.dequeue();
-			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))&&((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))&&(Integer.parseInt(actual[2]) == Integer.parseInt(dia))) {
+			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))&&((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor)) && (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))&&(actual[2].equals(dia))) {
 				viajesDia.enqueue(actual);
 			}
 		}
@@ -328,16 +332,24 @@ public class MVCModelo {
 	// PARTE C
 	/**
 	 * 1C Consultar los viajes entre una zona de origen y una zona destino en una
-	 * franja horaria (hora inicial - hora final) dada. La franja horaria se define
-	 * con horas enteras. Mostrar los viajes indicando el tiempo promedio de viaje y
-	 * su desviacion estandar para cada hora entera iniciando en la hora inicial y
-	 * terminando en la hora final.
+	 * franja horaria (hora inicial - hora final) dada.
 	 * 
-	 * @return
+	 * @return Queue con los viajes que cumplen el rango, el origen y el destino; ordenados
 	 */
-
+	public Queue<String[]> viajesFranja(String origen, String destino, String horaIn, String horaFin){
+		int tam = datosW.darTamano();
+		Queue<String[]> viajesHora = new Queue<String[]>();
+		for (int i = 0; i < tam; i++) {
+			String[] actual = datosH.dequeue();
+			if((Integer.parseInt(actual[2]) > Integer.parseInt(horaIn))&&(Integer.parseInt(actual[2]) < Integer.parseInt(horaFin))&&(actual[0].equals(origen))&&(actual[1].equals(destino))) {
+				viajesHora.enqueue(actual);
+			}
+		}
+		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesHora);
+		return ordenados;
+	}
 	/**
-	 * 2C Consultar la informaci�n de los N viajes con mayor tiempo promedio para una
+	 * 2C Consultar la informacion de los N viajes con mayor tiempo promedio para una
 	 * hora dada.
 	 * @param N Numero de viajes a consultar
 	 * hora Hora del dia
@@ -422,7 +434,7 @@ public class MVCModelo {
 		int izq = 0;
 		int der = datos.darTamano() - 1;
 		int pivote = quicksort(datos, izq, der);
-		if (izq < pivote - 1 && pivote + 1 > der) {
+		if (izq < der) {
 			quicksort(datos, izq, pivote - 1);
 			quicksort(datos, pivote + 1, der);
 		}
