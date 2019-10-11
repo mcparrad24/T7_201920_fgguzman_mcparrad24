@@ -2,12 +2,15 @@ package model.logic;
 
 import model.data_structures.Queue;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 import com.opencsv.CSVReader;
-
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonToken;
 /**
  * Definicion del modelo del mundo
  *
@@ -56,6 +59,19 @@ public class MVCModelo {
 				}
 			}
 
+		}
+	}
+	public void JSONLector() {
+		String path = "./data/data.json";
+		JsonReader reader;
+		try {
+			reader = new JsonReader(new FileReader(path));
+			Message[] lista3 = gson.fromJson(reader, Message[].class);
+			System.out.println(Arrays.toString(lista3));
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

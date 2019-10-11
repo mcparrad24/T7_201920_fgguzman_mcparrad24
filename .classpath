@@ -10,5 +10,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/opencsv-4.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/VEQ0106/Desktop/EDD FGA/proyecto2_201920_fgguzman_mcparrad24/lib/gson-2.8.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
