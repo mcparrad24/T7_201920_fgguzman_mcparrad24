@@ -2,7 +2,7 @@ package controller;
 
 import java.util.*;
 
-import model.data_structures.Queue;
+//import model.data_structures.Queue;
 import model.logic.MVCModelo;
 import view.MVCView;
 
@@ -41,6 +41,7 @@ public class Controller {
 			case 1:
 				System.out.println("--------- \nDar el numero del trimestre deseado");
 				trimestre = lector.next();
+				modelo.JSONLector();
 				modelo.CSVLector(Integer.parseInt(trimestre));
 				System.out.println("Total viajes por hora: " + modelo.totalHora() + "\n---------");
 				System.out.println("Total viajes por semana: " + modelo.totalSemana() + "\n---------");
@@ -49,7 +50,10 @@ public class Controller {
 						+ "\n---------");
 				System.out.println("Zona con mayor identificador: " + Arrays.toString(modelo.mayorIdentificador())
 						+ "\n---------");
+				
 				break;
+				
+				
 			case 2:
 				System.out.println("--------- \nHacer la consulta con:");
 				System.out.println("1. Mes");
@@ -257,6 +261,7 @@ public class Controller {
 				lector.close();
 				fin = true;
 				break;
+				
 			default:
 				System.out.println("--------- \n Opcion Invalida !! \n---------");
 				break;

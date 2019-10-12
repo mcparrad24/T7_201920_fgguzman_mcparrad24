@@ -47,6 +47,10 @@ public class UberTrip implements Comparable<UberTrip> {
 		return desviacion;
 	}
 	
+	public int darTrimestre() {
+		return trimestre;
+	}
+	
 	public String toString() {
 		return "["+this.idOrigen+","+this.idDestino+","+this.HMD+","+this.tiempo+","+this.desviacion+"]";
 	}

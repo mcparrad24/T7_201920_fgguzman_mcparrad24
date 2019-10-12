@@ -1,7 +1,7 @@
 package model.logic;
 
-import model.data_structures.Queue;
-
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -16,10 +16,9 @@ import com.google.gson.stream.JsonToken;
  *
  */
 public class MVCModelo {
-	private Queue<String[]> datosH = new Queue<>();
-	private Queue<String[]> datosM = new Queue<>();
-	private Queue<String[]> datosW = new Queue<>();
-	private UberTrip viajes;
+	private UberTrip viajesH, viajesM, viajesW;
+	private ZonaJSON zonas;
+	private MallaVial mallas;
 
 	// CARGA DE INFORMACION
 	/**
@@ -33,23 +32,21 @@ public class MVCModelo {
 		String archivoM = "./data/bogota-cadastral-2018-" + num + "-All-MonthlyAggregate.csv";
 		String archivoW = "./data/bogota-cadastral-2018-" + num + "-WeeklyAggregate.csv";
 		String[] header = new String[1];
-		int i = 0;
 		try {
 			reader = new CSVReader(new FileReader(archivoH));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				viajes = new UberTrip(nextLine[i++],nextLine[i++],nextLine[i++],nextLine[i++],nextLine[i++],num);
-				i=0;
+				viajesH = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
 			}
 			reader = new CSVReader(new FileReader(archivoM));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				datosM.enqueue(nextLine);
+				viajesM = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
 			}
 			reader = new CSVReader(new FileReader(archivoW));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				datosW.enqueue(nextLine);
+				viajesW = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -71,8 +68,8 @@ public class MVCModelo {
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader(path));
-			Message[] lista3 = gson.fromJson(reader, Message[].class);
-
+			zonas = gson.fromJson(reader, ZonaJSON.class);
+			System.out.println(zonas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,218 +77,95 @@ public class MVCModelo {
 
 	public void TXTLector() {
 		FileReader fr = null;
-		int i;
+		BufferedReader br = null;
 		try {
 			fr = new FileReader("./data/Nodes_of_red_vial-wgs84_shp.txt");
-			while ((i = fr.read()) != -1)
-				
-
+			br = new BufferedReader(fr);
+			String st;
+			String[] a = new String[3];
+			while ((st = br.readLine()) != null) {
+				a = st.split(",");
+				mallas = new MallaVial(a[0], a[1], a[2]);
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 	}
 
 	/**
-	 * Los siguientes metodos buscan el tamano (total) de viajes segun el periodo de
-	 * tiempo
+	 * Total de viajes CSV, zonas JSON y nodos TXT
 	 * 
 	 * @return El total (tamano)
 	 */
 	public int totalHora() {
-		int total = datosH.darTamano();
+		int total = 0;
 		return total;
 	}
 
 	public int totalSemana() {
-		int total = datosW.darTamano();
+		int total = 0;
 		return total;
 	}
 
 	public int totalMes() {
-		int total = datosM.darTamano();
+		int total = 0;
 		return total;
 	}
-
-	/**
-	 * Los siguientes metodos buscan la zona deseada
-	 * 
-	 * @return la zona menor o mayor
-	 */
-	public String[] menorIdentificador() {
-		String[] zona = null;
-		String[] cop = null;
-		Queue<String[]> copia = datosH;
-		int tam = copia.darTamano();
-		int menor = 99;
-		int test = 99;
-		for (int i = 0; i < tam; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test < menor) {
-				menor = test;
-				zona = cop;
-			}
-			if (test == 1) {
-				return zona;
-			}
-		}
-		copia = datosW;
-		int tam2 = copia.darTamano();
-		for (int i = 0; i < tam2; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test < menor) {
-				menor = test;
-				zona = cop;
-			}
-			if (test == 1) {
-				return zona;
-			}
-		}
-		copia = datosM;
-		int tam3 = copia.darTamano();
-		for (int i = 0; i < tam3; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test < menor) {
-				menor = test;
-				zona = cop;
-			}
-			if (test == 1) {
-				return zona;
-			}
-		}
-		return zona;
+	
+	public int totalZonas() {
+		int total = 0;
+		return total;
 	}
-
-	public String[] mayorIdentificador() {
-		String[] zona = null;
-		String[] cop = null;
-		Queue<String[]> copia = datosH;
-		int tam = copia.darTamano();
-		int mayor = 0;
-		int test = 0;
-		for (int i = 0; i < tam; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test > mayor) {
-				mayor = test;
-				zona = cop;
-			}
-			if (test == 1160) {
-				return zona;
-			}
-		}
-		copia = datosW;
-		int tam2 = copia.darTamano();
-		for (int i = 0; i < tam2; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test > mayor) {
-				mayor = test;
-				zona = cop;
-			}
-			if (test == 1160) {
-				return zona;
-			}
-		}
-		copia = datosM;
-		int tam3 = copia.darTamano();
-		for (int i = 0; i < tam3; i++) {
-			cop = copia.dequeue();
-			test = Integer.parseInt(cop[0]);
-			if (test > mayor) {
-				mayor = test;
-				zona = cop;
-			}
-			if (test == 1160) {
-				return zona;
-			}
-		}
-		return zona;
+	
+	public int totalNodos() {
+		int total = 0;
+		return total;
 	}
 
 	// PARTE A
 	/**
-	 * 1A Consultar el tiempo promedio de viaje y su desviacion estandar de los
-	 * viajes entre una zona de origen y una zona destino para un mes dado.
+	 * 1A-Obtener las N letras más frecuentes por las que comienza el nombre de una zona.
+	 * N es un dato de entrada.El resultado debe aparecer de mayor a menor. 
+	 * Para cada letra se debe imprimir la letra y el nombre de las zonas que comienzan por esa letra.
 	 * 
-	 * @param zonaOrigen ID de la zona de origen zonaDestino ID de la zona destino
-	 *                   mes Numero que representa el mes del aÃ±o
-	 * @return String de tiempo promedio y desviaciï¿½n estï¿½ndar
+	 * @param N numero de letras más frecuentes.
+	 * @return ----- ordenado de las N letras más frecuentes
 	 */
-	public String tiempoPromedioDesviacionMes(String zonaOrigen, String zonaDestino, String mes) {
+	public String letrasMasFrecuentes(int N) {
 		String rta = "";
-		int tam = datosM.darTamano();
-		Queue<String[]> copia = datosM;
-		Queue<String[]> zonas = new Queue<String[]>();
-		for (int i = 0; i <= tam - 1; i++) {
-			String[] actual = copia.dequeue();
-			if (actual[0].equals(zonaOrigen) && actual[1].equals(zonaDestino) && actual[3].equals(mes)) {
-				zonas.enqueue(actual);
-			}
-		}
-		if (zonas.isEmpty()) {
-			rta = null;
-		} else {
-			double tPromedio = tiempoPromedio(zonas);
-			double desvEstPromedio = desviacionEstandarPromedio(zonas);
-			rta = tPromedio + ", " + desvEstPromedio;
-		}
+
 		return rta;
 	}
 
 	/**
-	 * 2A Consultar la informacion de los N viajes con mayor tiempo promedio para un
-	 * mes dado.
+	 *2A-Buscar los nodos que delimitan las zonas por Localización Geográfica (latitud, longitud).
+	 *Dadas una latitud y una longitud, se deben mostrar todos los nodos en la frontera de las zonas que
+	 *tengan la misma latitud y longitud truncando a las primeras 3 cifras decimales.
 	 * 
-	 * @param N Numero de viajes a consultar mes Numero que representa el mes del
-	 *          ano
-	 * @return Queue de los viajes ordenados
+	 * @param lat latitud dada, lon longitud dada
+	 * @return ----- de los nodos que pertenecen
 	 */
-	public Queue<String[]> tiempoPromViajesMes(String N, String mes) {
-		int tam = datosM.darTamano();
-		Queue<String[]> viajesMes = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datosM.dequeue();
-			if (Integer.parseInt(actual[2]) == Integer.parseInt(mes)) {
-				viajesMes.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesMes);
-		Queue<String[]> nViajes = new Queue<String[]>();
-		for (int i = 0; i < Integer.parseInt(N); i++) {
-			nViajes.enqueue(ordenados.dequeue());
-		}
-		return nViajes;
+	public int buscarLatitudLongitud(double lat, double lon) {
+		int tam = 0;
+
+		return tam;
 	}
 
 	/**
-	 * 3A Comparar los tiempos promedios de los viajes para una zona dada contra
-	 * cada zona X en un rango de zonas dado [Zona menor, Zona Mayor] en ambos
-	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un mes dado. Los
-	 * resultados deben estar ordenados ascendentemente por el identificador de la
-	 * zona X en el rango dado.
+	 * Buscar los tiempos promedio de viaje que están en un rango y que son del primer trimestre del 2018.
+	 * Dado un rango de tiempos promedio de viaje en segundos [limite_bajo,limite_alto],
+	 * retornar los viajes cuyo tiempo promedio mensual esté en ese rango.
+	 * Se debe mostrar únicamente N viajes ordenados por zona de origen y zona de destino. 
+	 * Por cada viaje se  debe mostrar su zona de origen, zona de destino, mes y tiempo promedio mensual del viaje.
 	 * 
-	 * @return Los datos ordenados en el rango deseado y el mes dado
+	 * @param El minimo y maximo para buscar
+	 * @return ------- de los viajes
 	 */
-	public Queue<String[]> tiempoPromRangoMes(String zonaDada, String zonaMenor, String zonaMayor, String mes) {
-		int tam = datosM.darTamano();
-		Queue<String[]> viajesMes = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datosM.dequeue();
-			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor))
-					&& (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))
-					&& ((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor))
-							&& (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))
-					&& (actual[2].equals(mes))) {
-				viajesMes.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesMes);
-		return ordenados;
+	public int tiempoPromRangoMes(int min, int max) {
+		int tam = 0;
+
+		return tam;
 	}
 
 	// PARTE B
@@ -481,17 +355,16 @@ public class MVCModelo {
 	 * @param datos Queue de los datos a ordenar
 	 * @return Queue con los datos ordenados
 	 */
-	public Queue<String[]> ordenarViajesQuickSort(Queue<String[]> datos) {
+	public TravelTime[] ordenarViajesQuickSort(TravelTime[] clus) {
 		int izq = 0;
-		int der = datos.darTamano() - 1;
-		int pivote = quicksort(datos, izq, der);
-		if (izq < der) {
-			quicksort(datos, izq, pivote - 1);
-			quicksort(datos, pivote + 1, der);
-		}
-		return datos;
+		int der = clus.length - 1;
+		int pivote = quicksort(clus, izq, der);
+		if(izq < pivote-1 && pivote+1 > der) {
+			quicksort(clus, izq, pivote-1);
+			quicksort(clus, pivote+1, der);
+		}	
+		return clus;
 	}
-
 	/**
 	 * Ordena los viajes del queue de forma recursiva.
 	 * 
@@ -500,32 +373,23 @@ public class MVCModelo {
 	 *              representa la posicion del dato en la derecha del queue
 	 * @return
 	 */
-	public int quicksort(Queue<String[]> datos, int izq, int der) {
-		String[] pivote = datos.darElemento(izq);
-		double horaP = Double.parseDouble(pivote[3]);
-		int i = izq - 1;
-		String[] aux = new String[datos.darElemento(izq).length];
+	public int quicksort(TravelTime[] clus, int izq, int der) {
+		String[] au = {"0", "0", "0", "0", "0"};
+		TravelTime pivote = (TravelTime) clus[izq];
+		int i = izq;
+		TravelTime aux = new TravelTime(au, 1);
 		for (int j = izq; j < der; j++) {
-			String[] eleJ = datos.darElemento(j);
-			if (Double.parseDouble(eleJ[3]) > horaP) {
+			if (clus[j].compareTo(pivote) == -1) {
 				i++;
-				aux = datos.darElemento(i);
-				for (int k = 0; k < datos.darElemento(i).length; k++) {
-					datos.darElemento(i)[k] = datos.darElemento(j)[k];
-				}
-				for (int k = 0; k < datos.darElemento(i).length; k++) {
-					datos.darElemento(j)[k] = aux[k];
-				}
+				aux = clus[i];
+				clus[i] = clus[j];
+				clus[j] = aux;
 			}
 		}
-		aux = datos.darElemento(i + 1);
-		for (int k = 0; k < datos.darElemento(i).length; k++) {
-			datos.darElemento(i + 1)[k] = datos.darElemento(der)[k];
-		}
-		for (int k = 0; k < datos.darElemento(i).length; k++) {
-			datos.darElemento(der)[k] = aux[k];
-		}
-		return i + 1;
+		aux = clus[i+1];
+		clus[i+1] = clus[der];
+		clus[der] = aux;
+		return i+1;
 	}
 
 	/**
