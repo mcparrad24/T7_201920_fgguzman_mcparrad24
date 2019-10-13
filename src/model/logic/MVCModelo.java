@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonToken;
  *
  */
 public class MVCModelo {
-	private UberTrip viajesH, viajesM, viajesW;
+	private UberTrip viajesH1, viajesM1, viajesW1, viajesH2, viajesM2, viajesW2, viajesH3, viajesM3, viajesW3;
 	private ZonaJSON zonas;
 	private MallaVial mallas;
 
@@ -26,27 +26,63 @@ public class MVCModelo {
 	 * 
 	 * @param numero de trimestre deseado
 	 */
-	public void CSVLector(int num) {
+	public void CSVLector() {
 		CSVReader reader = null;
-		String archivoH = "./data/bogota-cadastral-2018-" + num + "-All-HourlyAggregate.csv";
-		String archivoM = "./data/bogota-cadastral-2018-" + num + "-All-MonthlyAggregate.csv";
-		String archivoW = "./data/bogota-cadastral-2018-" + num + "-WeeklyAggregate.csv";
+		String archivoH1 = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
+		String archivoM1 = "./data/bogota-cadastral-2018-1-All-MonthlyAggregate.csv";
+		String archivoW1 = "./data/bogota-cadastral-2018-1-WeeklyAggregate.csv";
+		String archivoH2 = "./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv";
+		String archivoM2 = "./data/bogota-cadastral-2018-2-All-MonthlyAggregate.csv";
+		String archivoW2 = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
+		String archivoH3 = "./data/bogota-cadastral-2018-3-All-HourlyAggregate.csv";
+		String archivoM3 = "./data/bogota-cadastral-2018-3-All-MonthlyAggregate.csv";
+		String archivoW3 = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
 		String[] header = new String[1];
 		try {
-			reader = new CSVReader(new FileReader(archivoH));
+			reader = new CSVReader(new FileReader(archivoH1));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				viajesH = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
+				viajesH1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
 			}
-			reader = new CSVReader(new FileReader(archivoM));
+			reader = new CSVReader(new FileReader(archivoM1));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				viajesM = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
+				viajesM1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
 			}
-			reader = new CSVReader(new FileReader(archivoW));
+			reader = new CSVReader(new FileReader(archivoW1));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				viajesW = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], num);
+				viajesW1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
+			}
+			reader = new CSVReader(new FileReader(archivoH2));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesH2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
+			}
+			reader = new CSVReader(new FileReader(archivoM2));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesM2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
+			}
+			reader = new CSVReader(new FileReader(archivoW2));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesW2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
+			}
+			reader = new CSVReader(new FileReader(archivoH3));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesH3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
+			}
+			reader = new CSVReader(new FileReader(archivoM3));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesM3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
+			}
+			reader = new CSVReader(new FileReader(archivoW3));
+			header = reader.readNext();
+			for (String[] nextLine : reader) {
+				viajesW3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -125,12 +161,12 @@ public class MVCModelo {
 
 	// PARTE A
 	/**
-	 * 1A-Obtener las N letras más frecuentes por las que comienza el nombre de una zona.
+	 * 1A-Obtener las N letras mï¿½s frecuentes por las que comienza el nombre de una zona.
 	 * N es un dato de entrada.El resultado debe aparecer de mayor a menor. 
 	 * Para cada letra se debe imprimir la letra y el nombre de las zonas que comienzan por esa letra.
 	 * 
-	 * @param N numero de letras más frecuentes.
-	 * @return ----- ordenado de las N letras más frecuentes
+	 * @param N numero de letras mï¿½s frecuentes.
+	 * @return ----- ordenado de las N letras mï¿½s frecuentes
 	 */
 	public String letrasMasFrecuentes(int N) {
 		String rta = "";
@@ -139,7 +175,7 @@ public class MVCModelo {
 	}
 
 	/**
-	 *2A-Buscar los nodos que delimitan las zonas por Localización Geográfica (latitud, longitud).
+	 *2A-Buscar los nodos que delimitan las zonas por Localizaciï¿½n Geogrï¿½fica (latitud, longitud).
 	 *Dadas una latitud y una longitud, se deben mostrar todos los nodos en la frontera de las zonas que
 	 *tengan la misma latitud y longitud truncando a las primeras 3 cifras decimales.
 	 * 
@@ -153,10 +189,10 @@ public class MVCModelo {
 	}
 
 	/**
-	 * Buscar los tiempos promedio de viaje que están en un rango y que son del primer trimestre del 2018.
+	 * Buscar los tiempos promedio de viaje que estï¿½n en un rango y que son del primer trimestre del 2018.
 	 * Dado un rango de tiempos promedio de viaje en segundos [limite_bajo,limite_alto],
-	 * retornar los viajes cuyo tiempo promedio mensual esté en ese rango.
-	 * Se debe mostrar únicamente N viajes ordenados por zona de origen y zona de destino. 
+	 * retornar los viajes cuyo tiempo promedio mensual estï¿½ en ese rango.
+	 * Se debe mostrar ï¿½nicamente N viajes ordenados por zona de origen y zona de destino. 
 	 * Por cada viaje se  debe mostrar su zona de origen, zona de destino, mes y tiempo promedio mensual del viaje.
 	 * 
 	 * @param El minimo y maximo para buscar
