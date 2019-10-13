@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 
 import model.data_structures.HashTableLinearProbing;
-import model.logic.TravelTime;
+import model.logic.UberTrip;
 
 public class TestHashTableLinearProbing {
 	
@@ -20,12 +20,12 @@ public class TestHashTableLinearProbing {
 	public void setUp1() {
 		CSVReader reader = null;
 		String[] header = new String[1];
-		TravelTime carga;
+		UberTrip carga;
 		try {
 			reader = new CSVReader(new FileReader("./docs/DatosPrueba.csv"));
 			header = reader.readNext();
 			for (String[] nextLine : reader) {
-				carga = new TravelTime(nextLine, 1);
+				carga = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
 				linPr.put(carga.darLlave(), carga.darValor());
 			}
 
@@ -53,7 +53,7 @@ public class TestHashTableLinearProbing {
 	public void testInsertar1() {
 		setUp1();
 		String[] nuevo = {"4", "58", "10", "1474.35", "483.6", "1414.18", "1.32"};
-		TravelTime nuevoDato = new TravelTime(nuevo, 1);
+		UberTrip nuevoDato = new UberTrip(nuevo[0], nuevo[1], nuevo[2], nuevo[3],nuevo[4], 1);
 		linPr.put(nuevoDato.darLlave(), nuevoDato.darValor());
 		assertEquals("No se agrego el dato correctamente", 36, linPr.darTamano());
 	}
@@ -63,7 +63,7 @@ public class TestHashTableLinearProbing {
 		setUp1();
 		boolean siEs = false;
 		String[] nuevo = {"4", "58", "10", "1474.35", "483.6", "1414.18", "1.32"};
-		TravelTime nuevoDato = new TravelTime(nuevo, 1);
+		UberTrip nuevoDato = new UberTrip(nuevo[0], nuevo[1], nuevo[2], nuevo[3], nuevo[4], 1);
 		linPr.put(nuevoDato.darLlave(), nuevoDato.darValor());
 		String key = 1+"-"+4+"-"+58;
 		String valor = linPr.get(key);

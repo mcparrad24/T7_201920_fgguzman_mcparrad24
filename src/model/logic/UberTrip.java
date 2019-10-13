@@ -8,6 +8,8 @@ public class UberTrip implements Comparable<UberTrip> {
 	private double tiempo;
 	private double desviacion;
 	private int trimestre;
+	private String llave;
+	private String valor;
 	
 	public UberTrip(String idOrigen, String idDestino, String HMD, String tiempo, String desviacion,
 			int trimestre) {
@@ -17,12 +19,17 @@ public class UberTrip implements Comparable<UberTrip> {
 		this.tiempo = Double.parseDouble(tiempo);
 		this.desviacion = Double.parseDouble(desviacion);
 		this.trimestre = trimestre;
+		this.llave = darLlave();
+		this.valor = darValor();
 	}
 
 	public int compareTo(UberTrip viaje) {
-		int menor = 0;
+		int menor = 1;
 		if(this.tiempo < viaje.tiempo) {
 			menor = -1;
+		}
+		else if (this.tiempo == viaje.tiempo) {
+			menor = 0;
 		}
 		return menor;
 	}
@@ -49,6 +56,16 @@ public class UberTrip implements Comparable<UberTrip> {
 	
 	public int darTrimestre() {
 		return trimestre;
+	}
+	
+	public String darLlave() {
+		llave = this.trimestre+"-"+this.idOrigen+"-"+this.idDestino;
+		return llave;
+	}
+	
+	public String darValor() {
+		valor = this.trimestre+","+this.idOrigen+","+this.idDestino+","+this.HMD+","+this.tiempo;
+		return valor;
 	}
 	
 	public String toString() {

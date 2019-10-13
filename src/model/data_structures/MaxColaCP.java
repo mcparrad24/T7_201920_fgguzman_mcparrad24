@@ -20,7 +20,7 @@ public class MaxColaCP<T extends Comparable<T>> implements IMaxColaCP<T> {
 	/**
 	 * Retornar el numero de elementos presentes en la cola
 	 * 
-	 * @return tamaño de la cola
+	 * @return tamaï¿½o de la cola
 	 */
 	public int darTamano() {
 		return tamanoAct;
@@ -42,6 +42,7 @@ public class MaxColaCP<T extends Comparable<T>> implements IMaxColaCP<T> {
 			Node<T> nuevo = new Node<T>();
 			nuevo.dato = dato;
 			last.next = nuevo;
+			nuevo.previous = last;
 			last = nuevo;
 			if (nuevo.dato.compareTo(max.dato) >= 1) {
 				max = nuevo;
