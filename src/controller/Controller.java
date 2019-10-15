@@ -44,7 +44,7 @@ public class Controller {
 				System.out.println("Total viajes por mes: " + modelo.totalMes() + "\n---------");	
 				break;
 			case 2:
-				System.out.println("--------- \nIngresar el número de letras con las que quiere realizar la consulta: ");
+				System.out.println("--------- \nIngresar el numero de letras con las que quiere realizar la consulta: ");
 				N = lector.next();
 				break;
 			case 3:
@@ -54,7 +54,7 @@ public class Controller {
 				break;
 			case 4:
 				System.out.println("--------- \nHacer la consulta con:");
-				System.out.println("1. Tiempos de viaje que están en un rango y que son del primero trimestre del 2018");
+				System.out.println("1. Tiempos de viaje que estan en un rango y que son del primero trimestre del 2018");
 				System.out.println("2. Tiempos de viaje que salen de una zona dada y a una hora dada");
 				System.out.println("3. Tiempos de viaje que llegan a una zona dada y en un rango de horas");
 				eleccion = lector.next();
@@ -69,7 +69,7 @@ public class Controller {
 				}
 				break;
 			case 5:
-				System.out.println("--------- \nIngresar el número de zonas con las que quiere realizar la consulta: ");
+				System.out.println("--------- \nIngresar el numero de zonas con las que quiere realizar la consulta: ");
 				N = lector.next();
 				break;
 			case 6:
@@ -78,12 +78,12 @@ public class Controller {
 				datos = dato.split(",");
 				break;
 			case 7:
-				System.out.println("--------- \nIngresar un rango de desviaciones estándar [limite_bajo,limite_alto]");
+				System.out.println("--------- \nIngresar un rango de desviaciones estandar [limite_bajo,limite_alto]");
 				dato = lector.next();
 				datos = dato.split(",");
 				break;
 			case 8:
-				System.out.println("--------- \nIngresar el número de zonas priorizadas con las que quiere realizar la consulta: ");
+				System.out.println("--------- \nIngresar el numero de zonas priorizadas con las que quiere realizar la consulta: ");
 				dato = lector.next();
 				datos = dato.split(",");
 				break;

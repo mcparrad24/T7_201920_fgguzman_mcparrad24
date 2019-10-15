@@ -166,10 +166,10 @@ public class MVCModelo {
 	 * Para cada letra se debe imprimir la letra y el nombre de las zonas que comienzan por esa letra.
 	 * 
 	 * @param N numero de letras mï¿½s frecuentes.
-	 * @return ----- ordenado de las N letras mï¿½s frecuentes
+	 * @return arreglo ordenado de las N letras mï¿½s frecuentes
 	 */
-	public String letrasMasFrecuentes(int N) {
-		String rta = "";
+	public String[] letrasMasFrecuentes(int N) {
+		String rta[] = null;
 
 		return rta;
 	}
@@ -180,12 +180,12 @@ public class MVCModelo {
 	 *tengan la misma latitud y longitud truncando a las primeras 3 cifras decimales.
 	 * 
 	 * @param lat latitud dada, lon longitud dada
-	 * @return ----- de los nodos que pertenecen
+	 * @return arreglo de los nodos que pertenecen
 	 */
-	public int buscarLatitudLongitud(double lat, double lon) {
-		int tam = 0;
+	public String[] buscarLatitudLongitud(double lat, double lon) {
+		String rta[] = null;
 
-		return tam;
+		return rta;
 	}
 
 	/**
@@ -196,192 +196,115 @@ public class MVCModelo {
 	 * Por cada viaje se  debe mostrar su zona de origen, zona de destino, mes y tiempo promedio mensual del viaje.
 	 * 
 	 * @param El minimo y maximo para buscar
-	 * @return ------- de los viajes
+	 * @return arreglo de los viajes
 	 */
-	public int tiempoPromRangoMes(int min, int max) {
-		int tam = 0;
+	public String[] tiempoPromRangoMes(int min, int max) {
+		String rta[] = null;
 
-		return tam;
+		return rta;
 	}
 
 	// PARTE B
 	/**
-	 * 1B Consultar el tiempo promedio de viaje y su desviacion estandar de los
-	 * viajes entre una zona de origen y una zona destino para un dia dado de la
-	 * semana.
+	 * 1B Buscar los N zonas que están más al norte.
+	 * Una zona A esta más al Norte que una zona B si algún punto de la frontera de A 
+	 * está más al norte que todos los puntos de la frontera de B.
 	 * 
-	 * @param zonaOrigen ID de la zona de origen zonaDestino ID de la zona destino
-	 *                   dia Numero que representa el dia de la semana
-	 * @return String de tiempo promedio y desviacion estandar
+	 * @param N viajes mas al norte
+	 * @return arreglo zonas ordenadas  desde  las  que  estén  más  al  norte. 
 	 */
-	public String tiempoPromedioDesviacionDia(String zonaOrigen, String zonaDestino, String dia) {
-		String rta = "";
-		Queue<String[]> copia = datosW;
-		Queue<String[]> zonas = new Queue<String[]>();
-		for (int i = 0; i <= datosW.darTamano() - 1; i++) {
-			String[] actual = copia.dequeue();
-			if (actual[0].equals(zonaOrigen) && actual[1].equals(zonaDestino) && actual[3].equals(dia)) {
-				zonas.enqueue(actual);
-			}
-		}
-		if (zonas.isEmpty()) {
-			rta = null;
-		} else {
-			double tPromedio = tiempoPromedio(zonas);
-			double desvEstPromedio = desviacionEstandarPromedio(zonas);
-			rta = tPromedio + ", " + desvEstPromedio;
-		}
+	public String[] viajesAlNorte(int N) {
+		String rta[] = null;
+
 		return rta;
 	}
 
 	/**
-	 * 2B Consultar la informacion de los N viajes con mayor tiempo promedio para un
-	 * dia dado.
+	 * 2B Buscar nodos de la malla vial por Localización Geográfica (latitud, longitud).
+	 * Dado una latitud y una longitud, se deben mostrar todos los nodos que tengan esas
+	 * mismas latitud y longitud truncando a 2 cifras decimales. 
 	 * 
-	 * @param N Numero de viajes a consultar dia Numero que representa el dia de la
-	 *          semana
-	 * @return Queue de los viajes ordenados
+	 * @param lat latitud dada, lon longitud dada
+	 * @return arreglo de los nodos que pertenecen
 	 */
-	public Queue<String[]> tiempoPromViajesDia(String N, String dia) {
-		int tam = datosW.darTamano();
-		Queue<String[]> viajesDia = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datosW.dequeue();
-			if (Integer.parseInt(actual[2]) == Integer.parseInt(dia)) {
-				viajesDia.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesDia);
-		Queue<String[]> nViajes = new Queue<String[]>();
-		for (int i = 0; i < Integer.parseInt(N); i++) {
-			nViajes.enqueue(ordenados.dequeue());
-		}
-		return nViajes;
+	public String[] mismaLatitudLongitud(double lat, double lon) {
+		String rta[] = null;
+
+		return rta;
 	}
 
 	/**
-	 * 3B Comparar los tiempos promedios de los viajes para una zona dada contra
-	 * cada zona X en un rango de zonas dado [Zona menor, Zona Mayor] en ambos
-	 * sentidos (zona dada - zona X vs. zona X - zona dada) para un dia dado. Los
-	 * resultados deben estar ordenados ascendentemente por el identificador de la
-	 * zona X en el rango dado.
-	 * 
-	 * @return Los datos ordenados en el rango deseado y el mes dado
+	 * 3B Buscar los tiempos de espera que tienen una desviación estándar 
+	 * en un rango dado y que son del primer trimestre del 2018.
+	 * Dado un rango de desviaciones estándares [limite_bajo,limite_alto] 
+	 * retornar los viajes cuya desviación estándar mensual este en ese rango.
+	 * Se debe mostrar únicamente N viajes ordenados por zona de origen y zona de destino.
+	 * De cada viaje se debe mostrar la zona de origen, zona de destino, mes y la desviación estándar del viaje.
+	 * @param El minimo y maximo para buscar
+	 * @return arreglo de los viajes
 	 */
-	public Queue<String[]> tiempoPromRangoDia(String zonaDada, String zonaMenor, String zonaMayor, String dia) {
-		int tam = datosW.darTamano();
-		Queue<String[]> viajesDia = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datosW.dequeue();
-			if ((Integer.parseInt(actual[0]) > Integer.parseInt(zonaMenor))
-					&& (Integer.parseInt(actual[0]) < Integer.parseInt(zonaMayor))
-					&& ((Integer.parseInt(actual[1]) > Integer.parseInt(zonaMenor))
-							&& (Integer.parseInt(actual[1]) < Integer.parseInt(zonaMayor)))
-					&& (actual[2].equals(dia))) {
-				viajesDia.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesDia);
-		return ordenados;
+	public String[] desviacionEstandarRangoMes(int min, int max) {
+		String rta[] = null;
+
+		return rta;
 	}
 
 	// PARTE C
 	/**
-	 * 1C Consultar los viajes entre una zona de origen y una zona destino en una
-	 * franja horaria (hora inicial - hora final) dada.
+	 * 1C Retornar todos los  tiempos  de  viaje promedio  que  salen  de una  zona  dada 
+	 * y  a una hora dada.Dados el Id de una zona de salida y una hora que son ingresados
+	 * por el usuario, retornar los tiempos de viaje promedio con esas características.
+	 * Se debe mostrar la zona de origen, zona de destino, hora y tiempo promedio de cada viaje
 	 * 
-	 * @return Queue con los viajes que cumplen el rango, el origen y el destino;
-	 *         ordenados
+	 * @param inicio de zona de salida y h hora
+	 * @return arreglo de los viajes
 	 */
-	public Queue<String[]> viajesFranja(String origen, String destino, String horaIn, String horaFin) {
-		int tam = datosW.darTamano();
-		Queue<String[]> viajesHora = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datosH.dequeue();
-			if ((Integer.parseInt(actual[2]) > Integer.parseInt(horaIn))
-					&& (Integer.parseInt(actual[2]) < Integer.parseInt(horaFin)) && (actual[0].equals(origen))
-					&& (actual[1].equals(destino))) {
-				viajesHora.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesHora);
-		return ordenados;
+	public String[] viajesFranja(String inicio, String h) {
+		String rta[] = null;
+
+		return rta;
 	}
 
 	/**
-	 * 2C Consultar la informacion de los N viajes con mayor tiempo promedio para
-	 * una hora dada.
+	 * 2C Retornar todos  los  tiempos  de viaje que  llegan  de una  zona  dada  y  en  un  rango de horas.
+	 * mostrar todos los tiempos de viaje promedio  que cumplan esos criterios. 
+	 * Se debe mostrar la zona de origen, zona de destino, hora y tiempo promedio de cada viaje. 
 	 * 
-	 * @param N Numero de viajes a consultar hora Hora del dia
-	 * @return Queue de los viajes ordenados
-	 */
-	public Queue<String[]> tiempoPromViajesHora(String N, String hora) {
-		return tPromViaHora(N, hora, datosH);
-	}
-
-	public Queue<String[]> tPromViaHora(String N, String hora, Queue<String[]> datos) {
-		int tam = datos.darTamano();
-		int horas = Integer.parseInt(hora);
-		Queue<String[]> viajesHora = new Queue<String[]>();
-		for (int i = 0; i < tam; i++) {
-			String[] actual = datos.dequeue();
-			if (Integer.parseInt(actual[2]) == horas) {
-				viajesHora.enqueue(actual);
-			}
-		}
-		Queue<String[]> ordenados = ordenarViajesQuickSort(viajesHora);
-		Queue<String[]> nViajes = new Queue<String[]>();
-		for (int i = 0; i < Integer.parseInt(N); i++) {
-			nViajes.enqueue(ordenados.dequeue());
-		}
-		return nViajes;
-	}
-
-	/**
-	 * 3C Generar una grafica ASCII que muestre el tiempo promedio de los viajes
-	 * entre una zona origen y una zona destino para cada hora del dia. Cada * en la
-	 * grafica corresponde a 1 minuto. Un tiempo promedio se aproxima a los minutos
-	 * mas cercanos.
-	 * 
-	 * @param zonaOrigen ID de la zona de origen zonaDestino ID de la zona destino
+	 * @param destino zona de llegada, y rango de horas
 	 * @return Arreglo con los viajes
 	 */
-	public String[] graficaASCII(String zonaOrigen, String zonaDestino) {
-		int minutos;
-		double tiempo;
-		String[] viajesAscii = new String[24];
-		String aster = "";
-		Queue<String[]> copia = datosH;
-		Queue<String[]> zonas = new Queue<String[]>();
-		for (int i = 0; i <= copia.darTamano() - 1; i++) {
-			String[] actual = copia.dequeue();
-			if (actual[0].equals(zonaOrigen) && actual[1].equals(zonaDestino)) {
-				zonas.enqueue(actual);
-			}
-		}
-		Queue<String[]> ascii = zonas;
-		for (int i = 0; i <= ascii.darTamano() - 1 && ascii != null; i++) {
-			String[] actual = ascii.dequeue();
-			for (int hor = 0; hor <= 23; hor++) {
-				if (actual[2].equals(String.valueOf(hor))) {
-					tiempo = Double.parseDouble(actual[3]);
-					minutos = (int) tiempo / 60;
-					for (int j = 0; j < minutos; j++) {
-						String a = "*";
-						aster = aster + a;
-					}
-					viajesAscii[hor] = "";
-					viajesAscii[hor] = viajesAscii[hor] + aster;
-				}
-			}
-		}
-		aster = "hora sin viajes";
-		for (int i = 0; i < viajesAscii.length; i++) {
-			if (viajesAscii[i] == null) {
-				viajesAscii[i] = aster;
-			}
-		}
-		return viajesAscii;
+	public String[] tiempoPromViajesHora(String destino, String horainicial, String horafinal) {
+		String rta[] = null;
+
+		return rta;
+	}
+
+	/**
+	 * 3C Obtener las N zonas priorizadas por la mayor cantidad de nodos que definen su frontera.
+	 * El valor N es un dato de entrada.Por cada zona se debe mostrar el nombre de la zona y el número de nodos que definen su frontera.
+	 * 
+	 * @param N numero de datos
+	 * @return Arreglo con los viajes
+	 */
+	public String[] zonasFronterizas(String N) {
+		String rta[] = null;
+
+		return rta;
+	}
+	
+	/**
+	 * 4C Gráfica  ASCII -Porcentaje  de  datos  faltantes para  el  primer  semestre  2018.
+	 * Crear una gráfica que muestre por cada zona de origen que porcentaje de datos faltan 
+	 * (un dato faltante indica que no hubo ningún viaje desde la zona de origen a la zona 
+	 * destino a una hora dada en un trimestre dado) 
+	 * 
+	 * @param inicial la zona de origen, destino la zona final, hora la hora dada, trimestre el trimestre
+	 * @return Arreglo con los viajes
+	 */
+	public String[] graficaASCII(String inicial, String destino, String hora, String trimestre) {
+		String rta[] = null;
+
+		return rta;
 	}
 
 	// METODOS UTILES
@@ -390,7 +313,7 @@ public class MVCModelo {
 	 * 
 	 * @param datos Queue de los datos a ordenar
 	 * @return Queue con los datos ordenados
-	 */
+
 	public TravelTime[] ordenarViajesQuickSort(TravelTime[] clus) {
 		int izq = 0;
 		int der = clus.length - 1;
@@ -408,7 +331,7 @@ public class MVCModelo {
 	 *              posicion del dato en la izquierda del queue der Numero que
 	 *              representa la posicion del dato en la derecha del queue
 	 * @return
-	 */
+
 	public int quicksort(TravelTime[] clus, int izq, int der) {
 		String[] au = {"0", "0", "0", "0", "0"};
 		TravelTime pivote = (TravelTime) clus[izq];
@@ -433,7 +356,7 @@ public class MVCModelo {
 	 * 
 	 * @param datos Queue con los datos
 	 * @return El tiempo promedio de los datos del queue.
-	 */
+
 	public double tiempoPromedio(Queue<String[]> datos) {
 		int tam = datos.darTamano();
 		double tiempo = 0;
@@ -452,7 +375,7 @@ public class MVCModelo {
 	 * 
 	 * @param datos Queue con los datos
 	 * @return La desviacion estandar promedio de los datos del queue.
-	 */
+
 	public double desviacionEstandarPromedio(Queue<String[]> datos) {
 		int tam = datos.darTamano();
 		double desvEst = 0;
@@ -464,4 +387,5 @@ public class MVCModelo {
 		desvEstPromedio = (desvEst / tam);
 		return desvEstPromedio;
 	}
+	*/
 }
