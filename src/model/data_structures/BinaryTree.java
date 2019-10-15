@@ -19,7 +19,9 @@ public class BinaryTree <Key extends Comparable<Key>, Value> implements IBinaryT
             this.tamano = size;
         }
     }
-	
+    public BinaryTree() {
+    }
+
 	/**
 	 * Retornar el numero de elementos presentes en el árbol
 	 * @return tamano del árbol
