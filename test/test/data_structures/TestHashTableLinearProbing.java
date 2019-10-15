@@ -74,7 +74,7 @@ public class TestHashTableLinearProbing {
 	}
 	
 	@Test
-	public void testEliminarMax1() {
+	public void testEliminar1() {
 		setUp1();
 		String key = 1+"-"+1141+"-"+416;
 		linPr.delete(key);
@@ -82,7 +82,7 @@ public class TestHashTableLinearProbing {
 	}
 	
 	@Test
-	public void testEliminarMax2() {
+	public void testEliminar2() {
 		setUp1();
 		String key = 1+"-"+1141+"-"+416;
 		String valor = linPr.delete(key);
