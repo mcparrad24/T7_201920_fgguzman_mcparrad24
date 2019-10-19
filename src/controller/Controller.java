@@ -38,7 +38,6 @@ public class Controller {
 			switch (option) {
 			case 1:
 				modelo.JSONLector();
-				modelo.CSVLector();
 				System.out.println("Total viajes por hora: " + modelo.totalHora() + "\n---------");
 				System.out.println("Total viajes por semana: " + modelo.totalSemana() + "\n---------");
 				System.out.println("Total viajes por mes: " + modelo.totalMes() + "\n---------");	

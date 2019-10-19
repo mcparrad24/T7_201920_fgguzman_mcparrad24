@@ -8,6 +8,9 @@ import java.util.*;
 
 import com.opencsv.CSVReader;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 
@@ -16,117 +19,30 @@ import com.google.gson.stream.JsonToken;
  *
  */
 public class MVCModelo {
-	private UberTrip viajesH1, viajesM1, viajesW1, viajesH2, viajesM2, viajesW2, viajesH3, viajesM3, viajesW3;
 	private ZonaJSON zonas;
-	private MallaVial mallas;
-
 	// CARGA DE INFORMACION
 	/**
-	 * Lector de los archivos de excel
-	 * 
-	 * @param numero de trimestre deseado
+	 * Lector de los archivos de JSON
 	 */
-	public void CSVLector() {
-		CSVReader reader = null;
-		String archivoH1 = "./data/bogota-cadastral-2018-1-All-HourlyAggregate.csv";
-		String archivoM1 = "./data/bogota-cadastral-2018-1-All-MonthlyAggregate.csv";
-		String archivoW1 = "./data/bogota-cadastral-2018-1-WeeklyAggregate.csv";
-		String archivoH2 = "./data/bogota-cadastral-2018-2-All-HourlyAggregate.csv";
-		String archivoM2 = "./data/bogota-cadastral-2018-2-All-MonthlyAggregate.csv";
-		String archivoW2 = "./data/bogota-cadastral-2018-2-WeeklyAggregate.csv";
-		String archivoH3 = "./data/bogota-cadastral-2018-3-All-HourlyAggregate.csv";
-		String archivoM3 = "./data/bogota-cadastral-2018-3-All-MonthlyAggregate.csv";
-		String archivoW3 = "./data/bogota-cadastral-2018-3-WeeklyAggregate.csv";
-		String[] header = new String[1];
-		try {
-			reader = new CSVReader(new FileReader(archivoH1));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesH1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
-			}
-			reader = new CSVReader(new FileReader(archivoM1));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesM1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
-			}
-			reader = new CSVReader(new FileReader(archivoW1));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesW1 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 1);
-			}
-			reader = new CSVReader(new FileReader(archivoH2));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesH2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
-			}
-			reader = new CSVReader(new FileReader(archivoM2));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesM2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
-			}
-			reader = new CSVReader(new FileReader(archivoW2));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesW2 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 2);
-			}
-			reader = new CSVReader(new FileReader(archivoH3));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesH3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
-			}
-			reader = new CSVReader(new FileReader(archivoM3));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesM3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
-			}
-			reader = new CSVReader(new FileReader(archivoW3));
-			header = reader.readNext();
-			for (String[] nextLine : reader) {
-				viajesW3 = new UberTrip(nextLine[0], nextLine[1], nextLine[2], nextLine[3], nextLine[4], 3);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-
-		}
-	}
 
 	public void JSONLector() {
+		String str = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[-74.200295,4.617249],[-74.200285,4.617248],[-74.200277,4.617248],[-74.200257,4.617246] ...]]],\"properties\":{\"cartodb_id\":12,\"scacodigo\":\"004575\",\"scatipo\":0,\"scanombre\":\"LOS LAURELES\",\"shape_leng\":0.02774133557,\"shape_area\":0.00003682838,\"MOVEMENT_ID\":\"1\",\"DISPLAY_NAME\":\"LOS LAURELES, 004575 (1)\"}}";
+
+		JsonParser parser = new JsonParser();
+		JsonObject element = (JsonObject)parser.parse(str);
+
+		JsonElement responseWrapper = element.get("properties");
 		Gson gson = new Gson();
 		String path = "./data/bogota_cadastral.json";
 		JsonReader reader;
 		try {
 			reader = new JsonReader(new FileReader(path));
-			zonas = gson.fromJson(reader, ZonaJSON.class);
+			zonas = gson.fromJson(reader, ZonaJSON[].class);
+			
 			System.out.println(zonas);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void TXTLector() {
-		FileReader fr = null;
-		BufferedReader br = null;
-		try {
-			fr = new FileReader("./data/Nodes_of_red_vial-wgs84_shp.txt");
-			br = new BufferedReader(fr);
-			String st;
-			String[] a = new String[3];
-			while ((st = br.readLine()) != null) {
-				a = st.split(",");
-				mallas = new MallaVial(a[0], a[1], a[2]);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	/**
