@@ -16,7 +16,6 @@ import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 
 import model.data_structures.RedBlackBST;
-import model.logic.TravelTime;
 import model.logic.ZonaJSON;
 
 public class TestRedBlackBST {
