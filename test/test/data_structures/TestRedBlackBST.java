@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -124,12 +125,30 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testLlaveMin() {
-
+		setUp1();
+		int keyEsp = 1;
+		String valueEsp = "LOS LAURELES" + "," + "0.02774133557" + "," + "0.00003682838" + "," + 4;
+		int key = arbol.min();
+		String value = arbol.get(key);
+		boolean siEs = false;
+		if(keyEsp == key && valueEsp.equals(value)) {
+			siEs = true;
+		}
+		assertEquals("La llave dada no es la correcta", true, siEs);
 	}
 
 	@Test
 	public void testLlaveMax() {
-
+		setUp1();
+		int keyEsp = 10;
+		String valueEsp = "ARBORIZADORA ALTA" + "," + "0.02491132946" + "," + "0.00001679339" + "," + 13;
+		int key = arbol.max();
+		String value = arbol.get(key);
+		boolean siEs = false;
+		if(keyEsp == key && valueEsp.equals(value)) {
+			siEs = true;
+		}
+		assertEquals("La llave dada no es la correcta", true, siEs);
 	}
 
 	@Test
@@ -139,11 +158,68 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testLlavesRango() {
-
+		setUp1();
+		int keyEsp1 = 4;
+		int keyEsp2 = 5;
+		int keyEsp3 = 6;
+		String valEsp1 = arbol.get(keyEsp1);
+		String valEsp2 = arbol.get(keyEsp2);
+		String valEsp3 = arbol.get(keyEsp3);
+		int key2 = 0;
+		int key3 = 0;
+		Iterator llavesIt = arbol.keysRango(4, 6);
+		int key = (int) llavesIt.next();
+		int key1 = key;
+		int i = 0;
+		while (llavesIt.hasNext()) {
+			key = (int) llavesIt.next();
+			if (i == 0) {
+				key2 = key;
+			}
+			else if (i == 1) {
+				key3 = key;
+			}
+			i++;
+		}
+		String val1 = arbol.get(key1);
+		String val2 = arbol.get(key2);
+		String val3 = arbol.get(key3);
+		boolean siEs = false;
+		if (keyEsp1 == key1 && keyEsp2 == key2 && keyEsp3 == key3 && valEsp1.equals(val1) && valEsp2.equals(val2) && valEsp3.equals(val3)) {
+			siEs = true;
+		}
+		assertEquals("Las llaves del rango no son las correctas", true, siEs);
 	}
 
 	@Test
 	public void testValoresRango() {
-
+		setUp1();
+		int key1 = 4;
+		int key2 = 5;
+		int key3 = 6;
+		String valEsp1 = arbol.get(key1);
+		String valEsp2 = arbol.get(key2);
+		String valEsp3 = arbol.get(key3);
+		String val2 = "";
+		String val3 = "";
+		Iterator valsIt = arbol.valuesRango(4, 6);
+		String val = (String) valsIt.next();
+		String val1 = val;
+		int i = 0;
+		while (valsIt.hasNext()) {
+			val = (String) valsIt.next();
+			if (i == 0) {
+				val2 = val;
+			}
+			else if (i == 1) {
+				val3 = val;
+			}
+			i++;
+		}
+		boolean siEs = false;
+		if (valEsp1.equals(val1) && valEsp2.equals(val2) && valEsp3.equals(val3)) {
+			siEs = true;
+		}
+		assertEquals("Los valores del rango no son los correctos", true, siEs);
 	}
 }
