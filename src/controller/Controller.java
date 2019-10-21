@@ -15,7 +15,7 @@ public class Controller {
 	/* Instancia de la Vista */
 	private MVCView view;
 	
-	private Queue llaves = new Queue<>();
+	private Queue<Integer> llaves = new Queue<>();
 	private Queue<String> vals = new Queue<>();
 
 	/**
@@ -41,8 +41,8 @@ public class Controller {
 				modelo.JSONLector();
 				System.out.println("Total zonas: " + modelo.totalZonas() + "\n---------");
 				datos = modelo.valoresMinMax();
-				System.out.println("Valor minimo: " + datos[0] + "\n---------");
-				System.out.println("Valor maximo: " + datos[1] + "\n---------");	
+				System.out.println("Valor maximo: " + datos[0] + "\n---------");
+				System.out.println("Valor minimo: " + datos[1] + "\n---------");	
 				break;
 			case 2:
 				System.out.println("--------- \nConsultar zona por id (e.g. 5)");
@@ -54,9 +54,9 @@ public class Controller {
 				else {
 				String [] valores = value.split(",");
 				System.out.println("Nombre de la zona: " + valores[0] + "\n");
-				System.out.println("Perímetro de la zona: " + valores[1] + "\n");
-				System.out.println("Área de la zona: " + valores[2] + "\n");
-				System.out.println("Número de puntos que definen el perímetro de la zona: " + valores[3] + "\n");
+				System.out.println("Peimetro de la zona: " + valores[1] + "\n");
+				System.out.println("Area de la zona: " + valores[2] + "\n");
+				System.out.println("Numero de puntos que definen el perimetro de la zona: " + valores[3] + "\n");
 				}
 				
 				break;
@@ -77,9 +77,9 @@ public class Controller {
 						String valor = vals.dequeue();
 						String valores[] = valor.split(",");
 						System.out.println("Nombre de la zona: " + valores[0] + "\n");
-						System.out.println("Perímetro de la zona: " + valores[1] + "\n");
-						System.out.println("Área de la zona: " + valores[2] + "\n");
-						System.out.println("Número de puntos que definen el perímetro de la zona: " + valores[3] + "\n");
+						System.out.println("Perimetro de la zona: " + valores[1] + "\n");
+						System.out.println("Area de la zona: " + valores[2] + "\n");
+						System.out.println("Numero de puntos que definen el perimetro de la zona: " + valores[3] + "\n");
 					}
 				}
 				break;

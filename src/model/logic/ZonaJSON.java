@@ -47,7 +47,7 @@ public class ZonaJSON {
 	}
 	
 	public void cambiarValor() {
-		valor = valor = scanombre + "," + shape_leng + "," + shape_area + "," + ptosGeo;
+		valor = scanombre + "," + shape_leng + "," + shape_area + "," + ptosGeo;
 	}
 
 

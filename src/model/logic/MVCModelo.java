@@ -7,7 +7,6 @@ import model.data_structures.RedBlackBST;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
@@ -18,7 +17,7 @@ import com.google.gson.stream.JsonReader;
 public class MVCModelo {
 	private ZonaJSON zonas;
 	private RedBlackBST<Integer,String> datos = new RedBlackBST<>();
-	private Queue keys = new Queue();
+	private Queue<Integer> keys = new Queue<>();
 	private Queue<String> values = new Queue<>();
 	// CARGA DE INFORMACION
 	/**
@@ -36,7 +35,7 @@ public class MVCModelo {
 			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("properties");
 			while(i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
 				e = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("properties");
-				pts = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray().size();
+				pts = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray().get(0).getAsJsonArray().get(0).getAsJsonArray().size();
 				zonas = gson.fromJson(e, ZonaJSON.class);
 				zonas.setPtosGeo(pts);
 				datos.insertar(zonas.getId(),zonas.getValor());
@@ -65,8 +64,8 @@ public class MVCModelo {
 		return valor;
 	}
 	
-	public Queue idRangoEspecificoLlaves(int movIDIn, int movIDMax) {
-		Iterator llaves = datos.keysRango(movIDIn, movIDMax);
+	public Queue<Integer> idRangoEspecificoLlaves(int movIDIn, int movIDMax) {
+		Iterator<Integer> llaves = datos.keysRango(movIDIn, (movIDMax+1));
 		int key = (int) llaves.next();
 		while (llaves.hasNext()) {
 			keys.enqueue(key);
@@ -76,7 +75,7 @@ public class MVCModelo {
 	}
 	
 	public Queue<String> idRangoEspecificoValores(int movIDIn, int movIDMax) {
-		Iterator valores = datos.valuesRango(movIDIn, movIDMax);
+		Iterator<String> valores = datos.valuesRango(movIDIn, (movIDMax+1));
 		String valor = (String) valores.next();
 		while (valores.hasNext()) {
 			values.enqueue(valor);
