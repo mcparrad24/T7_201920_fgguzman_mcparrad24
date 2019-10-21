@@ -26,20 +26,19 @@ public class MVCModelo {
 	 */
 
 	public void JSONLector() {
-		String str = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"geometry\":{\"type\":\"MultiPolygon\",\"coordinates\":[[[[-74.200295,4.617249],[-74.200285,4.617248],[-74.200277,4.617248],[-74.200257,4.617246] ...]]],\"properties\":{\"cartodb_id\":12,\"scacodigo\":\"004575\",\"scatipo\":0,\"scanombre\":\"LOS LAURELES\",\"shape_leng\":0.02774133557,\"shape_area\":0.00003682838,\"MOVEMENT_ID\":\"1\",\"DISPLAY_NAME\":\"LOS LAURELES, 004575 (1)\"}}";
-
-		JsonParser parser = new JsonParser();
-		JsonObject element = (JsonObject)parser.parse(str);
-
-		JsonElement responseWrapper = element.get("properties");
 		Gson gson = new Gson();
 		String path = "./data/bogota_cadastral.json";
 		JsonReader reader;
+		int i = 0;
 		try {
 			reader = new JsonReader(new FileReader(path));
-			zonas = gson.fromJson(reader, ZonaJSON[].class);
-			
-			System.out.println(zonas);
+			JsonElement elem = JsonParser.parseReader(reader);
+			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("properties");
+			while(i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
+				e = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("properties");
+				zonas = gson.fromJson(e, ZonaJSON.class);
+				i++;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
