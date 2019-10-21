@@ -20,23 +20,24 @@ import model.logic.ZonaJSON;
 
 public class TestRedBlackBST {
 
-	private RedBlackBST arbol = new RedBlackBST();
+	private RedBlackBST<Integer, String> arbol = new RedBlackBST<Integer, String>();
 	private ZonaJSON zonas;
 
-	public void JSONLector() {
+	public void setUp1() {
 		Gson gson = new Gson();
 		String path = "./data/bogota_cadastral.json";
-		JsonReader reader;
-		int i = 0;
+		JsonReader reader = null;
+		int i = 0, pts;
 		try {
 			reader = new JsonReader(new FileReader(path));
 			JsonElement elem = JsonParser.parseReader(reader);
-			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject()
-					.get("properties");
-			while (i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
+			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("properties");
+			while(i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
 				e = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("properties");
+				pts = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray().size();
 				zonas = gson.fromJson(e, ZonaJSON.class);
-				arbol.insertar(zonas.getId(), val);
+				zonas.setPtosGeo(pts);
+				arbol.insertar(zonas.getId(),zonas.getValor());
 				i++;
 			}
 		} catch (Exception e) {

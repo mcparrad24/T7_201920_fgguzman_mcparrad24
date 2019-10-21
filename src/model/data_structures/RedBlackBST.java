@@ -459,7 +459,9 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 		if (!isRankConsistent()) System.out.println("Ranks not consistent");
 		if (!is23())             System.out.println("Not a 2-3 tree");
 		if (!isBalanced())       System.out.println("Not balanced");
-		return isBST() && isSizeConsistent() && isRankConsistent() && is23() && isBalanced();
+		if (!nodoMayorSubArbolIzq(root)) System.out.println("Los nodos del subarbol izquierdo no son menores");
+		if (!nodoMenorSubArbolDer(root)) System.out.println("Los nodos del subarbol derecho no son mayores");
+		return isBST() && isSizeConsistent() && isRankConsistent() && is23() && isBalanced() && nodoMayorSubArbolIzq(root) && nodoMenorSubArbolDer(root);
 	}
 
 	// does this binary tree satisfy symmetric order?
@@ -526,4 +528,22 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 		if (!isRed(x)) black--;
 		return isBalanced(x.left, black) && isBalanced(x.right, black);
 	} 
+	
+	private boolean nodoMayorSubArbolIzq(Node nodo) {
+		if (nodo.left.key.compareTo(nodo.key) > 0) {
+			return false;
+		}
+		else {
+			return nodoMayorSubArbolIzq(nodo.left);
+		}
+	}
+	
+	private boolean nodoMenorSubArbolDer(Node nodo) {
+		if (nodo.left.key.compareTo(nodo.key) < 0) {
+			return false;
+		}
+		else {
+			return nodoMenorSubArbolDer(nodo.left);
+		}
+	}
 }
