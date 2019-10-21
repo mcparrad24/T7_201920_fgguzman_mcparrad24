@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -16,12 +17,14 @@ import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 
 import model.data_structures.RedBlackBST;
+import model.logic.Queue;
 import model.logic.ZonaJSON;
 
 public class TestRedBlackBST {
 
 	private RedBlackBST<Integer, String> arbol = new RedBlackBST<Integer, String>();
-	private ZonaJSON zonas;
+	private Queue<Integer> keys = new Queue<>();
+	private Queue<String> values = new Queue<>();
 
 	public void setUp1() {
 			CSVReader reader = null;
@@ -106,12 +109,18 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testAltura() {
-
+		setUp1();
+		int a = 2;
+		boolean siEs = false;
+		if (a == arbol.altura()) {
+			siEs = true;
+		}
+		assertEquals("No tiene la altura correcta", true, siEs);
 	}
 
 	@Test
 	public void testAlturaLlave() {
-
+		
 	}
 
 	@Test
@@ -124,26 +133,36 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testLlaveMin() {
-
+		setUp1();
+		int a = 1;
+		boolean siEs = false;
+		if (a == arbol.min()) {
+			siEs = true;
+		}
+		assertEquals("No es el valor minimo", true, siEs);
 	}
 
 	@Test
 	public void testLlaveMax() {
-
+		setUp1();
+		int a = 10;
+		boolean siEs = false;
+		if (a == arbol.max()) {
+			siEs = true;
+		}
+		assertEquals("No es el valor maximo", true, siEs);
 	}
 
 	@Test
 	public void testCheck() {
-
+		/**
+		setUp1();
+		boolean siEs = false;
+		if(arbol.check()) {
+			siEs = true;
+		}
+		assertEquals("No tiene las propiedades de arbol rojo negro", true, siEs);
+		**/
 	}
 
-	@Test
-	public void testLlavesRango() {
-
-	}
-
-	@Test
-	public void testValoresRango() {
-
-	}
 }

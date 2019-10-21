@@ -23,7 +23,6 @@ public class MVCModelo {
 	/**
 	 * Lector de los archivos de JSON
 	 */
-
 	public void JSONLector() {
 		Gson gson = new Gson();
 		String path = "./data/bogota_cadastral.json";

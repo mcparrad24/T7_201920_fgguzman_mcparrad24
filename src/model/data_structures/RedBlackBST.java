@@ -239,8 +239,9 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 	 * @return the height of the BST (a 1-node tree has height 0)
 	 */
 	public int altura() {
-		return height(root);
+		return height(root)-1;
 	}
+	
 	private int height(Node x) {
 		if (x == null) return -1;
 		return 1 + Math.max(height(x.left), height(x.right));
