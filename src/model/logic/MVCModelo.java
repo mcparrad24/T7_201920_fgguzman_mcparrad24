@@ -1,6 +1,7 @@
 package model.logic;
 
 import java.io.FileReader;
+import java.util.Iterator;
 
 import model.data_structures.RedBlackBST;
 
@@ -17,6 +18,8 @@ import com.google.gson.stream.JsonReader;
 public class MVCModelo {
 	private ZonaJSON zonas;
 	private RedBlackBST<Integer,String> datos = new RedBlackBST<>();
+	private Queue keys = new Queue();
+	private Queue<String> values = new Queue<>();
 	// CARGA DE INFORMACION
 	/**
 	 * Lector de los archivos de JSON
@@ -49,12 +52,36 @@ public class MVCModelo {
 		int total = datos.darTamano();
 		return total;
 	}
+	
 	public String[] valoresMinMax() {
 		String[] rtn = new String[2];
 		rtn[0] = datos.max().toString();
 		rtn[1] = datos.min().toString();
 		return rtn;
 	}
-
 	
+	public String zonaID(int movID) {
+		String valor = datos.get(movID);
+		return valor;
+	}
+	
+	public Queue idRangoEspecificoLlaves(int movIDIn, int movIDMax) {
+		Iterator llaves = datos.keysRango(movIDIn, movIDMax);
+		int key = (int) llaves.next();
+		while (llaves.hasNext()) {
+			keys.enqueue(key);
+			key = (int) llaves.next();
+		}
+		return keys;
+	}
+	
+	public Queue<String> idRangoEspecificoValores(int movIDIn, int movIDMax) {
+		Iterator valores = datos.valuesRango(movIDIn, movIDMax);
+		String valor = (String) valores.next();
+		while (valores.hasNext()) {
+			values.enqueue(valor);
+			valor = (String) valores.next();
+		}
+		return values;
+	}
 }

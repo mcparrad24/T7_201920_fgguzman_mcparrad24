@@ -4,15 +4,16 @@ public class ZonaJSON {
 	private int MOVEMENT_ID;
 	private String scanombre;
 	private double shape_leng;
-	private double shape_area;
+	private String shape_area;
 	private int ptosGeo;
-	private String valor;
+	private String valor = scanombre + "," + shape_leng + "," + shape_area + "," + ptosGeo;
 
 	public ZonaJSON(String id, String nombre, String perimetro, String area) {
 		this.MOVEMENT_ID = Integer.parseInt(id);
 		this.scanombre = nombre;
 		this.shape_leng = Double.parseDouble(perimetro);
-		this.shape_area = Double.parseDouble(area);
+		this.shape_area = area;
+		this.ptosGeo = getPtosGeo();
 		this.valor = getValor();
 	}
 
@@ -28,7 +29,7 @@ public class ZonaJSON {
 		return shape_leng;
 	}
 
-	public double getArea() {
+	public String getArea() {
 		return shape_area;
 	}
 
@@ -38,16 +39,17 @@ public class ZonaJSON {
 
 	public void setPtosGeo(int ptosGeo) {
 		this.ptosGeo = ptosGeo;
-	}
-
-	public int numPtosGeo() {
-		return ptosGeo;
+		cambiarValor();	
 	}
 
 	public String getValor() {
-		valor = scanombre + "," + shape_leng + "," + shape_area + "," + ptosGeo;
 		return valor;
 	}
+	
+	public void cambiarValor() {
+		valor = valor = scanombre + "," + shape_leng + "," + shape_area + "," + ptosGeo;
+	}
+
 
 	public String toString() {
 		return "ZonaJSON [MOVEMENT_ID=" + MOVEMENT_ID + ", scanombre=" + scanombre + ", shape_leng=" + shape_leng

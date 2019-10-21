@@ -16,6 +16,7 @@ import com.google.gson.stream.JsonReader;
 import com.opencsv.CSVReader;
 
 import model.data_structures.RedBlackBST;
+import model.logic.TravelTime;
 import model.logic.ZonaJSON;
 
 public class TestRedBlackBST {
@@ -24,24 +25,22 @@ public class TestRedBlackBST {
 	private ZonaJSON zonas;
 
 	public void setUp1() {
-		Gson gson = new Gson();
-		String path = "./data/bogota_cadastral.json";
-		JsonReader reader = null;
-		int i = 0, pts;
-		try {
-			reader = new JsonReader(new FileReader(path));
-			JsonElement elem = JsonParser.parseReader(reader);
-			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("properties");
-			while(i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
-				e = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("properties");
-				pts = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray().size();
-				zonas = gson.fromJson(e, ZonaJSON.class);
-				zonas.setPtosGeo(pts);
-				arbol.insertar(zonas.getId(),zonas.getValor());
-				i++;
-			}
+			CSVReader reader = null;
+			String archivo1 = "./docs/DatosPrueba.csv";
+			String[] header = new String[1];
+			ZonaJSON carga = null;
+			int i = 4;
+			try {
+				reader = new CSVReader(new FileReader(archivo1));
+				header = reader.readNext();
+				for (String[] nextLine : reader) {
+					carga = new ZonaJSON(nextLine[0], nextLine[1], nextLine[2], nextLine[3]);
+					carga.setPtosGeo(i);
+					arbol.insertar(carga.getId(), carga.getValor());
+					i++;
+				}
 		} catch (Exception e) {
-			fail("Fallo la lectura del archivo JSON " + e.getStackTrace()[0]);
+			fail("Fallo la lectura del archivo CSV " + e.getStackTrace()[0]);
 		} finally {
 			if (reader != null) {
 				try {
@@ -57,28 +56,30 @@ public class TestRedBlackBST {
 	public void testDarTamano() {
 		setUp1();
 		int tam = arbol.darTamano();
-		assertEquals("El tamano de la tabla no es correcto", 35, tam);
+		assertEquals("El tamano de la tabla no es correcto", 10, tam);
 	}
 
 	@Test
 	public void testInsertar1() {
 		setUp1();
-		String[] nuevo = { "4", "58", "10", "1474.35", "483.6", "1414.18", "1.32" };
-		UberTrip nuevoDato = new UberTrip(nuevo[0], nuevo[1], nuevo[2], nuevo[3], nuevo[4], 1);
-		arbol.insertar(nuevoDato.darLlave(), nuevoDato.darValor());
-		assertEquals("No se agrego el dato correctamente", 36, arbol.darTamano());
+		String[] nuevo = { "1077", "EL DORADO", "0.05429429289", "0.00010996928"};
+		ZonaJSON nuevoDato = new ZonaJSON(nuevo[0], nuevo[1], nuevo[2], nuevo[3]);
+		nuevoDato.setPtosGeo(6);
+		arbol.insertar(nuevoDato.getId(), nuevoDato.getValor());
+		assertEquals("No se agrego el dato correctamente", 11, arbol.darTamano());
 	}
 
 	@Test
 	public void testInsertar2() {
 		setUp1();
 		boolean siEs = false;
-		String[] nuevo = { "4", "58", "10", "1474.35", "483.6", "1414.18", "1.32" };
-		UberTrip nuevoDato = new UberTrip(nuevo[0], nuevo[1], nuevo[2], nuevo[3], nuevo[4], 1);
-		arbol.insertar(nuevoDato.darLlave(), nuevoDato.darValor());
-		String key = 1 + "-" + 4 + "-" + 58;
-		String valor = (String) arbol.get(key);
-		if (nuevoDato.darValor().equals(valor) && nuevoDato.darLlave().equals(key)) {
+		String[] nuevo = { "1077", "EL DORADO", "0.05429429289", "0.00010996928"};
+		ZonaJSON nuevoDato = new ZonaJSON(nuevo[0], nuevo[1], nuevo[2], nuevo[3]);
+		nuevoDato.setPtosGeo(6);
+		arbol.insertar(nuevoDato.getId(), nuevoDato.getValor());
+		int key = 1077;
+		String valor = "EL DORADO" + "," + "0.05429429289" + "," + "0.00010996928" + "," + 6;
+		if (nuevoDato.getValor().equals(valor) && nuevoDato.getId() == key) {
 			siEs = true;
 		}
 		assertEquals("El dato no se agrego correctamente", true, siEs);
@@ -94,8 +95,8 @@ public class TestRedBlackBST {
 	@Test
 	public void testGet() {
 		setUp1();
-		String key = 1 + "-" + 903 + "-" + 900;
-		String value = 1 + "," + 903 + "," + 900 + "," + 2 + "," + 341.25;
+		int key = 1;
+		String value = "LOS LAURELES" + "," + "0.02774133557" + "," + "0.00003682838" + "," + 4;
 		String valorEsp = (String) arbol.get(key);
 		boolean siEs = false;
 		if (valorEsp.equals(value)) {
@@ -116,7 +117,10 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testContains() {
-
+		setUp1();
+		int key = 8;
+		boolean contiene = arbol.contains(key);
+		assertEquals("No se encontro el dato correctamente", true, contiene);
 	}
 
 	@Test
