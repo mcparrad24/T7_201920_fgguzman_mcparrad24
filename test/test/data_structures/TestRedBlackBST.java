@@ -158,14 +158,12 @@ public class TestRedBlackBST {
 
 	@Test
 	public void testCheck() {
-		/**
 		setUp1();
 		boolean siEs = false;
 		if(arbol.check()) {
 			siEs = true;
 		}
 		assertEquals("No tiene las propiedades de arbol rojo negro", true, siEs);
-		**/
 	}
 
 	@Test

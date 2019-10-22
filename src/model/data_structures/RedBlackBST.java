@@ -466,51 +466,12 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 	 *  Check integrity of red-black tree data structure.
 	 ***************************************************************************/
 	public boolean check() {
-		if (!isBST())            System.out.println("Not in symmetric order");
-		if (!isSizeConsistent()) System.out.println("Subtree counts not consistent");
-		if (!isRankConsistent()) System.out.println("Ranks not consistent");
 		if (!is23())             System.out.println("Not a 2-3 tree");
-		if (!isBalanced())       System.out.println("Not balanced");
 		if (!nodoMayorSubArbolIzq(root)) System.out.println("Los nodos del subarbol izquierdo no son menores");
 		if (!nodoMenorSubArbolDer(root)) System.out.println("Los nodos del subarbol derecho no son mayores");
-		return isBST() && isSizeConsistent() && isRankConsistent() && is23() && isBalanced() && nodoMayorSubArbolIzq(root) && nodoMenorSubArbolDer(root);
+		return is23() && nodoMayorSubArbolIzq(root) && nodoMenorSubArbolDer(root);
 	}
 
-	// does this binary tree satisfy symmetric order?
-	// Note: this test also ensures that data structure is a binary tree since order is strict
-	private boolean isBST() {
-		return isBST(root, null, null);
-	}
-
-	// is the tree rooted at x a BST with all keys strictly between min and max
-	// (if min or max is null, treat as empty constraint)
-	// Credit: Bob Dondero's elegant solution
-	private boolean isBST(Node x, Key min, Key max) {
-		if (x == null) return true;
-		if (min != null && x.key.compareTo(min) <= 0) return false;
-		if (max != null && x.key.compareTo(max) >= 0) return false;
-		return isBST(x.left, min, x.key) && isBST(x.right, x.key, max);
-	} 
-
-	// are the size fields correct?
-	private boolean isSizeConsistent() { return isSizeConsistent(root); }
-	private boolean isSizeConsistent(Node x) {
-		if (x == null) return true;
-		if (x.size != size(x.left) + size(x.right) + 1) return false;
-		return isSizeConsistent(x.left) && isSizeConsistent(x.right);
-	} 
-
-	// check that ranks are consistent
-	private boolean isRankConsistent() {
-		for (int i = 0; i < darTamano(); i++)
-			if (i != rank(select(i))) return false;
-		Key key = keys().next();
-		while (keys().hasNext()) {
-			if (key.compareTo(select(rank(key))) != 0) return false;
-			key = keys().next();
-		}
-		return true;
-	}
 
 	// Does the tree have no red right links, and at most one (left)
 	// red links in a row on any path?
@@ -522,40 +483,28 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 			return false;
 		return is23(x.left) && is23(x.right);
 	} 
-
-	// do all paths from root to leaf have same number of black edges?
-	private boolean isBalanced() { 
-		int black = 0;     // number of black links on path from root to min
-		Node x = root;
-		while (x != null) {
-			if (!isRed(x)) black++;
-			x = x.left;
-		}
-		return isBalanced(root, black);
-	}
-
-	// does every path from the root to a leaf have the given number of black links?
-	private boolean isBalanced(Node x, int black) {
-		if (x == null) return black == 0;
-		if (!isRed(x)) black--;
-		return isBalanced(x.left, black) && isBalanced(x.right, black);
-	} 
 	
 	private boolean nodoMayorSubArbolIzq(Node nodo) {
-		if (nodo.left.key.compareTo(nodo.key) > 0) {
-			return false;
+		if (nodo.left != null) {
+			if (nodo.left.key.compareTo(nodo.key) > 0) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
-		else {
-			return nodoMayorSubArbolIzq(nodo.left);
-		}
+		return nodoMayorSubArbolIzq(nodo.left);
 	}
 	
 	private boolean nodoMenorSubArbolDer(Node nodo) {
-		if (nodo.left.key.compareTo(nodo.key) < 0) {
-			return false;
+		if (nodo.right != null) {
+			if (nodo.right.key.compareTo(nodo.key) <= 0) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
-		else {
-			return nodoMenorSubArbolDer(nodo.left);
-		}
+		return nodoMenorSubArbolDer(nodo.right);
 	}
 }
