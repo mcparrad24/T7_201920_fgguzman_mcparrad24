@@ -47,8 +47,7 @@ public class MVCModelo {
 
 
 	public int totalZonas() {
-		int total = datos.darTamano();
-		return total;
+		return datos.darTamano();
 	}
 	
 	public String[] valoresMinMax() {
