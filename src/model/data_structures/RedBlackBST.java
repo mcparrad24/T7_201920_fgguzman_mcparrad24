@@ -93,6 +93,17 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 		}
 		return null;
 	}
+	
+	private int getNode(Node x, Key key, int i) {
+		if(x.key != key) {
+			int cmp = key.compareTo(x.key);
+			if      (cmp < 0) x = x.left;
+			else if (cmp > 0) x = x.right;
+			else              return i;
+			getNode(x, key, i++);
+		}
+		return i;
+	}
 
 	/**
 	 * Does this symbol table contain the given key?
@@ -247,8 +258,8 @@ public class RedBlackBST <Key extends Comparable<Key>, Value> implements IRedBla
 		return 1 + Math.max(height(x.left), height(x.right));
 	}
 
-	public int alturaLlave(Key llave) { //ARREGLAR
-		return 0;
+	public int alturaLlave(Key llave) {
+		return getNode(root, llave, 0);
 	}
 
 	/***************************************************************************
