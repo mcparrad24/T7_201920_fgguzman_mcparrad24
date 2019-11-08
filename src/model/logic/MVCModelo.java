@@ -3,7 +3,7 @@ package model.logic;
 import java.io.FileReader;
 import java.util.Iterator;
 
-import model.data_structures.RedBlackBST;
+import model.data_structures.Graph;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -16,7 +16,7 @@ import com.google.gson.stream.JsonReader;
  */
 public class MVCModelo {
 	private ZonaJSON zonas;
-	private RedBlackBST<Integer,String> datos = new RedBlackBST<>();
+	private Graph<Integer,String> datos = new Graph<>();
 	private Queue<Integer> keys = new Queue<>();
 	private Queue<String> values = new Queue<>();
 	// CARGA DE INFORMACION

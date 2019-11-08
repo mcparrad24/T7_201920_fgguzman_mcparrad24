@@ -11,12 +11,12 @@ import org.junit.Test;
 
 import com.opencsv.CSVReader;
 
-import model.data_structures.RedBlackBST;
+import model.data_structures.Graph;
 import model.logic.ZonaJSON;
 
-public class TestRedBlackBST {
+public class TestGraph {
 
-	private RedBlackBST<Integer, String> arbol = new RedBlackBST<Integer, String>();
+	private Graph<Integer, String> arbol = new Graph<Integer, String>();
 
 	public void setUp1() {
 			CSVReader reader = null;
