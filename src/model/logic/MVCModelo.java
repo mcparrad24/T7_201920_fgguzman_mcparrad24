@@ -1,5 +1,6 @@
 package model.logic;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.Iterator;
 
@@ -16,33 +17,48 @@ import com.google.gson.stream.JsonReader;
  */
 public class MVCModelo {
 	private ZonaJSON zonas;
+	private Vertice vertices;
+	private Arco arcos;
 	private Graph<Integer,String> datos = new Graph<>();
 	private Queue<Integer> keys = new Queue<>();
 	private Queue<String> values = new Queue<>();
 	// CARGA DE INFORMACION
 	/**
-	 * Lector de los archivos de JSON
+	 * Lector de los archivos de texto
 	 */
-	public void JSONLector() {
-		Gson gson = new Gson();
-		String path = "./data/bogota_cadastral.json";
-		JsonReader reader;
-		int i = 0, pts;
+	public void TXTLector() {
+		FileReader fr = null;
+		BufferedReader br = null;
+		String st;
+		String[] a = new String[10];
+		int i,j=0;
 		try {
-			reader = new JsonReader(new FileReader(path));
-			JsonElement elem = JsonParser.parseReader(reader);
-			JsonElement e = elem.getAsJsonObject().get("features").getAsJsonArray().get(0).getAsJsonObject().get("properties");
-			while(i < elem.getAsJsonObject().get("features").getAsJsonArray().size()) {
-				e = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("properties");
-				pts = elem.getAsJsonObject().get("features").getAsJsonArray().get(i).getAsJsonObject().get("geometry").getAsJsonObject().get("coordinates").getAsJsonArray().get(0).getAsJsonArray().get(0).getAsJsonArray().size();
-				zonas = gson.fromJson(e, ZonaJSON.class);
-				zonas.setPtosGeo(pts);
-				datos.insertar(zonas.getId(),zonas.getValor());
-				i++;
+			fr = new FileReader("./data/bogota_arcos.txt");
+			br = new BufferedReader(fr);
+			while ((st = br.readLine()) != null) {
+				a = st.split(" ");
+				st = a[0];
+				for (i = 1; i<a.length;i++,j++) {
+					a[j] = a[i];
+				}
+				arcos = new Arco(st,a);
+				datosMallas.put(mallas.getNodo(), mallas.getCoordenadas());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
+			fr = new FileReader("./data/bogota_vertices.txt");
+			br = new BufferedReader(fr);
+			while ((st = br.readLine()) != null) {
+				a = st.split(";");
+				vertices = new Vertice(a[0], a[1], a[2], a[3]);
+				datosMallas.put(mallas.getNodo(), mallas.getCoordenadas());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 
