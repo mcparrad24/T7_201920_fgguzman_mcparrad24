@@ -5,11 +5,14 @@ public class Vertice {
 	private double lng;
 	private double lat;
 	private int MOVEMENT_ID;
+	private String info;
+	
 	public Vertice(String id, String lng, String lat, String mOVEMENT_ID) {
 		this.id = Integer.parseInt(id);
 		this.lng = Double.parseDouble(lng);
 		this.lat = Double.parseDouble(lat);
 		MOVEMENT_ID = Integer.parseInt(mOVEMENT_ID);
+		this.info = getInfo();
 	}
 	
 	public int getId() {
@@ -23,6 +26,14 @@ public class Vertice {
 	}
 	public int getMOVEMENT_ID() {
 		return MOVEMENT_ID;
+	}
+	
+	public String getInfo() {
+		return ""; //cual es la info?
+	}
+	
+	public void setInfoV(String nInfo) {
+		this.info = nInfo;
 	}
 	
 	public String toString() {
