@@ -2,42 +2,37 @@ package model.logic;
 
 public class Vertice {
 	private int id;
-	private double lng;
-	private double lat;
-	private int MOVEMENT_ID;
-	private String info;
+	private Info info;
+	private Queue<Vertice> adj = new Queue<Vertice>(); 
+	private Queue<Arco> arcos = new Queue<Arco>();
 	
-	public Vertice(String id, String lng, String lat, String mOVEMENT_ID) {
+	public Vertice(String id, Info infor) {
 		this.id = Integer.parseInt(id);
-		this.lng = Double.parseDouble(lng);
-		this.lat = Double.parseDouble(lat);
-		MOVEMENT_ID = Integer.parseInt(mOVEMENT_ID);
-		this.info = getInfo();
+		this.info = infor;
 	}
 	
 	public int getId() {
 		return id;
 	}
-	public double getLng() {
-		return lng;
-	}
-	public double getLat() {
-		return lat;
-	}
-	public int getMOVEMENT_ID() {
-		return MOVEMENT_ID;
+	
+	public Info getInfo() {
+		return info;
 	}
 	
-	public String getInfo() {
-		return ""; //cual es la info?
+	public Queue<Vertice> getAdj(){
+		return adj;
 	}
 	
-	public void setInfoV(String nInfo) {
+	public Queue<Arco> getArcos(){
+		return arcos;
+	}
+	
+	public void setInfo(Info nInfo) {
 		this.info = nInfo;
 	}
 	
 	public String toString() {
-		return "Vertice [id=" + id + ", longitud=" + lng + ", latitud=" + lat + ", MOVEMENT_ID=" + MOVEMENT_ID + "]";
+		return "Vertice [id=" + id + ", longitud=" + info.getLng() + ", latitud=" + info.getLat()+ ", MOVEMENT_ID=" + info.getMOVEMENT_ID() + "]";
 	}
 	
 }

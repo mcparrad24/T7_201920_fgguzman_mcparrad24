@@ -3,9 +3,10 @@ package model.data_structures;
 import java.util.Iterator;
 import model.logic.Vertice;
 import model.logic.Arco;
+import model.logic.Info;
 import model.logic.Queue;
 
-public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
+public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> { //Como ponerlo???
 	//C�digo tomado de: https://github.com/kevin-wayne/algs4/blob/master/src/main/java/edu/princeton/cs/algs4/Graph.java
 	//					https://github.com/kevin-wayne/algs4/blob/master/src/main/java/edu/princeton/cs/algs4/DepthFirstPaths.java
 	//Copyright 2002-2018, Robert Sedgewick and Kevin Wayne.
@@ -14,12 +15,14 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 
     private final int V;
     private int E;
-    private Bag<K>[] adj;
+    private HashTableLinearProbing<K, Val> adj;
     
-    private boolean[] marked;   // marked[v] = has vertex v been marked?
+    private HashTableLinearProbing<K, Val> marked;
+    private HashTableLinearProbing<K, Val> cc;
     private int[] id;           // id[v] = id of connected component containing v
     private int[] size;         // size[id] = number of vertices in given component
     private int count;          // number of connected components
+    
     
     /**
      * Initializes an empty graph with {@code V} vertices and 0 edges.
@@ -31,10 +34,9 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
     public Graph(int V) {
         this.V = V;
         this.E = 0;
-        adj = (Bag<K>[]) new Bag[V];
-        for (int v = 0; v < V; v++) {
-            adj[v] = new Bag<K>();
-        }
+        adj = new HashTableLinearProbing(V);
+        marked = new HashTableLinearProbing(V);
+        cc = new HashTableLinearProbing(V);
     }
 
     /**
@@ -62,14 +64,26 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
      * @param  w the other vertex in the edge
      * @throws IllegalArgumentException unless both {@code 0 <= v < V} and {@code 0 <= w < V}
      */
-    public void addEdge(int idVertexIni, int idVertexFin, double cost) {
+    public void addEdge(K idVertexIni, K idVertexFin, double cost) {
         E++;
-        adj[idVertexIni].add(idVertexFin);
-        adj[idVertexFin].add(idVertexIni);
-        Arco nuevo = new Arco(idVertexIni, idVertexFin, cost);
+       Vertice v1 = (Vertice) adj.get(idVertexIni);
+       Vertice v2 = (Vertice) adj.get(idVertexFin);
+       Arco nuevo = new Arco((String)idVertexIni, (String)idVertexFin, cost);
+       v1.getAdj().enqueue(v2);
+       v2.getAdj().enqueue(v1);
     }
+    
 
-
+    /**
+     * 
+     *
+     * @param  v one vertex in the edge
+     */
+    public void addVertex(K idVertex, Val infoVertex) {
+        V++;
+        Vertice nuevo = new Vertice((String)idVertex, (Info)infoVertex);
+    }
+    
     /**
      * Returns the vertices adjacent to vertex {@code v}.
      *
@@ -77,8 +91,10 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
      * @return the vertices adjacent to vertex {@code v}, as an iterable
      * @throws IllegalArgumentException unless {@code 0 <= v < V}
      */
-    public Iterable<K> adj(int idVertex) {
-        return adj[idVertex];
+    public Iterable<K> adj(K idVertex) {
+    	Vertice v1 = (Vertice)adj.get(idVertex);
+        Iterable<K> adyacentes = (Iterable<K>) v1.getAdj().iterator();
+        return adyacentes;
     }
     
     /**
@@ -87,26 +103,20 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
      * @param G the undirected graph
      */
     public void CC() {
-        marked = new boolean[V()];
-        id = new int[V()];
-        size = new int[V()];
-        for (int v = 0; v < V(); v++) {
-            if (!marked[v]) {
-                dfs(v);
-                count++;
-            }
-        }
+    	Iterator<K> marcados = (Iterator<K>) marked.keys();
+    	while(marcados.hasNext()) {
+    		K llave = marcados.next();
+    		boolean valor = (boolean)marked.get(llave);
+    		if (!valor) {
+    			dfs(llave);
+    			count++;	
+    			
+    		}
+    	}
     }
     
     private void dfs(K v) {
-        marked[v] = true;
-        id[v] = count;
-        size[count]++;
-        for (int w : adj(v)) {
-            if (!marked[w]) {
-                dfs(w);
-            }
-        }
+    	//MIRAR DFS
     }
     
     /**
@@ -119,43 +129,68 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
     }
 
 	@Override
-	public Val getInfoVertex(Key idVertex) {
-		return idVertex.getInfo();
+	public Val getInfoVertex(K idVertex) {
+		Vertice v1 = (Vertice)adj.get(idVertex);
+		Val infoV = (Val)v1.getInfo();
+		return infoV;
 	}
 
 	@Override
-	public void setInfoVertex(Key idVertex, Value infoVertex) {
-		idVertex.setInfo(infoVertex);
+	public void setInfoVertex(K idVertex, Val infoVertex) {
+		Vertice v1 =(Vertice)adj.get(idVertex);
+		v1.setInfo((Info)infoVertex);
 		
 	}
 
 	@Override
-	public double getCostArc(Key idVertexIni, Key idVertexFin) {
-		
-		return 0;
+	public double getCostArc(K idVertexIni, K idVertexFin) {
+		Vertice vIn = (Vertice)adj.get(idVertexIni);
+		Queue<Arco> arcos = vIn.getArcos();
+		int tam = arcos.size();
+		boolean encontrado = false;
+		for (int i = 0; i < tam && !encontrado; i++) {
+			Arco actual = arcos.dequeue();
+			if (actual.getIdInicio() == (Integer)idVertexIni && actual.getIdFinal() == (Integer)idVertexFin) {
+				return actual.getCosto();
+			}
+		}
 	}
 
 	@Override
-	public void setCostArc(Key idVertexIni, Key idVertexFin, double cost) {
-		
+	public void setCostArc(K idVertexIni, K idVertexFin, double cost) {
+		Vertice vIn = (Vertice)adj.get(idVertexIni);
+		Queue<Arco> arcos = vIn.getArcos();
+		int tam = arcos.size();
+		boolean encontrado = false;
+		for (int i = 0; i < tam && !encontrado; i++) {
+			Arco actual = arcos.dequeue();
+			if (actual.getIdInicio() == (Integer)idVertexIni && actual.getIdFinal() == (Integer)idVertexFin) {
+				actual.setCostArc(cost);
+			}
+		}
 		
 	}
 
 	@Override
 	public void uncheck() {
-		marked[v] = false;
-        id[v] = count;
-        size[count]++;
-        for (int w : adj(v)) {
-            if (marked[w]) {
-                uncheck(w);
-            }
-        }
+		Iterator<K> marca = (Iterator<K>) marked.keys();
+		while (marca.hasNext()) {
+			K actual = marca.next();
+			marked.put(actual, (V)false); //Preguntar
+		}
 	}
 
 	@Override
-	public Iterable<Key> getCC(Key idVertex) {
-		//Preguntar
-		return null;
+	public Iterable<K> getCC(K idVertex) {
+		Queue<K> queue = new Queue<K>();
+		Val color = adj.get(idVertex);
+		Iterator<K> ccs = (Iterator<K>) cc.keys();
+		while (ccs.hasNext()) {
+			K llave = ccs.next();
+			Val valorAct = cc.get(llave);
+			if(valorAct.equals(color)) {
+				queue.enqueue(llave);
+			}
+		}
 	}
 }

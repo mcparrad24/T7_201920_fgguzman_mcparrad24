@@ -18,13 +18,15 @@ public interface IGraph <K, V> {
 	
 	void setCostArc(K idVertexIni, K idVertexFin, double cost);
 	
+	void addVertex(K idVertex, V infoVertex);
+	
 	Iterable<K> adj(K idVertex);
 	
 	void uncheck();
 	
 	void dfs(K s);
 	
-	int cc();
+	int ccn();
 	
 	Iterable<K> getCC(K idVertex);
 	
