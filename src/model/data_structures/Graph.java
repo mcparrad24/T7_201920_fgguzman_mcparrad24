@@ -16,8 +16,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> { //
     private final int V;
     private int E;
     private HashTableLinearProbing<K, Val> adj;
-    
-    private HashTableLinearProbing<K, Val> marked;
+    private HashTableLinearProbing<K, Boolean> marked;
     private HashTableLinearProbing<K, Val> cc;
     private int[] id;           // id[v] = id of connected component containing v
     private int[] size;         // size[id] = number of vertices in given component
@@ -116,8 +115,19 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> { //
     }
     
     private void dfs(K v) {
-    	//MIRAR DFS
-    }
+    	marked.put(v, true);
+    	Vertice vAct = (Vertice) adj.get(v);
+    	Queue<K> adyacentes = (Queue<K>) vAct.getAdj();
+    	int tam = adyacentes.size();
+    	
+            for (int i = 0; i < tam; i++) {
+            	K actual = adyacentes.dequeue();
+            	boolean valor = marked.get(actual);
+            	if (!valor) {
+            		dfs(actual);
+                }
+            }
+        }
     
     /**
      * Returns the number of connected components in the graph {@code G}.
