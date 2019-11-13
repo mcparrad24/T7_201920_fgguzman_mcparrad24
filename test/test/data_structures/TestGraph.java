@@ -14,7 +14,6 @@ import com.opencsv.CSVReader;
 import model.data_structures.Graph;
 import model.logic.Info;
 import model.logic.Vertice;
-import model.logic.ZonaJSON;
 
 public class TestGraph {
 

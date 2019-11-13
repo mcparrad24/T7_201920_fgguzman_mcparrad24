@@ -82,7 +82,8 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 	 * @param  v one vertex in the edge
 	 */
 	public void addVertex(K idVertex, Val infoVertex) {
-		Vertice nuevo = new Vertice((String)idVertex, (Info)infoVertex);
+		String id = String.valueOf(idVertex);
+		Vertice nuevo = new Vertice(id, (Info)infoVertex);
 		adj.put(idVertex, nuevo);
 	}
 
