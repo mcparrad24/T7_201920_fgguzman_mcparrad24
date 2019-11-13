@@ -112,7 +112,6 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 			if (!valor) {
 				dfs(llave);
 				count++;	
-
 			}
 		}
 	}

@@ -12,225 +12,154 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 
 import model.data_structures.Graph;
+import model.logic.Info;
+import model.logic.Vertice;
 import model.logic.ZonaJSON;
 
 public class TestGraph {
 
-	private Graph<Integer, String> arbol = new Graph<Integer, String>();
+	private Graph Grafo = new Graph(10);
 
 	public void setUp1() {
-			CSVReader reader = null;
-			String archivo1 = "./docs/DatosPrueba.csv";
-			ZonaJSON carga = null;
-			int i = 4;
-			try {
-				reader = new CSVReader(new FileReader(archivo1));
-				reader.readNext();
-				for (String[] nextLine : reader) {
-					carga = new ZonaJSON(nextLine[0], nextLine[1], nextLine[2], nextLine[3]);
-					carga.setPtosGeo(i);
-					arbol.insertar(carga.getId(), carga.getValor());
-					i++;
-				}
-		} catch (Exception e) {
-			fail("Fallo la lectura del archivo CSV " + e.getStackTrace()[0]);
-		} finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					fail("No se pudo cerrar el lector");
-				}
-			}
-		}
+		Info info1 = new Info("-74.08921298299998", "4.582989396000016", "275");
+		Vertice v1 = new Vertice("0", info1);
+		Info info2 = new Info("-74.09175497299998", "4.5795689170000164", "684");
+		Vertice v2 = new Vertice("1", info2);
+		Info info3 = new Info("-74.08656902000001", "4.60729538999999", "35");
+		Vertice v3 = new Vertice("2", info3);
+		Info info4 = new Info("-74.07312877999998", "4.648768679999988", "1035");
+		Vertice v4 = new Vertice("3", info4);
+		Info info5 = new Info("-74.05100413999997", "4.724598160000029", "96");
+		Vertice v5 = new Vertice("4", info5);
+		Info info6 = new Info("-74.20408764000003", "4.610146419999976", "1");
+		Vertice v6 = new Vertice("5", info6);
+		Info info7 = new Info("-74.16112719", "4.615544890000023", "1099");
+		Vertice v7 = new Vertice("6", info7);
+		Info info8 = new Info("-74.06925505999997", "4.674469439999996", "833");
+		Vertice v8 = new Vertice("7", info8);
+		Info info9 = new Info("-74.08833413000002", "4.619344660000023", "104");
+		Vertice v9 = new Vertice("8", info9);
+		Info info10 = new Info("-74.16485762000002", "4.4879909200000165", "37");
+		Vertice v10 = new Vertice("9", info10);
+		
+		Grafo.addVertex(v1.getId(), v1.getInfo());
+		Grafo.addVertex(v2.getId(), v2.getInfo());
+		Grafo.addVertex(v3.getId(), v3.getInfo());
+		Grafo.addVertex(v4.getId(), v4.getInfo());
+		Grafo.addVertex(v5.getId(), v5.getInfo());
+		Grafo.addVertex(v6.getId(), v6.getInfo());
+		Grafo.addVertex(v7.getId(), v7.getInfo());
+		Grafo.addVertex(v8.getId(), v8.getInfo());
+		Grafo.addVertex(v9.getId(), v9.getInfo());
+		Grafo.addVertex(v10.getId(), v10.getInfo());
+		
+		Grafo.addEdge(v1.getId(), v2.getId(), 10);
+		Grafo.addEdge(v2.getId(), v4.getId(), 5);
+		Grafo.addEdge(v5.getId(), v8.getId(), 8);
+		Grafo.addEdge(v8.getId(), v10.getId(), 13);
+		Grafo.addEdge(v1.getId(), v5.getId(), 6);
 	}
 
 	@Test
-	public void testDarTamano() {
+	public void testV() {
 		setUp1();
-		int tam = arbol.darTamano();
-		assertEquals("El tamano de la tabla no es correcto", 10, tam);
+		int tam = Grafo.V();
+		assertEquals("El tamano del grafo no es correcto", 10, tam);
 	}
-
+	
 	@Test
-	public void testInsertar1() {
+	public void testE() {
 		setUp1();
-		String[] nuevo = { "1077", "EL DORADO", "0.05429429289", "0.00010996928"};
-		ZonaJSON nuevoDato = new ZonaJSON(nuevo[0], nuevo[1], nuevo[2], nuevo[3]);
-		nuevoDato.setPtosGeo(6);
-		arbol.insertar(nuevoDato.getId(), nuevoDato.getValor());
-		assertEquals("No se agrego el dato correctamente", 11, arbol.darTamano());
+		int tam = Grafo.E();
+		assertEquals("El tamano del grafo no es correcto", 5, tam);
 	}
 
 	@Test
-	public void testInsertar2() {
+	public void testAddVertex1() {
 		setUp1();
-		boolean siEs = false;
-		String[] nuevo = { "1077", "EL DORADO", "0.05429429289", "0.00010996928"};
-		ZonaJSON nuevoDato = new ZonaJSON(nuevo[0], nuevo[1], nuevo[2], nuevo[3]);
-		nuevoDato.setPtosGeo(6);
-		arbol.insertar(nuevoDato.getId(), nuevoDato.getValor());
-		int key = 1077;
-		String valor = "EL DORADO" + "," + "0.05429429289" + "," + "0.00010996928" + "," + 6;
-		if (nuevoDato.getValor().equals(valor) && nuevoDato.getId() == key) {
-			siEs = true;
-		}
-		assertEquals("El dato no se agrego correctamente", true, siEs);
+		Info info11 = new Info("-74.03610183", "4.610830000000021", "7");
+		Vertice v11 = new Vertice("11", info11);
+		Grafo.addVertex(v11.getId(), v11.getInfo());
+		assertEquals("No se agrego el vertice correctamente", 11, Grafo.V());
 	}
 
 	@Test
-	public void testIsEmpty() {
-		setUp1();
-		boolean empty = arbol.isEmpty();
-		assertEquals("La tabla no esta vacia", false, empty);
-	}
-
-	@Test
-	public void testGet() {
-		setUp1();
-		int key = 1;
-		String value = "LOS LAURELES" + "," + "0.02774133557" + "," + "0.00003682838" + "," + 4;
-		String valorEsp = (String) arbol.get(key);
-		boolean siEs = false;
-		if (valorEsp.equals(value)) {
-			siEs = true;
-		}
-		assertEquals("No se encontro el dato correctamente", true, siEs);
-	}
-
-	@Test
-	public void testAltura() {
-		setUp1();
-		int a = 2;
-		boolean siEs = false;
-		if (a == arbol.altura()) {
-			siEs = true;
-		}
-		assertEquals("No tiene la altura correcta", true, siEs);
-	}
-
-	@Test
-	public void testAlturaLlave() {
-		setUp1();
-		int a = 1;
-		boolean siEs = false;
-		if (a == arbol.alturaLlave(2)) {
-			siEs = true;
-		}
-		assertEquals("La llave no tiene la altura correcta"+arbol.alturaLlave(2), true, siEs);
-	}
-
-	@Test
-	public void testContains() {
-		setUp1();
-		int key = 8;
-		boolean contiene = arbol.contains(key);
-		assertEquals("No se encontro el dato correctamente", true, contiene);
-	}
-
-	@Test
-	public void testLlaveMin() {
-		setUp1();
-		int keyEsp = 1;
-		String valueEsp = "LOS LAURELES" + "," + "0.02774133557" + "," + "0.00003682838" + "," + 4;
-		int key = arbol.min();
-		String value = arbol.get(key);
-		boolean siEs = false;
-		if(keyEsp == key && valueEsp.equals(value)) {
-			siEs = true;
-		}
-		assertEquals("La llave dada no es la correcta", true, siEs);
-	}
-
-	@Test
-	public void testLlaveMax() {
-		setUp1();
-		int keyEsp = 10;
-		String valueEsp = "ARBORIZADORA ALTA" + "," + "0.02491132946" + "," + "0.00001679339" + "," + 13;
-		int key = arbol.max();
-		String value = arbol.get(key);
-		boolean siEs = false;
-		if(keyEsp == key && valueEsp.equals(value)) {
-			siEs = true;
-		}
-		assertEquals("La llave dada no es la correcta", true, siEs);
-	}
-
-	@Test
-	public void testCheck() {
+	public void testAddVertex2() {
 		setUp1();
 		boolean siEs = false;
-		if(arbol.check()) {
+		Info info11 = new Info("-74.03610183", "4.610830000000021", "7");
+		Vertice v11 = new Vertice("10", info11);
+		Grafo.addVertex(v11.getId(), v11.getInfo());
+		int key = 10;
+		Info valor = info11;
+		if (v11.getInfo().equals(valor) && v11.getId() == key) {
 			siEs = true;
 		}
-		assertEquals("No tiene las propiedades de arbol rojo negro", true, siEs);
+		assertEquals("El vertice no se agrego correctamente", true, siEs);
 	}
-
+	
 	@Test
-	public void testLlavesRango() {
+	public void testAddArc1() {
 		setUp1();
-		int keyEsp1 = 4;
-		int keyEsp2 = 5;
-		int keyEsp3 = 6;
-		String valEsp1 = arbol.get(keyEsp1);
-		String valEsp2 = arbol.get(keyEsp2);
-		String valEsp3 = arbol.get(keyEsp3);
-		int key2 = 0;
-		int key3 = 0;
-		Iterator<Integer> llavesIt = arbol.keysRango(4, 6);
-		int key = (int) llavesIt.next();
-		int key1 = key;
-		int i = 0;
-		while (llavesIt.hasNext()) {
-			key = (int) llavesIt.next();
-			if (i == 0) {
-				key2 = key;
-			}
-			else if (i == 1) {
-				key3 = key;
-			}
-			i++;
-		}
-		String val1 = arbol.get(key1);
-		String val2 = arbol.get(key2);
-		String val3 = arbol.get(key3);
-		boolean siEs = false;
-		if (keyEsp1 == key1 && keyEsp2 == key2 && keyEsp3 == key3 && valEsp1.equals(val1) && valEsp2.equals(val2) && valEsp3.equals(val3)) {
-			siEs = true;
-		}
-		assertEquals("Las llaves del rango no son las correctas", true, siEs);
+		Grafo.addEdge(9, 3, 11);
+		assertEquals("No se agrego el arco correctamente", 6, Grafo.E());
 	}
-
+	
 	@Test
-	public void testValoresRango() {
+	public void testGetInfoVertex() {
 		setUp1();
-		int key1 = 4;
-		int key2 = 5;
-		int key3 = 6;
-		String valEsp1 = arbol.get(key1);
-		String valEsp2 = arbol.get(key2);
-		String valEsp3 = arbol.get(key3);
-		String val2 = "";
-		String val3 = "";
-		Iterator<String> valsIt = arbol.valuesRango(4, 6);
-		String val = (String) valsIt.next();
-		String val1 = val;
-		int i = 0;
-		while (valsIt.hasNext()) {
-			val = (String) valsIt.next();
-			if (i == 0) {
-				val2 = val;
-			}
-			else if (i == 1) {
-				val3 = val;
-			}
-			i++;
-		}
-		boolean siEs = false;
-		if (valEsp1.equals(val1) && valEsp2.equals(val2) && valEsp3.equals(val3)) {
-			siEs = true;
-		}
-		assertEquals("Los valores del rango no son los correctos", true, siEs);
+		Info info = new Info("-74.08921298299998", "4.582989396000016", "275");
+		Info infoComparar = (Info) Grafo.getInfoVertex(0);
+		assertEquals("La información del vertice es incorrecta", info, infoComparar);
+	}
+	
+	@Test
+	public void testSetInfoVertex() {
+		setUp1();
+		Info info = new Info("-74.12957995", "4.425596960000006", "42");
+		Grafo.setInfoVertex(0, info);
+		Info infoAct = (Info) Grafo.getInfoVertex(0);
+		assertEquals("La información del vertice no se actualizo correctamente", info, infoAct);
+	}
+	
+	@Test
+	public void testGetCostArc() {
+		setUp1();
+		double costoReal = Grafo.getCostArc(4, 7);
+		assertEquals("El costo del arco es incorrecto", 8, costoReal);
+	}
+	
+	@Test
+	public void testSetCostArc() {
+		setUp1();
+		double nuevoCosto = 10;
+		Grafo.setCostArc(4, 7, nuevoCosto);
+		assertEquals("El costo del arco no se actualizo correctamente", nuevoCosto, Grafo.getCostArc(4, 7));
+	}
+	
+	@Test
+	public void testAdj() {
+	
+	}
+	
+	@Test
+	public void testUncheck() {
+		
+	}
+	
+	@Test
+	public void testDfs() {
+		
+	}
+	
+	@Test
+	public void testCcn() {
+		
+	}
+	
+	@Test
+	public void testGetCC() {
+		
 	}
 }
 
