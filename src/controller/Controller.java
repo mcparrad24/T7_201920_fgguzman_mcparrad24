@@ -38,7 +38,7 @@ public class Controller {
 			int option = lector.nextInt();
 			switch (option) {
 			case 1:
-				modelo.JSONLector();
+				modelo.TXTLector();
 				System.out.println("Total zonas: " + modelo.totalZonas() + "\n---------");
 				datos = modelo.valoresMinMax();
 				System.out.println("Valor maximo: " + datos[0] + "\n---------");

@@ -1,16 +1,14 @@
 package model.logic;
 
-import java.util.Arrays;
-
 public class Arco {
 	private int idInicio;
 	private int idFinal;
 	private double costo;
 	
-	public Arco(String idInicio, String idFinal, double pCosto) {
+	public Arco(String idInicio, String idFinal, String pCosto) {
 		this.idInicio = Integer.parseInt(idInicio);
 		this.idFinal = Integer.parseInt(idFinal);
-		this.costo = pCosto;
+		this.costo = Double.parseDouble(pCosto);
 	}
 	public int getIdInicio() {
 		return idInicio;
