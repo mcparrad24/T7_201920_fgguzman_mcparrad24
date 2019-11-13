@@ -2,7 +2,7 @@ package model.data_structures;
 
 import model.logic.Queue;
 
-public class HashTableLinearProbing<K, V extends Comparable<K>> implements IHashTable<K, V> {
+public class HashTableLinearProbing<K extends Comparable<K>, V> implements IHashTable<K, V> {
 
 	private K[] tablaLlave;
 	private K llaveH;

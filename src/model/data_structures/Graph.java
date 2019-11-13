@@ -15,9 +15,9 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 
 	private final int V;
 	private int E;
-	private HashTableLinearProbing<K, Val> adj;
+	private HashTableLinearProbing<K, Vertice> adj;
 	private HashTableLinearProbing<K, Boolean> marked;
-	private HashTableLinearProbing<K, Val> cc;
+	private HashTableLinearProbing<K, Integer> cc;
 	private int[] id;           // id[v] = id of connected component containing v
 	private int[] size;         // size[id] = number of vertices in given component
 	private int count;          // number of connected components
@@ -82,8 +82,8 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 	 * @param  v one vertex in the edge
 	 */
 	public void addVertex(K idVertex, Val infoVertex) {
-		V++;
 		Vertice nuevo = new Vertice((String)idVertex, (Info)infoVertex);
+		adj.put(idVertex, nuevo);
 	}
 
 	/**
@@ -116,7 +116,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		}
 	}
 
-	private void dfs(K v) {
+	public void dfs(K v) {
 		marked.put(v, true);
 		Vertice vAct = (Vertice) adj.get(v);
 		Queue<K> adyacentes = (Queue<K>) vAct.getAdj();
@@ -166,6 +166,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 				return actual.getCosto();
 			}
 		}
+		return -1;
 	}
 
 	@Override
@@ -188,21 +189,22 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		Iterator<K> marca = (Iterator<K>) marked.keys();
 		while (marca.hasNext()) {
 			K actual = marca.next();
-			marked.put(actual, (Val)false); //Preguntar
+			marked.put(actual, false); //Preguntar
 		}
 	}
 
 	@Override
 	public Iterable<K> getCC(K idVertex) {
 		Queue<K> queue = new Queue<K>();
-		Val color = adj.get(idVertex);
+		int ccID = cc.get(idVertex);
 		Iterator<K> ccs = (Iterator<K>) cc.keys();
 		while (ccs.hasNext()) {
 			K llave = ccs.next();
-			Val valorAct = cc.get(llave);
-			if(valorAct.equals(color)) {
+			int valorAct = cc.get(llave);
+			if(valorAct == ccID){
 				queue.enqueue(llave);
 			}
 		}
+		return queue;
 	}
 }

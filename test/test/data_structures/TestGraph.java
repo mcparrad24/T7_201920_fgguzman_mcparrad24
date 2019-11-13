@@ -18,46 +18,46 @@ import model.logic.ZonaJSON;
 
 public class TestGraph {
 
-	private Graph Grafo = new Graph(10);
+	private Graph<Integer, Info> Grafo = new Graph(10);
 
 	public void setUp1() {
 		Info info1 = new Info("-74.08921298299998", "4.582989396000016", "275");
-		Vertice v1 = new Vertice("0", info1);
+		int id1 = 0;
 		Info info2 = new Info("-74.09175497299998", "4.5795689170000164", "684");
-		Vertice v2 = new Vertice("1", info2);
+		int id2 = 1;
 		Info info3 = new Info("-74.08656902000001", "4.60729538999999", "35");
-		Vertice v3 = new Vertice("2", info3);
+		int id3 = 2;
 		Info info4 = new Info("-74.07312877999998", "4.648768679999988", "1035");
-		Vertice v4 = new Vertice("3", info4);
+		int id4 = 3;
 		Info info5 = new Info("-74.05100413999997", "4.724598160000029", "96");
-		Vertice v5 = new Vertice("4", info5);
+		int id5 = 4;
 		Info info6 = new Info("-74.20408764000003", "4.610146419999976", "1");
-		Vertice v6 = new Vertice("5", info6);
+		int id6 = 5;
 		Info info7 = new Info("-74.16112719", "4.615544890000023", "1099");
-		Vertice v7 = new Vertice("6", info7);
+		int id7 = 6;
 		Info info8 = new Info("-74.06925505999997", "4.674469439999996", "833");
-		Vertice v8 = new Vertice("7", info8);
+		int id8 = 7;
 		Info info9 = new Info("-74.08833413000002", "4.619344660000023", "104");
-		Vertice v9 = new Vertice("8", info9);
+		int id9 = 8;
 		Info info10 = new Info("-74.16485762000002", "4.4879909200000165", "37");
-		Vertice v10 = new Vertice("9", info10);
+		int id10 = 9;
 		
-		Grafo.addVertex(v1.getId(), v1.getInfo());
-		Grafo.addVertex(v2.getId(), v2.getInfo());
-		Grafo.addVertex(v3.getId(), v3.getInfo());
-		Grafo.addVertex(v4.getId(), v4.getInfo());
-		Grafo.addVertex(v5.getId(), v5.getInfo());
-		Grafo.addVertex(v6.getId(), v6.getInfo());
-		Grafo.addVertex(v7.getId(), v7.getInfo());
-		Grafo.addVertex(v8.getId(), v8.getInfo());
-		Grafo.addVertex(v9.getId(), v9.getInfo());
-		Grafo.addVertex(v10.getId(), v10.getInfo());
+		Grafo.addVertex(id1, info1);
+		Grafo.addVertex(id2, info2);
+		Grafo.addVertex(id3, info3);
+		Grafo.addVertex(id4, info4);
+		Grafo.addVertex(id5, info5);
+		Grafo.addVertex(id6, info6);
+		Grafo.addVertex(id7, info7);
+		Grafo.addVertex(id8, info8);
+		Grafo.addVertex(id9, info9);
+		Grafo.addVertex(id10, info10);
 		
-		Grafo.addEdge(v1.getId(), v2.getId(), 10);
-		Grafo.addEdge(v2.getId(), v4.getId(), 5);
-		Grafo.addEdge(v5.getId(), v8.getId(), 8);
-		Grafo.addEdge(v8.getId(), v10.getId(), 13);
-		Grafo.addEdge(v1.getId(), v5.getId(), 6);
+		Grafo.addEdge(id1, id2, 10);
+		Grafo.addEdge(id2, id4, 5);
+		Grafo.addEdge(id5, id8, 8);
+		Grafo.addEdge(id8, id10, 13);
+		Grafo.addEdge(id1, id5, 6);
 	}
 
 	@Test
@@ -139,27 +139,27 @@ public class TestGraph {
 	
 	@Test
 	public void testAdj() {
-	
+		setUp1();
 	}
 	
 	@Test
 	public void testUncheck() {
-		
+		setUp1();
 	}
 	
 	@Test
 	public void testDfs() {
-		
+		setUp1();
 	}
 	
 	@Test
 	public void testCcn() {
-		
+		setUp1();
 	}
 	
 	@Test
 	public void testGetCC() {
-		
+		setUp1();
 	}
 }
 
