@@ -68,7 +68,9 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		Vertice v1 = (Vertice) adj.get(idVertexIni);
 		Vertice v2 = (Vertice) adj.get(idVertexFin);
 		String costoArco = String.valueOf(cost);
-		Arco nuevo = new Arco((String)idVertexIni, (String)idVertexFin, costoArco);
+		String idv1 = String.valueOf(idVertexIni);
+		String idv2 = String.valueOf(idVertexFin);
+		Arco nuevo = new Arco(idv1, idv2, costoArco);
 		v1.getAdj().enqueue(v2);
 		v2.getAdj().enqueue(v1);
 		v1.getArcos().enqueue(nuevo);

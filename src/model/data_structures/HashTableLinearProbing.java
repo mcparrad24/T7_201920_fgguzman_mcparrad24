@@ -19,13 +19,13 @@ public class HashTableLinearProbing<K extends Comparable<K>, V> implements IHash
 	public void crear(int tamanoMax) {
 		this.tamanoMax = tamanoMax;
 		this.tamano = 0;
-		tablaLlave = (K[]) new Comparable[tamanoMax + 1];
-		tablaDato = (V[]) new Comparable[tamanoMax + 1];
+		tablaLlave = (K[]) new Object[tamanoMax + 1];
+		tablaDato = (V[]) new Object[tamanoMax + 1];
 	}
 
 	private void resize(int capacity) {
-		K[] temp = (K[]) new Comparable[capacity + 1];
-		V[] temp2 = (V[]) new Comparable[capacity + 1];
+		K[] temp = (K[]) new Object[capacity + 1];
+		V[] temp2 = (V[]) new Object[capacity + 1];
 		for (int i = 1; i <= tamano; i++) {
 			temp[i] = tablaLlave[i];
 			temp2[i] = tablaDato[i];
