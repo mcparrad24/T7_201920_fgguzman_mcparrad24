@@ -95,9 +95,16 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 	 * @throws IllegalArgumentException unless {@code 0 <= v < V}
 	 */
 	public Iterable<K> adj(K idVertex) {
+		Queue<Integer> ids = new Queue<Integer>();
 		Vertice v1 = (Vertice)adj.get(idVertex);
-		Iterable<K> adyacentes = (Iterable<K>) v1.getAdj().iterator();
-		return adyacentes;
+		Queue<Vertice> adyacentes = (Queue<Vertice>) v1.getAdj().iterator();
+		int tam = adyacentes.size();
+		for (int i = 0; i < tam; i++) {
+			Vertice actual = adyacentes.dequeue();
+			ids.enqueue(actual.getId());
+		}
+		Queue<K> adya = (Queue<K>) ids;
+		return adya;
 	}
 
 	/**
@@ -122,7 +129,6 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		Vertice vAct = (Vertice) adj.get(v);
 		Queue<K> adyacentes = (Queue<K>) vAct.getAdj();
 		int tam = adyacentes.size();
-
 		for (int i = 0; i < tam; i++) {
 			K actual = adyacentes.dequeue();
 			boolean valor = marked.get(actual);
@@ -207,5 +213,9 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 			}
 		}
 		return queue;
+	}
+	
+	public HashTableLinearProbing<K, Boolean> marcados(){
+		return marked;
 	}
 }

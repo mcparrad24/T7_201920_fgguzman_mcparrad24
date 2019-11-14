@@ -12,7 +12,9 @@ import org.junit.Test;
 import com.opencsv.CSVReader;
 
 import model.data_structures.Graph;
+import model.data_structures.HashTableLinearProbing;
 import model.logic.Info;
+import model.logic.Queue;
 import model.logic.Vertice;
 
 public class TestGraph {
@@ -22,8 +24,10 @@ public class TestGraph {
 	public void setUp1() {
 		Info info1 = new Info("-74.08921298299998", "4.582989396000016", "275");
 		int id1 = 0;
+		Grafo.addVertex(id1, info1);
 		Info info2 = new Info("-74.09175497299998", "4.5795689170000164", "684");
 		int id2 = 1;
+		Grafo.addVertex(id2, info2);
 		Info info3 = new Info("-74.08656902000001", "4.60729538999999", "35");
 		int id3 = 2;
 		Info info4 = new Info("-74.07312877999998", "4.648768679999988", "1035");
@@ -41,8 +45,6 @@ public class TestGraph {
 		Info info10 = new Info("-74.16485762000002", "4.4879909200000165", "37");
 		int id10 = 9;
 		
-		Grafo.addVertex(id1, info1);
-		Grafo.addVertex(id2, info2);
 		Grafo.addVertex(id3, info3);
 		Grafo.addVertex(id4, info4);
 		Grafo.addVertex(id5, info5);
@@ -139,26 +141,66 @@ public class TestGraph {
 	@Test
 	public void testAdj() {
 		setUp1();
+		boolean igual = true;
+		Queue<Integer> queue = (Queue<Integer>) Grafo.adj(0);
+		int tam = queue.size();
+		for (int i = 0; i < tam; i++) {
+			int idActual = queue.dequeue();
+			if (idActual != 1 && idActual != 4) {
+				igual = false;
+			}
+		}
+		assertEquals("Los ID's de los vertices adyacentes no son los correctos", true, igual);
 	}
 	
 	@Test
 	public void testUncheck() {
 		setUp1();
+		boolean siEs = true;
+		Grafo.dfs(1);
+		HashTableLinearProbing<Integer, Boolean> tabla = Grafo.marcados();
+		Iterator<Integer> llaves = (Iterator<Integer>) tabla.keys();
+		int llaveAct = llaves.next();
+		while (llaves.hasNext()) {
+			boolean valor = tabla.get(llaveAct);
+			if (valor) {
+				siEs = false;
+			}
+			
+		}
+		assertEquals("No se desmarcaron los vertices correctamente", true, siEs);
 	}
 	
 	@Test
 	public void testDfs() {
-		setUp1();
+		boolean siEs = true;
+		Grafo.dfs(1);
+		HashTableLinearProbing<Integer, Boolean> tabla = Grafo.marcados();
+		Iterator<Integer> llaves = (Iterator<Integer>) tabla.keys();
+		int llaveAct = llaves.next();
+		while (llaves.hasNext()) {
+			boolean valor = tabla.get(llaveAct);
+			if (llaveAct == 0 || llaveAct == 1 || llaveAct == 3 || llaveAct == 4 || llaveAct == 7 || llaveAct == 9) {
+				if (!valor) {
+					siEs = false;
+				}
+			}
+			
+		}
+		assertEquals("DFS no funciona correctamente", true, siEs);
 	}
 	
 	@Test
 	public void testCcn() {
 		setUp1();
+		int numReal = 5;
+		assertEquals("El numero de componentes conexos es incorrecto", numReal, Grafo.ccn());
 	}
 	
 	@Test
 	public void testGetCC() {
 		setUp1();
+		Grafo.getCC(0);
 	}
 }
 
