@@ -39,10 +39,8 @@ public class Controller {
 			switch (option) {
 			case 1:
 				modelo.TXTLector();
-				System.out.println("Total zonas: " + modelo.totalZonas() + "\n---------");
-				datos = modelo.valoresMinMax();
-				System.out.println("Valor maximo: " + datos[0] + "\n---------");
-				System.out.println("Valor minimo: " + datos[1] + "\n---------");	
+				System.out.println("Total zonas: " + modelo.totalVertice() + "\n---------");
+				System.out.println("Total zonas: " + modelo.totalArcos() + "\n---------");
 				break;
 			case 2:
 				break;
@@ -51,6 +49,7 @@ public class Controller {
 			case 4:
 				break;
 			case 5:
+				modelo.generarHTML();
 				break;
 			case 6:
 				System.out.println("--------- \n Hasta pronto !! \n---------");
