@@ -1,6 +1,6 @@
 package model.logic;
 
-public class Vertice {
+public class Vertice implements Comparable<Vertice> {
 	private int id;
 	private Info info;
 	private Queue<Vertice> adj = new Queue<Vertice>(); 
@@ -33,6 +33,12 @@ public class Vertice {
 	
 	public String toString() {
 		return "Vertice [id=" + id + ", longitud=" + info.getLng() + ", latitud=" + info.getLat()+ ", MOVEMENT_ID=" + info.getMOVEMENT_ID() + "]";
+	}
+
+	@Override
+	public int compareTo(Vertice o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

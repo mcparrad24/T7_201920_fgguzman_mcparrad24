@@ -161,6 +161,7 @@ public class TestGraph {
 		setUp1();
 		boolean siEs = true;
 		Grafo.dfs(1);
+		Grafo.uncheck();
 		HashTableLinearProbing<Integer, Boolean> tabla = Grafo.marcados();
 		Iterator<Integer> llaves = (Iterator<Integer>) tabla.keys();
 		int llaveAct = llaves.next();
