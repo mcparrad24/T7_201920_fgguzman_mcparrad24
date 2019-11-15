@@ -66,40 +66,4 @@ public class MVCModelo {
 		}
 
 	}
-
-	public int totalZonas() {
-		return datos.darTamano();
-	}
-	
-	public String[] valoresMinMax() {
-		String[] rtn = new String[2];
-		rtn[0] = datos.max().toString();
-		rtn[1] = datos.min().toString();
-		return rtn;
-	}
-	
-	public String zonaID(int movID) {
-		String valor = datos.get(movID);
-		return valor;
-	}
-	
-	public Queue<Integer> idRangoEspecificoLlaves(int movIDIn, int movIDMax) {
-		Iterator<Integer> llaves = datos.keysRango(movIDIn, (movIDMax+1));
-		int key = (int) llaves.next();
-		while (llaves.hasNext()) {
-			keys.enqueue(key);
-			key = (int) llaves.next();
-		}
-		return keys;
-	}
-	
-	public Queue<String> idRangoEspecificoValores(int movIDIn, int movIDMax) {
-		Iterator<String> valores = datos.valuesRango(movIDIn, (movIDMax+1));
-		String valor = (String) valores.next();
-		while (valores.hasNext()) {
-			values.enqueue(valor);
-			valor = (String) valores.next();
-		}
-		return values;
-	}
 }
