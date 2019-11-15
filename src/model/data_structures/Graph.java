@@ -104,7 +104,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		for (int i = 0; i < tam; i++) {
 			Vertice actual = adyacentes.dequeue();
 			K idActual = (K)actual.getId();
-			ids.enqueue(actual.getId());
+			ids.enqueue(idActual);
 			adyacentes.enqueue(actual);
 		}
 		Queue<K> adya = (Queue<K>) ids.iterator();
@@ -131,14 +131,21 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 	public void dfs(K v) {
 		marked.put(v, true);
 		Vertice vAct = (Vertice) adj.get(v);
-		Queue<K> adyacentes = (Queue<K>) vAct.getAdj();
+		Queue<Vertice> adyacentes = vAct.getAdj();
 		int tam = adyacentes.size();
 		for (int i = 0; i < tam; i++) {
-			K actual = adyacentes.dequeue();
-			boolean valor = marked.get(actual);
-			if (!valor) {
-				dfs(actual);
+			Vertice actual = adyacentes.dequeue();
+			if (marked.get((K) actual) == null) {
+				marked.put((K) actual, true);
 			}
+			else {
+				boolean valor = marked.get((K) actual);
+				if (!valor) {
+					K id = actual.getId();
+					dfs(id);
+				}
+			}
+			adyacentes.enqueue(actual);
 		}
 	}
 
