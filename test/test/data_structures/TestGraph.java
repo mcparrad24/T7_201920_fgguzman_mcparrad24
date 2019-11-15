@@ -76,16 +76,7 @@ public class TestGraph {
 	}
 
 	@Test
-	public void testAddVertex1() {
-		setUp1();
-		Info info11 = new Info("-74.03610183", "4.610830000000021", "7");
-		Vertice v11 = new Vertice("11", info11);
-		Grafo.addVertex(v11.getId(), v11.getInfo());
-		assertEquals("No se agrego el vertice correctamente", 11, Grafo.V());
-	}
-
-	@Test
-	public void testAddVertex2() {
+	public void testAddVertex() {
 		setUp1();
 		boolean siEs = false;
 		Info info11 = new Info("-74.03610183", "4.610830000000021", "7");
@@ -109,9 +100,13 @@ public class TestGraph {
 	@Test
 	public void testGetInfoVertex() {
 		setUp1();
+		boolean siEs = false;
 		Info info = new Info("-74.08921298299998", "4.582989396000016", "275");
 		Info infoComparar = (Info) Grafo.getInfoVertex(0);
-		assertEquals("La información del vertice es incorrecta", info, infoComparar);
+		if (info.getLng() == infoComparar.getLng() && info.getLat() == infoComparar.getLat() && info.getMOVEMENT_ID() == infoComparar.getMOVEMENT_ID()) {
+			siEs = true;
+		}
+		assertEquals("La información del vertice es incorrecta", true, siEs);
 	}
 	
 	@Test
@@ -126,29 +121,37 @@ public class TestGraph {
 	@Test
 	public void testGetCostArc() {
 		setUp1();
+		boolean siEs = false;
 		double costoReal = Grafo.getCostArc(4, 7);
-		assertEquals("El costo del arco es incorrecto", 8, costoReal);
+		if (costoReal == 8) {
+			siEs = true;
+		}
+		assertEquals("El costo del arco es incorrecto", true, siEs);
 	}
 	
 	@Test
 	public void testSetCostArc() {
 		setUp1();
-		double nuevoCosto = 10;
-		Grafo.setCostArc(4, 7, nuevoCosto);
-		assertEquals("El costo del arco no se actualizo correctamente", nuevoCosto, Grafo.getCostArc(4, 7));
+		boolean siEs = false;
+		Grafo.setCostArc(4, 7, 10);
+		double costo = Grafo.getCostArc(4, 7);
+		if (costo == 10) {
+			siEs = true;
+		}
+		assertEquals("El costo del arco no se actualizo correctamente", true, siEs);
 	}
 	
 	@Test
 	public void testAdj() {
 		setUp1();
 		boolean igual = true;
-		Queue<Integer> queue = (Queue<Integer>) Grafo.adj(0);
-		int tam = queue.size();
-		for (int i = 0; i < tam; i++) {
-			int idActual = queue.dequeue();
+		Iterator it = (Iterator) Grafo.adj(0);
+		int idActual = (int) it.next();
+		while (it.hasNext()) {
 			if (idActual != 1 && idActual != 4) {
 				igual = false;
 			}
+			idActual = (int) it.next();
 		}
 		assertEquals("Los ID's de los vertices adyacentes no son los correctos", true, igual);
 	}

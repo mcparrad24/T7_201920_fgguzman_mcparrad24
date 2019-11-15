@@ -97,15 +97,17 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 	 * @throws IllegalArgumentException unless {@code 0 <= v < V}
 	 */
 	public Iterable<K> adj(K idVertex) {
-		Queue<Integer> ids = new Queue<Integer>();
+		Queue<K> ids = new Queue<K>();
 		Vertice v1 = (Vertice)adj.get(idVertex);
-		Queue<Vertice> adyacentes = (Queue<Vertice>) v1.getAdj().iterator();
+		Queue<Vertice> adyacentes = v1.getAdj();
 		int tam = adyacentes.size();
 		for (int i = 0; i < tam; i++) {
 			Vertice actual = adyacentes.dequeue();
+			K idActual = (K)actual.getId();
 			ids.enqueue(actual.getId());
+			adyacentes.enqueue(actual);
 		}
-		Queue<K> adya = (Queue<K>) ids;
+		Queue<K> adya = (Queue<K>) ids.iterator();
 		return adya;
 	}
 
@@ -165,6 +167,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 
 	@Override
 	public double getCostArc(K idVertexIni, K idVertexFin) {
+		double costo = -1;
 		Vertice vIn = (Vertice)adj.get(idVertexIni);
 		Queue<Arco> arcos = vIn.getArcos();
 		int tam = arcos.size();
@@ -172,10 +175,10 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		for (int i = 0; i < tam && !encontrado; i++) {
 			Arco actual = arcos.dequeue();
 			if (actual.getIdInicio() == (Integer)idVertexIni && actual.getIdFinal() == (Integer)idVertexFin) {
-				return actual.getCosto();
+				costo =  actual.getCosto();
 			}
 		}
-		return -1;
+		return costo;
 	}
 
 	@Override
@@ -189,6 +192,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 			if (actual.getIdInicio() == (Integer)idVertexIni && actual.getIdFinal() == (Integer)idVertexFin) {
 				actual.setCostArc(cost);
 			}
+			arcos.enqueue(actual);
 		}
 
 	}
@@ -198,7 +202,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		Iterator<K> marca = (Iterator<K>) marked.keys();
 		while (marca.hasNext()) {
 			K actual = marca.next();
-			marked.put(actual, false); //Preguntar
+			marked.put(actual, false);
 		}
 	}
 
