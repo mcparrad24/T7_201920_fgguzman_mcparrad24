@@ -122,12 +122,11 @@ public class MVCModelo {
 				"        var path;\r\n" + 
 				"	var GrafoC;\r\n"
 				+ "   var Grafo;\r\n"); 
-		while(i<10000) {
+		while(i<datosVer.length) {
 			String hex = "";
 			String wr = escribirParte(datosVer[i]);
 			writer.write("          GrafoC "+wr);
 			i++;
-			System.out.println(i);
 			writer.write("     Grafo = new google.maps.Polyline({\r\n" + 
 					"          path: GrafoC,\r\n" + 
 					"          geodesic: true,\r\n"+

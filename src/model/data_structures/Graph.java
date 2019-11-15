@@ -77,7 +77,6 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		v2.getArcos().enqueue(nuevo);
 	}
 
-
 	/**
 	 * 
 	 *
@@ -87,6 +86,7 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		String id = String.valueOf(idVertex);
 		Vertice nuevo = new Vertice(id, (Info)infoVertex);
 		adj.put(idVertex, nuevo);
+		marked.put(idVertex, false);
 	}
 
 	/**
@@ -103,11 +103,11 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		int tam = adyacentes.size();
 		for (int i = 0; i < tam; i++) {
 			Vertice actual = adyacentes.dequeue();
-			K idActual = (K)actual.getId();
+			K idActual = (K)(Object)actual.getId();
 			ids.enqueue(idActual);
 			adyacentes.enqueue(actual);
 		}
-		Queue<K> adya = (Queue<K>) ids.iterator();
+		Queue<K> adya = (Queue<K>) ids;
 		return adya;
 	}
 
@@ -135,15 +135,10 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 		int tam = adyacentes.size();
 		for (int i = 0; i < tam; i++) {
 			Vertice actual = adyacentes.dequeue();
-			if (marked.get((K) actual) == null) {
-				marked.put((K) actual, true);
-			}
-			else {
-				boolean valor = marked.get((K) actual);
-				if (!valor) {
-					K id = actual.getId();
-					dfs(id);
-				}
+			boolean valor = marked.get((K) actual);
+			if (!valor) {
+				K id = (K)(Object)actual.getId();
+				dfs(id);
 			}
 			adyacentes.enqueue(actual);
 		}
@@ -206,10 +201,11 @@ public class Graph <K extends Comparable<K>, Val> implements IGraph<K, Val> {
 
 	@Override
 	public void uncheck() {
-		Iterator<K> marca = (Iterator<K>) marked.keys();
+		Iterator<Vertice> marca = (Iterator<Vertice>) marked.keys();
 		while (marca.hasNext()) {
-			K actual = marca.next();
-			marked.put(actual, false);
+			Vertice actual = marca.next();
+			K id = (K)(Object)actual.getId();
+			marked.put(id, false);
 		}
 	}
 
